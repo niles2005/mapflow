@@ -1,0 +1,31 @@
+
+{{project.name}}
+<div class="container">
+	<div class="row">
+		
+		<div class="span10">
+			<ul doc-tutorial-nav="11" class="btn-group tutorial-nav"><li class="btn btn-primary"><a href="tutorial/step_10"><i class="icon-step-backward"></i> Previous</a></li>
+<li class="btn btn-primary"><a href="http://angular.github.com/angular-phonecat/step-11/app"><i class="icon-play"></i> Live Demo</a></li>
+<li class="btn btn-primary"><a href="https://github.com/angular/angular-phonecat/compare/step-10...step-11"><i class="icon-search"></i> Code Diff</a></li>
+<li class="btn btn-primary"><a href="tutorial/the_end">Next <i class="icon-step-forward"></i></a></li></ul>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
+						<th><a href="" ng-click="predicate = 'time'; reverse=!reverse">Time</a></th>
+						<th><a href="" ng-click="predicate = 'size'; reverse=!reverse">Size</a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="file in project.files | orderBy:predicate:reverse">
+						<td>{{file.name}}</td>
+						<td>{{file.time}}</td>
+						<td>{{file.size}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+

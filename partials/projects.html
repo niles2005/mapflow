@@ -1,0 +1,25 @@
+
+<div class="container">
+
+	<div class="row">
+		<div class="span12">
+			<ul class="projects">
+				<li ng-repeat="project in projects" class="thumbnail">
+					<img ng-src="{{project.imageUrl}}" class="thumb">
+					<h3>
+						<a href="#/projects/{{project.dataVendor}}/{{project.name}}">
+						<h3>{{project.dataVendor}} / {{project.name}}</h3>
+						</a>
+					<span>{{project.creator}} @ {{project.createTime}}</span>
+					<p>
+						{{project.info}}
+					</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+</div>
+
+
