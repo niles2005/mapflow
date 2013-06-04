@@ -1,0 +1,38 @@
+<div class="container">
+<div class="row">
+    <div class="span12">
+        <form name="myForm">
+            <div class="control-group" ng-class="{error: myForm.name.$invalid}">
+                <label>Project Name</label>
+                <input type="text" name="name" ng-model="project.name" required>
+                <span ng-show="myForm.name.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <div class="control-group" ng-class="{error: myForm.site.$invalid}">
+                <label>Vendor</label>
+                <input type="text" name="vendor" ng-model="project.dataVendor" required>
+                <span ng-show="myForm.site.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <div class="control-group" ng-class="{error: myForm.site.$invalid}">
+                <label>Info</label>
+                <textarea name="description" ng-model="project.info" required></textarea>
+                <span ng-show="myForm.site.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <a href="#/" class="btn">Cancel</a>
+            <button ng-click="save()" ng-disabled="myForm.$invalid" class="btn btn-primary">
+                Save
+            </button>
+
+        </form>
+
+    </div>
+</div>
+ </div>

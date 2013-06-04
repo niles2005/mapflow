@@ -32,7 +32,6 @@ var projectList = [
     }
 ];
 
-
 var projectDetail = {
 	"id": "p1", 
 	"name": "shanghai", 
@@ -50,15 +49,48 @@ var projectDetail = {
 };
 
 angular.module('myApp.controllers', []).
-  controller('ProjectsCtrl', function($scope) {
-		$scope.projects = projectList;
+  controller('ProjectsCtrl', function($rootScope) {
+        $rootScope.projects = projectList;
   }).	
   controller('Project1Ctrl', function($scope,$routeParams) {
-	  $scope.project = projectDetail;
+        $scope.project = projectDetail;
   }).	
   controller('MyCtrl1', [function() {
 
   }])
-  .controller('MyCtrl2', [function() {
+  .controller('ProjectNew', function($rootScope,$scope,$location) {
+        $scope.project =  {
+            "id": "",
+            "name": "",
+            "dataVendor": "",
+            "imageUrl":"img/osm.png",
+            "createTime": "",
+            "creator": "default",
+            "info": ""
+        }
 
-  }]);
+        $scope.save = function() {
+            $scope.project.id =  'p' + ($rootScope.projects.length + 1);
+            $scope.project.createTime = new Date();
+
+            $rootScope.projects.push($scope.project);
+            $location.path('#/projects');
+        };
+
+
+  }).controller('ProjectEdit', function($rootScope,$scope,$location,$routeParams) {
+        var res =   $rootScope.projects.filter(function(value){
+            return value.id == $routeParams.projectId;
+        });
+        if(res.length == 1){
+            $scope.project =  res[0];
+        }
+
+//        console.dir($scope.project);
+
+        $scope.save = function() {
+            $scope.project.createTime = new Date();
+            $location.path('#/projects');
+
+        };
+    });
