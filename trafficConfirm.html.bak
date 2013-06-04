@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html ng-app>
 <head>
-    <title>test 6/4</title>
+<<<<<<< HEAD
+    <title>test 6/4 zanghui</title>
+=======
+    <title>test 6/5  sadjfks fsa  </title>
+>>>>>>> 9e18f668d67c76c2bcb144d208b0d160e40c7a91
 </head>
 <body>
     <div>
