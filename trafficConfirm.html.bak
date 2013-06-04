@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html ng-app>
 <head>
-    <title>traffic confirm</title>
+    <title>test</title>
 </head>
 <body>
     <div>
              {{traffics}}
     </div>
+    
+    
+    for conflict test
 
 
 <script src="lib/angular/angular.js"></script>
