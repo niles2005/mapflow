@@ -93,4 +93,5 @@ angular.module('myApp.controllers', []).
             $location.path('#/projects');
 
         };
-    });
+    }).controller('CompilingCtrl', function($scope,$routeParams) {
+  });
