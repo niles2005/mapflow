@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app>
 <head>
-    <title>test</title>
+    <title>test 6/5</title>
 </head>
 <body>
     <div>
@@ -13,6 +13,8 @@
 
 
 <script src="lib/angular/angular.js"></script>
+
+
 <script src="js/controller.js"></script>
 </body>
 </html>
