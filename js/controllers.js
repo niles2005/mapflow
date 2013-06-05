@@ -93,7 +93,7 @@ angular.module('myApp.controllers', []).
 	};
 
 
-}).controller('ProjectEdit', function($rootScope, $scope, $location, $routeParams) {
+}).controller('ProjectEdit', function($rootScope, $scope, $location, $routeParams,$filter) {
 	var res = $rootScope.projects.filter(function(value) {
 		return value.id == $routeParams.projectId;
 	});
@@ -102,7 +102,9 @@ angular.module('myApp.controllers', []).
 	}
 
 	$scope.save = function() {
-		$scope.project.createTime = new Date();
+        if ($scope.project) {
+            $scope.project.createTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'); // new Data() not support the format
+        }
 		$location.path('#/projects');
 
 	};
@@ -162,11 +164,14 @@ function CompilingCtrl($scope) {
 		drawRect(context, posX, posY, width - 100, 30, '2D(Area)');
 		
 		if(pressX1 && pressY1 && pressX2 && pressY2) {
-			context.storkeStyle = "rgb(255,0,0)";
-			context.beginPath();
-			context.moveTo(pressX1,pressY1);
-			context.lineTo(pressX2,pressY2);
-			context.stroke();
+//			context.strokeStyle = "rgb(255,0,0)";
+//			context.beginPath();
+//			context.moveTo(pressX1,pressY1);
+//			context.lineTo(pressX2,pressY2);
+//			context.stroke();
+
+            drawHotArea(context,pressX1 , pressY1 , pressX2 , pressY2)  ;
+
 		}
 		
 		context.restore();
@@ -223,6 +228,28 @@ function drawRect(context, x, y, width, height, info) {
 		context.drawImage(errorImg, x + k * 40 + 12, y + 5);
 	}
 	context.stroke();
+}
+
+function drawHotArea(context,x1 ,y1 ,x2 , y2){
+    if(x1 >= x2)  {
+        var minX = x2;
+        var maxX = x1;
+    }else{
+        var minX = x1;
+        var maxX = x2;
+    }
+    if(y1 >= y2)  {
+        var minY = y2;
+        var maxY = y1;
+    }else{
+        var minY = y1;
+        var maxY = y2;
+    }
+    context.globalAlpha = 0.3;
+    context.fillStyle = 'rgb(255,0,0)';
+    context.fillRect(minX, minY, maxX - minX, maxY - minY);
+//    context.fill();
+
 }
 
 function drawGrid(context, x, y, width, height, validImage, errorImage) {
