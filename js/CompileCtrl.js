@@ -50,19 +50,16 @@ Rect.prototype = {
 		context.strokeRect(this.x, this.y, this.width, this.height);
 	},
 	drawImage: function(context, status) {
-		if (status === 0) {
-			context.drawImage(errorImg, this.x + 12, this.y + 5);
+		if (status) {
+            context.drawImage(validImg, this.x + 12, this.y + 5);
 		} else {
-			context.drawImage(validImg, this.x + 12, this.y + 5);
+            context.drawImage(errorImg, this.x + 12, this.y + 5);
 		}
 	},
 	isEmpty: function() {
 		return (this.width <= 0.0) || (this.height <= 0.0);
 	},
 	intersects: function(x1, y1, w1, h1) {
-		if (this.isEmpty() || w1 <= 0 || h1 <= 0) {
-			return false;
-		}
 		return ((x1 + w1) > this.x &&
 				(y1 + h1) > this.y &&
 				x1 < (this.x + this.width) &&
@@ -131,11 +128,7 @@ function CompileCtrl($scope) {
 		drawModule(context, module0D, '0D(Label)', rect0DArr);
 
 		if (pressX1 && pressY1 && pressX2 && pressY2) {
-			context.strokeStyle = "#F00";
-			context.beginPath();
-			context.moveTo(pressX1, pressY1);
-			context.lineTo(pressX2, pressY2);
-			context.stroke();
+            drawHotArea(context,pressX1 , pressY1 , pressX2 , pressY2);
 		}
 
 		context.restore();
@@ -199,6 +192,28 @@ function CompileCtrl($scope) {
 			}
 		}
 	}
+
+    function drawHotArea(context, x1, y1, x2, y2){
+         if(x1 >= x2){
+             var maxX = x1;
+             var minX = x2;
+         } else{
+             var maxX = x2;
+             var minX = x1;
+         }
+         if(y1 >= y2){
+             var maxY = y1;
+             var minY = y2;
+         } else{
+             var maxY = y2;
+             var minY = y1;
+         }
+        context.globalAlpha = 0.3;
+        context.fillStyle = 'rgb(255,0,0)';
+        context.fillRect(minX,minY,maxX-minX,maxY-minY);
+        context.fill();
+
+    }
 
 	repaint();
 }
