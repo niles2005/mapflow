@@ -78,7 +78,7 @@ angular.module('myApp.controllers', []).
 	};
 
 
-}).controller('ProjectEdit', function($rootScope, $scope, $location, $routeParams) {
+}).controller('ProjectEdit', function($rootScope, $scope, $location, $routeParams,$filter) {
 	var res = $rootScope.projects.filter(function(value) {
 		return value.id == $routeParams.projectId;
 	});
@@ -87,10 +87,10 @@ angular.module('myApp.controllers', []).
 	}
 
 	$scope.save = function() {
-		$scope.project.createTime = new Date();
+        if ($scope.project) {
+            $scope.project.createTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'); // new Data() not support the format
+        }
 		$location.path('#/projects');
 
 	};
 }).controller(CompileCtrl);
-
-
