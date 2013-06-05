@@ -208,7 +208,10 @@ function CompileCtrl($scope) {
         context.fillStyle = 'rgb(255,0,0)';
         context.fillRect(minX,minY,maxX-minX,maxY-minY);
         context.fill();
-
+        context.globalAlpha = 0.5;
+        context.strokeStyle = 'rgb(255,0,0)';
+        context.strokeRect(minX,minY,maxX-minX,maxY-minY);
+        context.stroke();
     }
 
 	repaint();
