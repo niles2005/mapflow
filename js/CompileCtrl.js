@@ -212,9 +212,11 @@ function checkIntersect(x1, y1, x2, y2, rects, module) {
 	}
 	for (var i = 0; i < rects.length; i++) {
 		if (rects[i].intersects(x1, y1, x2 - x1, y2 - y1)) {
-			module.levels[i] = 1;
-		} else {
-			module.levels[i] = 0;
+			if(module.levels[i]) {
+				module.levels[i] = 0;
+			} else {
+				module.levels[i] = 1;
+			}
 		}
 	}
 }
