@@ -1,5 +1,21 @@
 
 <div class="container">
-	<canvas id="compile_canvas" ></canvas>
+    <div class="row-fluid">
+        <div class="span1">navigation</div>
+          <form class="form-horizontal">
+              <div class="span3 input-prepend"><span class="add-on">数据源：</span><input type="text" class="span2"></div>
+              <div class="span3 input-prepend"><span class="add-on">数据路径：</span><input type="text" class="span2" ></div>
+              <div class="span5 input-prepend">
+                  <span class="add-on">配置模版：</span>
+                  <select class="span3">
+                      <option>config</option>
+                      <option>config template</option>
+                  </select>
+                  <button>开始编译</button>
+              </div>
+          </form>
+    </div>
+    <br>
+	<div><canvas id="compile_canvas" ></canvas></div>
 </div>
 
