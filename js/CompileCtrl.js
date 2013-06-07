@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 function treeItems(){
     $('li:has(ul)')
         .click(function(event){
@@ -14,17 +16,18 @@ function treeItems(){
                         .css('list-style-image','url(img/plus.gif)')
                         .children().slideUp();
                 }
-            }
-            return false;
-        })
-        .css({cursor:'pointer',
-            'list-style-image':'url(img/plus.gif)'})
-        .children().hide();
-    $('li:not(:has(ul))').css({
-        cursor: 'default',
-        'list-style-image':'none'
+}
+return false;
+})
+.css({cursor:'pointer',
+    'list-style-image':'url(img/plus.gif)'})
+.children().hide();
+$('li:not(:has(ul))').css({
+    cursor: 'default',
+    'list-style-image':'none'
     });
 }
+
 
 function bindEvent(elementTarget, eventType, func) {
 	if (window.addEventListener) {
@@ -112,9 +115,14 @@ Rect.prototype = {
 
 };
 
-function CompileCtrl($scope) {
+function compileConfig($scope){
     $scope.treeItem =  treeModel1;
     $scope.tree = treeModel2;
+}
+
+
+function CompileCtrl($scope) {
+
 	var gridNum = 20;
 	var startX = 80;
 	var startY = 30;
@@ -143,6 +151,33 @@ function CompileCtrl($scope) {
 	canvas.height = height;
 	var context = canvas.getContext('2d');
 	var pressX1, pressY1, pressX2, pressY2;
+
+    function treeItems (){
+        $('li:has(ul)')
+            .click(function(event){
+                if (this == event.target) {
+                    if ($(this).children().is(':hidden')) {
+                        $(this)
+                            .css('list-style-image','url(img/minus.gif)')
+                            .children().slideDown();
+                    }
+                    else {
+                        $(this)
+                            .css('list-style-image','url(img/plus.gif)')
+                            .children().slideUp();
+                    }
+                }
+                return false;
+            })
+            .css({cursor:'pointer',
+                'list-style-image':'url(img/plus.gif)'})
+            .children().hide();
+        $('li:not(:has(ul))').css({
+            cursor: 'default',
+            'list-style-image':'none'
+        });
+    }
+
 
 	function repaint() {
 

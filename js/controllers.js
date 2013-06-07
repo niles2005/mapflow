@@ -93,4 +93,6 @@ angular.module('myApp.controllers', []).
 		$location.path('#/projects');
 
 	};
-}).controller(CompileCtrl);
+})
+//    .controller(CompileCtrl)
+//    .controller('compileConfig1',compileConfig);

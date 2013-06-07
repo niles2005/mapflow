@@ -2,41 +2,7 @@
 <div class="container">
     <div class="row-fluid">
       <div class="span2">
-          <ul>
-              <li ng-repeat="item in treeItem.root" >
-                  {{item.self}}
-                  <ul ng-show="item.branch.length > 0">
-                      <li ng-repeat="b in item.branch" > {{b.self}}  </li>
-                  </ul>
-              </li>
 
-          </ul>
-
-          <ul ng-tree="tree">
-              <li>{{item.name}}</li>
-          </ul>
-
-
-          <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>
-                  Item 3
-                  <ul>
-                      <li>Item 3.1</li>
-                      <li>Item 3.2</li>
-                      <li>Item 3.3</li>
-                  </ul>
-              </li>
-              <li>
-                  Item 4
-                  <ul>
-                      <li>Item 4.1</li>
-                      <li> Item 4.2 </li>
-                  </ul>
-              </li>
-              <li>Item 5</li>
-          </ul>
       </div>
 
       <div class="span10">
@@ -66,7 +32,5 @@
 
 </div>
 
-<script type="text/javascript">
-    $(treeItems);
-</script>
+
 
