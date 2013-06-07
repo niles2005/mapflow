@@ -237,6 +237,10 @@ function CompileCtrl($scope) {
 				event.cancelBubble = true;
 				event.returnValue = false;
 			}
+			if(!pressX2 && !pressY2) {//just click
+				pressX2 = pressX1;
+				pressY2 = pressY1;
+			}
 			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect2DArr,module2D);
 			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect1DArr,module1D);
 			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect0DArr,module0D);
