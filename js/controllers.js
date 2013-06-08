@@ -48,17 +48,15 @@ var projectDetail = {
 	]
 };
 
-angular.module('myApp.controllers', []).
-		controller('ProjectsCtrl', function($rootScope) {
-	$rootScope.projects = projectList;
-}).
-		controller('Project1Ctrl', function($scope, $routeParams) {
-	$scope.project = projectDetail;
-}).
-		controller('MyCtrl1', [function() {
+function ProjectsCtrl($rootScope) {
+    $rootScope.projects = projectList;
+}
 
-	}])
-		.controller('ProjectNew', function($rootScope, $scope, $location, $filter) {
+function Project1Ctrl($scope, $routeParams) {
+	$scope.project = projectDetail;
+}
+
+function ProjectNew($rootScope, $scope, $location, $filter) {
 	$scope.project = {
 		"id": "",
 		"name": "",
@@ -76,9 +74,9 @@ angular.module('myApp.controllers', []).
 		$rootScope.projects.push($scope.project);
 		$location.path('#/projects');
 	};
+}
 
-
-}).controller('ProjectEdit', function($rootScope, $scope, $location, $routeParams,$filter) {
+function ProjectEdit($rootScope, $scope, $location, $routeParams,$filter) {
 	var res = $rootScope.projects.filter(function(value) {
 		return value.id == $routeParams.projectId;
 	});
@@ -93,6 +91,17 @@ angular.module('myApp.controllers', []).
 		$location.path('#/projects');
 
 	};
-})
-//    .controller(CompileCtrl)
-//    .controller('compileConfig1',compileConfig);
+}
+
+
+
+
+
+angular.module('myApp.controllers', []).
+		controller(ProjectsCtrl).
+		controller(Project1Ctrl).
+		controller(ProjectNew).
+                controller(ProjectEdit).
+                controller(CompileCtrl).
+                controller(CompileContentCtrl).
+                controller(CompileTreeCtrl);

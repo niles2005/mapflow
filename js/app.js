@@ -6,11 +6,10 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/projects', {templateUrl: 'partials/projects.html', controller: 'ProjectsCtrl'});
     $routeProvider.when('/projects/:dataVendor/:projectName', {templateUrl: 'partials/project1.html', controller: 'Project1Ctrl'});
-    $routeProvider.when('/compiling', {templateUrl: 'partials/compiling.html', controller: 'CompileCtrl'});
-    $routeProvider.when('/compileconfig', {templateUrl: 'partials/compileconfig.html', controller: 'compileConfig'});
-    $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-    $routeProvider.when('/projectnew', {templateUrl: 'partials/projectnew.html', controller: 'ProjectNew'});
-    $routeProvider.when('/projectedit/:projectId', {templateUrl: 'partials/projectnew.html', controller: 'ProjectEdit'});
+    $routeProvider.when('/compile', {templateUrl: 'partials/compile.html', controller: 'CompileCtrl'});
+    $routeProvider.when('/compileTree', {templateUrl: 'partials/compileTree.html', controller: 'CompileTreeCtrl'});
+    $routeProvider.when('/compileContent', {templateUrl: 'partials/compileContent.html', controller: 'CompileContentCtrl'});
+    $routeProvider.when('/projectNew', {templateUrl: 'partials/projectNew.html', controller: 'ProjectNew'});
+    $routeProvider.when('/projectedit/:projectId', {templateUrl: 'partials/projectNew.html', controller: 'ProjectEdit'});
     $routeProvider.otherwise({redirectTo: '/projects'});
   }]);
