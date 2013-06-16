@@ -56,9 +56,20 @@ TreeConfig.prototype = {
                         var fieldValue = $(childNode).attr('value');
                         if (fieldName && fieldValue) {
                             if (!node._attr) {
-                                node._attr = {};
+                                node._attr = [];
                             }
-                            node._attr[fieldName] = fieldValue;
+                            var levelValue = fieldValue.split("|");
+                            for (var i=0; i < 20 ; i++) {
+                                if (!node._attr[i]) {
+                                    node._attr[i] = {};
+                                }
+                                if (levelValue.length == 20) {
+                                    node._attr[i][fieldName] = levelValue[i];
+                                } else{
+                                    node._attr[i][fieldName] = fieldValue;
+                                }
+                            }
+
                         }
                         continue;
                     }
@@ -77,14 +88,15 @@ TreeConfig.prototype = {
                     if (subUL.length > 0) {//有子节点
                         subUL.children().hide();
                         jli.find('>div').addClass('nodeclosed');
-                        jli.css('cursor','pointer');
-                    } else{
-                        jli.css('cursor','default');
+                        jli.css('cursor', 'pointer');
+                    } else {
+                        jli.css('cursor', 'default');
                     }
                 }
                 if (jul.find('>li').length > 0) {
                     $(node).append(jul);
                 }
+
             }
         }
     },
@@ -94,18 +106,29 @@ TreeConfig.prototype = {
             event.stopPropagation();
             event.preventDefault();
 
-            var props = {};
-            var fields = ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"];
+            var props = [];
+            var fields = {
+                area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
+                line: ["exist", "simlifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
+                point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
+            }
             var liObj = this;
             while (liObj) {
                 if (liObj._attr) {
-                    for (var k in fields) {
-                        var propName = fields[k];
-                        if (props[propName]) {
+                    for (var level=0 ; level < 20 ; level++) {
+                        if(!props[level]){
+                            props[level] = {};
+                        }
+                        for (var group in fields) {
+                            for (var key in fields[group]) {
+                                var propName = fields[group][key];
+                                if (props[level][propName]) {
 
-                        } else {
-                            if (liObj._attr[propName]) {
-                                props[propName] = liObj._attr[propName];
+                                } else {
+                                    if (liObj._attr[level][propName]) {
+                                        props[level][propName] = liObj._attr[level][propName];
+                                    }
+                                }
                             }
                         }
                     }
@@ -118,6 +141,7 @@ TreeConfig.prototype = {
                 }
             }
             console.dir(props);
+
             var jli = $(this);
             var jul = jli.find('>ul');
             if (jul.length > 0) {
