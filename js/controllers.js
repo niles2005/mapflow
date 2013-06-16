@@ -94,6 +94,9 @@ function ProjectEdit($rootScope, $scope, $location, $routeParams,$filter) {
 }
 
 
+function CompileTreeCtrl(){
+    // TODO
+}
 
 
 

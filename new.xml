@@ -1,0 +1,602 @@
+<?xml version="1.0"?>
+<config>
+	<define name="icons" value="CN@BASE|US@BASE|CA@BASE|$@BASE"/>
+	<group name="area" fields="exist,simplifypixel,showpixel,showriverwidth,shownamerange">
+		<item name="base" extend="root">
+			<field name="exist" value="1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			<field name="simplifypixel" value="1.5|1.2|   0.8|0.8|0.8|0.7|0.6|     0.5|0.5|0.4|0.4|0.3|     0.3|0.3|0.2|0.2|0.2|    0.1|0.1|0.1"/>
+			<field name="showpixel" value="1|1|   1|1|1|1|1|     1|1|1|1|1|     1|1|1|1|1|    1|1|1"/>
+			<field name="showriverwidth" value="0.4"/>
+			<field name="shownamerange" value="50|50|   50|50|50|50|50|     50|50|50|50|50|     50|50|50|50|50|    0|0|0"/>
+			<item name="waterway" extend="base"/>
+			<item name="tourism" extend="base"/>
+			<item name="sport" extend="base"/>
+			<item name="shop" extend="base"/>
+			<item name="railway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+			</item>
+			<item name="power" extend="base"/>
+			<item name="place" extend="base"/>
+			<item name="office" extend="base"/>
+			<item name="natural" extend="base">
+				<item name="natural.wood" extend="natural">
+					<field name="exist" value="0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+			</item>
+			<item name="military" extend="base"/>
+			<item name="man_made" extend="base"/>
+			<item name="leisure" extend="base">
+				<item name="leisure.park_" extend="leisure">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="landuse" extend="base"/>
+			<item name="historic" extend="base"/>
+			<item name="highway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1"/>
+			</item>
+			<item name="geological" extend="base"/>
+			<item name="building" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+			</item>
+			<item name="boundary" extend="base"/>
+			<item name="barrier" extend="base"/>
+			<item name="amenity" extend="base"/>
+			<item name="aeroway" extend="base"/>
+			<item name="aerialway" extend="base"/>
+			<item name="admin_level" extend="base">
+                <field name="showriverwidth" value="0.5"/>
+                <field name="exist" value="0|2|2|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				<item name="admin_level.8" extend="admin_level">
+                    <field name="showriverwidth" value="0.6"/>
+				</item>
+				<item name="admin_level.6" extend="admin_level">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="admin_level.5" extend="admin_level">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="admin_level.4" extend="admin_level">
+					<field name="exist" value="0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					<field name="simplifypixel" value="1.5|1.2|0.8|0.8|0.8|0.7|0.6|0.7|0.5|0.4|0.4|0.3|0.3|0.3|0.2|0.2|0.2|0.1|0.1|0.1"/>
+				</item>
+				<item name="admin_level.2" extend="admin_level"/>
+				<item name="admin_level.10" extend="admin_level">
+					<field name="exist" value="0|0|0|0|0|0|1|1|1|1|0|0|0|0|1|1|1|1|1|1"/>
+				</item>
+			</item>
+		</item>
+	</group>
+	<group name="line">
+		<item name="base" extend="root">
+			<field name="exist" value="0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			<field name="simplifypixel" value="0.15|0.15|   0.15|0.15|0.2|0.2|0.2|     0.2|0.2|0.2|0.2|0.2|     0.2|0.2|0.2|0.2|0.2|    0.2|0.2|0.2"/>
+			<field name="maxanglefilter" value="41"/>
+			<field name="namefilter" value="1"/>
+			<field name="nameblank" value="0|0|   0|0|0|8|10|     10|12|12|15|15|     20|20|25|30|30|    35|35|35"/>
+			<field name="namegroupmargin" value="120"/>
+			<item name="waterway" extend="base">
+				<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				<item name="waterway.stream" extend="waterway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+				</item>
+				<item name="waterway.canal" extend="waterway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+			</item>
+			<item name="traffic" extend="base">
+				<item name="traffic.3" extend="traffic"/>
+				<item name="traffic.2" extend="traffic"/>
+				<item name="traffic.1" extend="traffic"/>
+			</item>
+			<item name="route" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			</item>
+			<item name="railway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			</item>
+			<item name="power" extend="base"/>
+			<item name="man_made" extend="base"/>
+			<item name="highway" extend="base">
+				<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				<item name="4" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<item name="highway.turning_circle" extend="4">
+						<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+					</item>
+					<item name="highway.service" extend="4"/>
+					<item name="highway.raceway" extend="4"/>
+					<item name="highway.path" extend="4"/>
+					<item name="highway.footway" extend="4"/>
+					<item name="highway.Towpath Trail" extend="4"/>
+				</item>
+				<item name="3" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					<item name="highway.tertiary" extend="3"/>
+					<item name="highway.road" extend="3"/>
+					<item name="highway.residential" extend="3"/>
+				</item>
+				<item name="2.5" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+					<item name="highway.trunk_link" extend="2.5"/>
+					<item name="highway.secondary_link" extend="2.5"/>
+					<item name="highway.primary_link" extend="2.5">
+						<field name="exist" value="0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					</item>
+				</item>
+				<item name="2" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+					<item name="highway.trunk" extend="2">
+						<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					</item>
+					<item name="highway.secondary" extend="2"/>
+					<item name="highway.primary" extend="2">
+						<field name="exist" value="0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					</item>
+				</item>
+				<item name="1.5" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+					<item name="highway.motorway_link" extend="1.5"/>
+					<item name="highway.expressway_link" extend="1.5"/>
+				</item>
+				<item name="1" extend="highway">
+					<item name="highway.motorway" extend="1">
+						<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					</item>
+					<item name="highway.expressway" extend="1">
+						<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					</item>
+				</item>
+			</item>
+			<item name="cycleway" extend="base"/>
+			<item name="boundary" extend="base"/>
+			<item name="barrier" extend="base"/>
+			<item name="aeroway" extend="base"/>
+			<item name="aerialway" extend="base"/>
+			<item name="admin_level.4" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			</item>
+			<item name="admin_level.2" extend="base">
+				<field name="exist" value="0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			</item>
+		</item>
+	</group>
+	<group name="point">
+		<item name="base" extend="root">
+			<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+			<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|11"/>
+			<field name="fontstyle" value="0"/>
+			<field name="iconstyle" value="0"/>
+			<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+			<field name="labellevel" value="60"/>
+			<field name="labelmargin" value="1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+			<field name="labelcharspace" value="0"/>
+			<field name="sameclassrange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+			<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+			<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+			<item name="waterway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="waterway.rapids" extend="waterway"/>
+				<item name="waterway.dam" extend="waterway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="waterway.creek" extend="waterway"/>
+			</item>
+			<item name="tourism" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="tourism.hotel" extend="tourism">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|10|10|10|10|10|10|11|10|10|10"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|100|50|0|0|0|0|0"/>
+				</item>
+				<item name="sh_poi" extend="tourism">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|60|60|60|60|20|20|20|20|20|20"/>
+					<item name="tourism.sh_zoom" extend="sh_poi"/>
+					<item name="tourism.sh_theatre" extend="sh_poi"/>
+					<item name="tourism.sh_stadium" extend="sh_poi"/>
+					<item name="tourism.sh_orienttower" extend="sh_poi"/>
+					<item name="tourism.sh_museum" extend="sh_poi"/>
+					<item name="tourism.sh_municipal" extend="sh_poi"/>
+					<item name="tourism.sh_jingmao" extend="sh_poi"/>
+					<item name="tourism.sh_jingantemple" extend="sh_poi"/>
+					<item name="tourism.sh_huanqiu" extend="sh_poi"/>
+					<item name="tourism.sh_historytower" extend="sh_poi"/>
+					<item name="tourism.sh_exhibition" extend="sh_poi"/>
+					<item name="tourism.sh_citygodtemple" extend="sh_poi"/>
+					<item name="tourism.sh_church" extend="sh_poi"/>
+					<item name="tourism.sh_chinapavilion" extend="sh_poi"/>
+					<item name="tourism.sh_botanicalgarden" extend="sh_poi"/>
+				</item>
+			</item>
+			<item name="sport" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+			</item>
+			<item name="shop" extend="base">
+				<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="shop.supermarket" extend="shop"/>
+				<item name="shop.sports" extend="shop">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="shop.pet_store" extend="shop">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="shop.outdoor" extend="shop">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="shop.glasses" extend="shop">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="shop.electronics" extend="shop">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="shop.doityourself" extend="shop"/>
+				<item name="shop.convenience" extend="shop"/>
+				<item name="shop.bookstore" extend="shop"/>
+			</item>
+			<item name="roadsign" extend="base">
+				<field name="fontsize" value="12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12"/>
+				<field name="samenamerange" value="0|0|0|0|0|0|200|200|200|200|200|200|200|200|200|200|200|200|200|200"/>
+				<field name="sameclassrange" value="0|0|0|0|0|0|0|100|100|100|100|100|100|100|100|100|100|100|100|100"/>
+				<field name="sametyperange" value="0|0|0|0|0|0|0|150|150|150|150|150|150|150|150|150|150|150|150|150"/>
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				<item name="roadsign.d" extend="roadsign">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="roadsign.c" extend="roadsign"/>
+				<item name="roadsign.b" extend="roadsign"/>
+				<item name="roadsign.a" extend="roadsign"/>
+			</item>
+			<item name="roadarrow" extend="base">
+				<field name="fontsize" value="12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12|12"/>
+				<field name="labellevel" value="70|70|70|70|70|70|70|70|70|70|70|70|70|70|70|70|70|70|70|70"/>
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<field name="samenamerange" value="20|20|20|20|20|20|20|20|20|20|20|20|20|20|20|20|20|20|20|20"/>
+				<item name="roadarrow.motorway" extend="roadarrow">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="railway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+				<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|500|500|500|500|500|500|500|500|500|500"/>
+				<item name="railway.subway_station" extend="railway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|60|60|60|25|25|25|25|25|25|25"/>
+					<field name="iconstyle" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|2|2|2"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|9|9|9|9|9|9|9|1|1|1|1|1"/>
+					<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|30|30|30|30|50|100|200|300|300|300"/>
+				</item>
+				<item name="railway.station" extend="railway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|22|22|22|22|22|22|22|22|42|62"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1"/>
+				</item>
+			</item>
+			<item name="power" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+			</item>
+			<item name="place" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				<item name="place.village" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|40|40|40|0|0|0|0|0"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|40|30|20|0|0|0|0|0|0"/>
+					<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="place.town" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.suburb" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.region" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.ocean" extend="place">
+					<field name="exist" value="0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.locality" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|10|10|11|11|11|11|11"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|60|40|20|0|0|0|0|0"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.island" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.hamlet" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="place.county" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|0|0|0|0|0"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|50|50|50|50|40|40|40|40|40|40|40|40"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|13|13|13|14|15|13|13|13|13|13"/>
+				</item>
+				<item name="place.country" extend="place">
+					<field name="exist" value="0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="place.continent" extend="place">
+					<field name="exist" value="0|1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="place.city" extend="place">
+					<field name="exist" value="0|0|0|0|0|0|1|1|1|1|0|0|0|0|0|0|0|0|0|0"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|13|14|14|13|13|13|13|11|11|11|11|11"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|10|10|60|60|60|60|60|60|60|60|60|60"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="office" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<field name="sametyperange" value="0100|0|0|0|0|0|0|0|0|0|0|0|0|0|0|100|100|60|0|0"/>
+			</item>
+			<item name="natural" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|500|500|500|500|500|500|500"/>
+				<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				<item name="natural.wetland" extend="natural"/>
+				<item name="natural.water" extend="natural">
+					<field name="exist" value="0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
+					<field name="samenamerange" value="0|0|0|0|0|0|0|200|200|200|200|100|100|100|100|100|100|100|100|100"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|60|50|50|50|50|50|50|50|50|60"/>
+					<field name="samenamerange" value="0|0|0|0|0|500|500|500|500|500|500|500|500|500|500|500|500|500|500|500"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="natural.peak" extend="natural">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="natural.hill" extend="natural"/>
+				<item name="natural.cliff" extend="natural">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="military" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+			</item>
+			<item name="man_made" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="man_made.tower" extend="man_made"/>
+				<item name="man_made.mine" extend="man_made">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="leisure" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1"/>
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+				<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|500|500|500|500|500|500|500|500"/>
+				<item name="leisure.sports_centre" extend="leisure">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="leisure.park" extend="leisure">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+					<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|150|150|150|150|150|150|150|150"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="leisure.golf_course" extend="leisure">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+				</item>
+				<item name="leisure.garden" extend="leisure">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+					<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|0|0|0|150|150|150|150|150|150|150|150"/>
+				</item>
+			</item>
+			<item name="landuse" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="landuse.retail" extend="landuse">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="landuse.reservoir" extend="landuse">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="landuse.quarry" extend="landuse">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="landuse.military" extend="landuse">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+			</item>
+			<item name="historic" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|60|30|0|0|0|0|0"/>
+				<item name="historic.memorial" extend="historic">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+				</item>
+			</item>
+			<item name="highway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1|1"/>
+				<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|10|11|11|11|11"/>
+				<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				<field name="samenamerange" value="0|0|0|0|0|0|0|0|0|20|20|20|20|20|20|20|20|20|20|20"/>
+				<item name="highway.traffic_signals" extend="highway"/>
+				<item name="highway.services" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|9|9|9|9|9|9|9|9|1|1|1|1"/>
+				</item>
+				<item name="highway.overpass" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+				</item>
+				<item name="highway.intersection" extend="highway">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="highway.exit" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="highway.bus_stop" extend="highway">
+					<field name="labelorient" value="9|9|9|9|9|9|9|9|9|9|9|9|9|9|9|9|9|9|9|9"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|60|60|60|60|60|60|60|60|60|1"/>
+				</item>
+				<item name="4" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+					<item name="highway.track" extend="4"/>
+					<item name="highway.steps" extend="4"/>
+					<item name="highway.raceway" extend="4"/>
+					<item name="highway.pedestrian" extend="4"/>
+					<item name="highway.path" extend="4"/>
+					<item name="highway.living_street" extend="4"/>
+					<item name="highway.footway" extend="4"/>
+					<item name="highway.cycleway" extend="4"/>
+					<item name="highway.bridleway" extend="4"/>
+				</item>
+				<item name="3" extend="highway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|10|10|11|11|11"/>
+					<item name="highway.unclassified" extend="3"/>
+					<item name="highway.tertiary_link" extend="3"/>
+					<item name="highway.tertiary" extend="3"/>
+					<item name="highway.service" extend="3"/>
+					<item name="highway.road" extend="3"/>
+					<item name="highway.residential" extend="3"/>
+				</item>
+				<item name="2.5" extend="highway">
+					<item name="highway.trunk_link" extend="2.5"/>
+					<item name="highway.secondary_link" extend="2.5"/>
+					<item name="highway.primary_link" extend="2.5"/>
+				</item>
+				<item name="2" extend="highway">
+					<field name="fontsize" value="10|10|10|10|10|10|10|10|10|10|10|10|10|10|11|11|11|13|13|13"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<item name="highway.trunk" extend="2"/>
+					<item name="highway.secondary" extend="2"/>
+					<item name="highway.primary" extend="2"/>
+				</item>
+				<item name="1.5" extend="highway">
+					<item name="highway.motorway_link" extend="1.5"/>
+				</item>
+				<item name="1" extend="highway">
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|11|11|10|11|13|13|13"/>
+					<item name="highway.motorway" extend="1"/>
+				</item>
+			</item>
+			<item name="geological" extend="base"/>
+			<item name="building" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				<field name="fontsize" value="11|11|11|11|11|11|11|11|11|11|11|11|11|10|10|11|11|11|11|11"/>
+				<item name="building.yes" extend="building"/>
+			</item>
+			<item name="barrier" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="barrier.toll_booth" extend="barrier"/>
+				<item name="barrier.gate" extend="barrier"/>
+			</item>
+			<item name="amenity" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				<field name="fontsize" value="11|11|11|11|11|11|11|11|11|10|10|10|10|10|10|10|10|10|10|10"/>
+				<item name="amenity.university" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.theatre" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.telecom" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+				</item>
+				<item name="amenity.tea" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.square" extend="amenity"/>
+				<item name="amenity.securities" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.school" extend="amenity">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1"/>
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|100|50|0|0|0|0|0"/>
+				</item>
+				<item name="amenity.sauna" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.restaurant" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|60|30|0"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|10|10|10|10|10|10|10|10|10|10|10"/>
+				</item>
+				<item name="amenity.publishing_house" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.post_office" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.post_box" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.place_of_worship" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.pharmacy" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.pawn" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+				</item>
+				<item name="amenity.parking" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|9|9|9|9|9|9|9|9"/>
+				</item>
+				<item name="amenity.kindergarten" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.insurance" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1"/>
+				</item>
+				<item name="amenity.hospital" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.gameroom" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.fuel" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.fast_food" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+					<field name="sametyperange" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|60|60|0|0"/>
+					<field name="fontsize" value="11|11|11|11|11|11|11|11|11|10|10|10|10|10|10|10|10|10|10|10"/>
+				</item>
+				<item name="amenity.credit_union" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.cafe" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+				<item name="amenity.bus_station" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				</item>
+				<item name="amenity.billboard" extend="amenity"/>
+				<item name="amenity.bank" extend="amenity"/>
+				<item name="amenity.atm" extend="amenity"/>
+				<item name="amenity.amusement" extend="amenity">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1"/>
+				</item>
+			</item>
+			<item name="aeroway" extend="base">
+				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1"/>
+				<item name="aeroway.runway" extend="aeroway"/>
+				<item name="aeroway.gate" extend="aeroway">
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0"/>
+				</item>
+				<item name="aeroway.aerodrome" extend="aeroway">
+					<field name="exist" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+					<field name="labellevel" value="60|60|60|60|60|60|60|60|60|60|30|30|30|30|30|30|30|60|60|60"/>
+					<field name="labelorient" value="0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1|1|1"/>
+				</item>
+			</item>
+			<item name="aerialway" extend="base"/>
+		</item>
+	</group>
+</config>
