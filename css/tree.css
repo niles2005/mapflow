@@ -1,0 +1,78 @@
+ul,ol {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.treepanel {
+    font-size: 14px;
+    border:1px solid #7F9DB9;
+    overflow: auto;
+}
+
+.treepanel ul.disabled{
+    display: none;
+}
+.treepanel li {
+    padding: 0 0 0 18px;
+    margin: 0;
+}
+
+.treepanel span {
+    padding: 1px 0 1px 18px;
+    display: inline-block;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select:none;
+}
+.treepanel span.selected {
+    background-color:#ccc;
+}
+.treepanel span.hover { 
+    color: #0000bb; 
+    cursor: default;
+}
+
+.treepanel .nodeopen {
+    background: url('../img/minus.gif') no-repeat 2px 5px;
+    height: 16px;
+    width: 16px;
+    margin-left: -16px;
+    float: left;
+}
+.treepanel .nodeclosed {
+    background: url('../img/plus.gif') no-repeat 2px 5px;
+    height: 16px;
+    width: 16px;
+    margin-left: -16px;
+    float: left;
+}
+
+
+.tree_mapview .item {
+    background: url('../img/tree_mapview_item.png')  no-repeat 0 1px;
+}
+.tree_mapview .mmde {
+    background: url('../img/tree_mapview_mmde.png')  no-repeat 0 2px;
+}
+
+.tree_mapview .group {
+    background: url('../img/tree_mapview_group-open.gif')  no-repeat 0 2px;
+}
+
+.tree_mapview .group.closed {
+    background: url('../img/tree_mapview_group-close.gif')  no-repeat 0 2px;
+}
+
+
+.tree_mapstyle .element {
+    background: url('../img/tree_mapstyle_element.png')  no-repeat 0 3px;
+}
+
+.tree_mapstyle .item {
+    background: url('../img/tree_mapstyle_element.png')  no-repeat 0 3px;
+}
+
+.tree_mapstyle .group {
+    background: url('../img/tree_mapstyle_group.png')  no-repeat 0 2px;
+}

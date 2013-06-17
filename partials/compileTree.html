@@ -1,55 +1,15 @@
-<!--<div class="container">-->
-	<div class="row">
-		<div class="span3">
+
+        <link type="text/css" href="css/tree.css" rel="stylesheet" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+            	var treeDiv = document.getElementById("tree");
+             	var tree = new TreeConfig("new.xml");
+            	treeDiv.appendChild(tree._div);
+            	tree.loadContent();
+            });
+        </script>
 
 
-			<ul id="tree1">
-				<li ng-repeat="item in treeItem.root" >
-					{{item.self}}
-					<ul ng-show="item.branch.length > 0">
-						<li ng-repeat="b in item.branch" > {{b.self}}  </li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="span8" >
-			<ul ng-tree="tree" id="tree2">
-				<li>{{item.name}}</li>
-			</ul>
-
-		</div>
-		<div class="span4" >
-			<ul  id="tree3">
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>
-					Item 3
-					<ul>
-						<li>Item 3.1</li>
-						<li>Item 3.2</li>
-						<li>Item 3.3</li>
-					</ul>
-				</li>
-				<li>
-					Item 4
-					<ul>
-						<li>Item 4.1</li>
-						<li> Item 4.2 </li>
-					</ul>
-				</li>
-				<li>Item 5</li>
-			</ul>
-		</div>
-
-
-	</div>
-			<script type="text/javascript">
-				console.log(document.getElementById('tree1'));
-				console.log(document.getElementById('tree3'));
-//                                console.dir(treeItems);
-//				$(treeItems);
-                                treeItems();
-				//    {{treeItems()}};
-			</script>	
-
-<!--</div>-->
+    	<div id="tree">
+    	
+    	</div>
