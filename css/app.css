@@ -63,3 +63,126 @@ width: 100px;
 	color: white;
 	text-decoration: none;
 }
+
+
+.tempInfo li> a {
+    display: block;
+    width:15px;
+    /*background: #f00;*/
+    
+}
+
+.pagination input {
+    width: 30px;
+    background: #f00;
+}
+
+.lii {
+  position: relative;
+/*  margin: 15px 0;*/
+  /*padding: 39px 19px 14px;*/
+  /**padding-top: 19px;*/
+  /*background-color: #fff;*/
+  /*border: 1px solid #ddd;*/
+/*  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;*/
+}
+
+/* Echo out a label for the example */
+.lii:after {
+  content: "1";
+  position: absolute;
+  top: -28px;
+  /*margin: 0;*/
+  left: -1px;
+/*  height: 15px;*/
+  /*padding: 3px 7px;*/
+  /*font-size: 10px;*/
+  /*font-weight: bold;*/
+  /*background-color: #f5f5f5;*/
+  /*border: 1px solid #ddd;*/
+  color: #F00;
+/*  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;*/
+}
+
+
+.labeli0 {
+  position: relative;
+}
+
+/* Echo out a label for the example */
+.labeli0:before {
+  content: "0";
+  position: absolute;
+  top: -28px;
+  text-align: center;
+  /*margin: 0;*/
+  /*left: -1px;*/
+  color: #F00;
+}
+
+
+
+.labeli5 {
+  position: relative;
+}
+
+/* Echo out a label for the example */
+.labeli5:before {
+  content: "5";
+  position: absolute;
+  top: -28px;
+  /*margin: 0;*/
+  /*left: -1px;*/
+  color: #F00;
+}
+
+.labeli10 {
+  position: relative;
+}
+
+/* Echo out a label for the example */
+.labeli10:before {
+  content: "10";
+  position: absolute;
+  top: -28px;
+  /*margin: 0;*/
+  /*left: -1px;*/
+  color: #F00;
+}
+
+.labeli15 {
+  position: relative;
+}
+
+/* Echo out a label for the example */
+.labeli15:before {
+  content: "15";
+  position: absolute;
+  top: -25px;
+  /*margin: 0;*/
+  /*left: 10px;*/
+  color: #F00;
+}
+
+
+.labeli119 {
+  position: relative;
+}
+
+/* Echo out a label for the example */
+.labeli119:before {
+  content: "19";
+  position: absolute;
+  top: -25px;
+  /*margin: 0;*/
+  /*left: 10px;*/
+  color: #F00;
+}
+
+.my-class {
+    background: #f2dede;
+}
