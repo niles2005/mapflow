@@ -1,3 +1,5 @@
+'use strict';
+
 function TreeConfig(configFile) {
     this._div = document.createElement("div");
     if (configFile && typeof configFile == 'string') {
@@ -11,6 +13,7 @@ function TreeConfig(configFile) {
     this._xmlName = null;
     this._rootUL = null;
     this._clickListener = this.makeClickListener();
+
 }
 
 TreeConfig.prototype = {
@@ -52,24 +55,16 @@ TreeConfig.prototype = {
                     if (tagName && tagName === 'define') {
                         continue;
                     } else if (tagName && tagName === 'field') {
-                        var fieldName = $(childNode).attr('name');
-                        var fieldValue = $(childNode).attr('value');
-                        if (fieldName && fieldValue) {
+                        var strName = $(childNode).attr('name');
+                        var strValue = $(childNode).attr('value');
+                        if (strName && strValue) {
                             if (!node._attr) {
-                                node._attr = [];
+                                node._attr = {};
                             }
-                            var levelValue = fieldValue.split("|");
-                            for (var i=0; i < 20 ; i++) {
-                                if (!node._attr[i]) {
-                                    node._attr[i] = {};
-                                }
-                                if (levelValue.length == 20) {
-                                    node._attr[i][fieldName] = levelValue[i];
-                                } else{
-                                    node._attr[i][fieldName] = fieldValue;
-                                }
-                            }
-
+                            var groupName = this.getGroup(childNode);
+                            node._attr['group'] = groupName;
+                            node._attr[strName] = strValue.split("|");
+                            console.dir(node._attr);
                         }
                         continue;
                     }
@@ -101,36 +96,47 @@ TreeConfig.prototype = {
         }
     },
 
+    getGroup: function (node) {
+        var tagName = node.tagName;
+        if (tagName && tagName === 'group') {
+            return $(node).attr('name');
+        } else if (node.parentElement) {
+            return this.getGroup(node.parentElement);
+        } else {
+            return null;
+        }
+
+    },
+
     makeClickListener: function () {
         return function (evnet) {
             event.stopPropagation();
             event.preventDefault();
 
             var props = [];
-            var fields = {
-                area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
-                line: ["exist", "simlifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
-                point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
-            }
             var liObj = this;
             while (liObj) {
                 if (liObj._attr) {
-                    for (var level=0 ; level < 20 ; level++) {
-                        if(!props[level]){
+                    for (var level = 0; level < 20; level++) {
+                        if (!props[level]) {
                             props[level] = {};
                         }
-                        for (var group in fields) {
-                            for (var key in fields[group]) {
-                                var propName = fields[group][key];
+
+                        var group = liObj._attr['group'];
+                        if (group) {
+                            for (var key in propsMap[group]) {
+                                var propName = propsMap[group][key];
                                 if (props[level][propName]) {
 
                                 } else {
-                                    if (liObj._attr[level][propName]) {
-                                        props[level][propName] = liObj._attr[level][propName];
+                                    if (liObj._attr[propName]) {
+                                        var index = level > liObj._attr[propName].length - 1 ? liObj._attr[propName].length - 1 : level;
+                                        props[level][propName] = liObj._attr[propName][index];
                                     }
                                 }
                             }
                         }
+
                     }
                 }
                 var ulObj = liObj.parentElement;
@@ -140,7 +146,11 @@ TreeConfig.prototype = {
                     liObj = null;
                 }
             }
-            console.dir(props);
+            levelPropsArr = props;
+            angular.element($(this).get(0)).scope().getProps();
+            console.dir(angular.element($(this).get(0)).scope().p);
+//            Document.MY_SCOPE.getProps();
+
 
             var jli = $(this);
             var jul = jli.find('>ul');
@@ -159,6 +169,24 @@ TreeConfig.prototype = {
         }
     }
 }
+
+var levelPropsArr = [];
+var propsMap = {
+    area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
+    line: ["exist", "simlifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
+    point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
+}
+
+function CompileTreeCtrl($scope) {
+//    Document.MY_SCOPE = $scope ;
+    $scope.p = [];
+    $scope.getProps = function () {
+        $scope.p = levelPropsArr;
+    };
+
+}
+
+
 
 
 
