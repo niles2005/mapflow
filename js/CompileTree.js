@@ -114,6 +114,8 @@ TreeConfig.prototype = {
 
             var props = [];
             var liObj = this;
+            //check which tree
+//            var treeName = ...;//
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {
