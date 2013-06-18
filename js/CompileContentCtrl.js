@@ -21,10 +21,10 @@ function CompileContentCtrl($scope) {
         {'exist': 0},
         {'exist': 0},
         {'exist': 0}];
-    $scope.setProp = function(prop, theIndex) {
-        $scope.theIndex = theIndex;
-        $scope.currProp = prop;
-
+    $scope.existValue = 1;
+    
+    $scope.setProp = function(prop) {
+        prop.exist = $scope.existValue;
     };
     var $Mask;
     $scope.doMask = function() {
@@ -128,14 +128,11 @@ function CompileContentCtrl($scope) {
                 pressY1 = pressY2;
                 pressY2 = tmp;
             }
-            if ($scope.currProp) {
-                for (var k in rectArr) {
-                    var rect = rectArr[k];
-                    if (rect.intersects(pressX1, pressY1, pressX2 - pressX1, pressY2 - pressY1)) {
-                        $scope.props[k]['exist'] = $scope.currProp.exist;
-                    }
+            for (var k in rectArr) {
+                var rect = rectArr[k];
+                if (rect.intersects(pressX1, pressY1, pressX2 - pressX1, pressY2 - pressY1)) {
+                    $scope.props[k]['exist'] = $scope.existValue;
                 }
-
             }
 
             pressX1 = null;

@@ -11,7 +11,7 @@
                 <div class="pagination " style="padding: 8px 15px;margin: 0;">
                     <ul id='listul'>
                         <li ng-repeat="prop in props">
-                            <a ng-click="setProp(prop,$index)" ng-class="{active: $index==theIndex}" class="labeli{{$index}}">
+                            <a ng-click="setProp(prop)" ng-class="{active: $index==theIndex}" class="labeli{{$index}}">
                                 <img ng-src="img/exist{{prop.exist}}.png"/>
                             </a>
                         </li>
@@ -23,10 +23,10 @@
 
                         <form>
                             <label class="radio  inline">
-                                <input type="radio" ng-model="currProp.exist" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">
+                                <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">
                             </label>
                             <label class="radio  inline">
-                                <input type="radio" ng-model="currProp.exist" name="optionsRadios" value="0"><img src="img/error.png">
+                                <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">
                             </label>
                             <label class="radio  inline">
                                 <img style="border:1px solid" ng-click='doMask()' src="img/painter.jpg">
