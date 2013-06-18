@@ -9,6 +9,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
     $routeProvider.when('/compile', {templateUrl: 'partials/compile.html', controller: 'CompileCtrl'});
     $routeProvider.when('/compileTree', {templateUrl: 'partials/compileTree.html', controller: 'CompileTreeCtrl'});
     $routeProvider.when('/compileContent', {templateUrl: 'partials/compileContent.html', controller: 'CompileContentCtrl'});
+    $routeProvider.when('/compilePage', {templateUrl: 'partials/compilePage.html', controller: 'CompilePageCtrl'});
     $routeProvider.when('/projectNew', {templateUrl: 'partials/projectNew.html', controller: 'ProjectNew'});
     $routeProvider.when('/projectedit/:projectId', {templateUrl: 'partials/projectNew.html', controller: 'ProjectEdit'});
     $routeProvider.otherwise({redirectTo: '/projects'});
