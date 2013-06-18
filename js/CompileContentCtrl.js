@@ -1,4 +1,7 @@
+//'use strict';
+
 function CompileContentCtrl($scope) {
+    bac = "abc";
     $scope.test = "aab";
     $scope.props = [
         {'exist': 0, "showPixel": 0.8, margin: 1},
@@ -24,7 +27,7 @@ function CompileContentCtrl($scope) {
     $scope.existValue = 1;
     
     $scope.setProp = function(prop) {
-        prop.exist = $scope.existValue;
+//        prop.exist = $scope.existValue;
     };
     var $Mask;
     $scope.doMask = function() {
@@ -128,7 +131,7 @@ function CompileContentCtrl($scope) {
             }
             for (var k in rectArr) {
                 var rect = rectArr[k];
-                if (rect.intersects(pressX1, pressY1, pressX2 - pressX1, pressY2 - pressY1)) {
+                if (rect.intersectsLine(pressX1, pressY1, pressX2, pressY2)) {
                     $scope.props[k]['exist'] = $scope.existValue;
                 }
             }

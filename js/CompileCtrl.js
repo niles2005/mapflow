@@ -65,8 +65,58 @@ Rect.prototype = {
 				(y1 + h1) > this.y &&
 				x1 < (this.x + this.width) &&
 				y1 < (this.y + this.height));
-	}
-
+	},
+        intersectsLine: function(x1,y1,x2,y2) {
+            var out1, out2;
+            var OUT_LEFT = 1;
+            var OUT_TOP = 2;
+            var OUT_RIGHT = 4;
+            var OUT_BOTTOM = 8;
+            var self = this;
+            function  outcode(x, y) {
+                var out = 0;
+                if (self.width <= 0) {
+                    out |= OUT_LEFT | OUT_RIGHT;
+                } else if (x < self.x) {
+                    out |= OUT_LEFT;
+                } else if (x > self.x + self.width) {
+                    out |= OUT_RIGHT;
+                }
+                if (self.height <= 0) {
+                    out |= OUT_TOP | OUT_BOTTOM;
+                } else if (y < self.y) {
+                    out |= OUT_TOP;
+                } else if (y > self.y + self.height) {
+                    out |= OUT_BOTTOM;
+                }
+                return out;
+            }
+            
+            if ((out2 = outcode(x2, y2)) === 0) {
+                return true;
+            }
+            while ((out1 = outcode(x1, y1)) !== 0) {
+                if ((out1 & out2) != 0) {
+                    return false;
+                }
+                if ((out1 & (OUT_LEFT | OUT_RIGHT)) !== 0) {
+                    var x = this.x;
+                    if ((out1 & OUT_RIGHT) !== 0) {
+                        x += this.width;
+                    }
+                    y1 = y1 + (x - x1) * (y2 - y1) / (x2 - x1);
+                    x1 = x;
+                } else {
+                    var y = this.y;
+                    if ((out1 & OUT_BOTTOM) !== 0) {
+                        y += this.height;
+                    }
+                    x1 = x1 + (y - y1) * (x2 - x1) / (y2 - y1);
+                    y1 = y;
+                }
+            }
+            return true;
+        }
 };
 
 function CompileCtrl($scope) {

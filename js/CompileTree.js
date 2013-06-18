@@ -187,10 +187,15 @@ function CompileTreeCtrl($scope) {
         console.dir($scope);
     };
 
+    var treeDiv = document.getElementById("tree");
+    var tree = new TreeConfig("new.xml");
+    treeDiv.appendChild(tree._div);
+    tree.loadContent();
+
 }
 
 
-
+         
 
 
 
