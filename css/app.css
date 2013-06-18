@@ -1,5 +1,11 @@
 /* app css stylesheet */
-
+* {
+     user-select: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+}
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -183,6 +189,6 @@ width: 100px;
   color: #F00;
 }
 
-.my-class {
+.active {
     background: #f2dede;
 }

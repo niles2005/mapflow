@@ -56,19 +56,20 @@ TreeConfig.prototype = {
                         var fieldValue = $(childNode).attr('value');
                         if (fieldName && fieldValue) {
                             if (!node._attr) {
-                                node._attr = [];
+                                node._attr = {};
                             }
-                            var levelValue = fieldValue.split("|");
-                            for (var i=0; i < 20 ; i++) {
-                                if (!node._attr[i]) {
-                                    node._attr[i] = {};
-                                }
-                                if (levelValue.length == 20) {
-                                    node._attr[i][fieldName] = levelValue[i];
-                                } else{
-                                    node._attr[i][fieldName] = fieldValue;
-                                }
-                            }
+                            var levelValueArr = fieldValue.split("|");
+                            node._attr[fieldName] = levelValue;
+//                            for (var i=0; i < 20 ; i++) {
+//                                if (!node._attr[i]) {
+//                                    node._attr[i] = {};
+//                                }
+//                                if (levelValue.length == 20) {
+//                                    node._attr[i][fieldName] = levelValue[i];
+//                                } else{
+//                                    node._attr[i][fieldName] = fieldValue;
+//                                }
+//                            }
 
                         }
                         continue;
@@ -113,12 +114,15 @@ TreeConfig.prototype = {
                 point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
             }
             var liObj = this;
+            //check which tree
+//            var treeName = ...;//
             while (liObj) {
                 if (liObj._attr) {
                     for (var level=0 ; level < 20 ; level++) {
                         if(!props[level]){
                             props[level] = {};
                         }
+                        var group = fields[treeName];
                         for (var group in fields) {
                             for (var key in fields[group]) {
                                 var propName = fields[group][key];
