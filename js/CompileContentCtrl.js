@@ -64,9 +64,7 @@ function CompileContentCtrl($scope) {
 
 
         context.clearRect(0, 0, width, height);
-//        context.fillStyle = 'rgb(255,255,255)';
-//        context.fillRect(0, 0, width, height);
-//
+
         context.strokeStyle = "rgb(0,0,0)";
         context.strokeRect(0, 0, width, height);
 
