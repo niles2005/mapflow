@@ -13,7 +13,6 @@ function TreeConfig(configFile) {
     this._xmlName = null;
     this._rootUL = null;
     this._clickListener = this.makeClickListener();
-
 }
 
 TreeConfig.prototype = {
@@ -184,6 +183,8 @@ function CompileTreeCtrl($scope) {
     $scope.p = [];
     $scope.getProps = function () {
         $scope.p = levelPropsArr;
+        $scope.$apply();
+        console.dir($scope);
     };
 
 }
