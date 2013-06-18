@@ -147,4 +147,13 @@ function CompileContentCtrl($scope) {
         bindEvent(document, "mouseup", onMouseUp);
     }
     repaint();
+    
+    $('#collapseTwo').on('show', function () {
+        $scope.doMask();
+    });
+    
+    $('#collapseTwo').on('hide', function () {
+        $scope.doRemoveMask();
+    });
 }
+
