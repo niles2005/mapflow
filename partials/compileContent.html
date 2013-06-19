@@ -46,13 +46,13 @@
          <div class="accordion-group">
             <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseShowPixel">
-                    showPixel
+                    showpixel
                 </a>
                 <div class="pagination " style="padding: 8px 15px;margin: 0;">
                     <ul id='listul2'>
                         <li ng-repeat="prop in props">
-                            <a ng-click="setProp(prop,'showPixel')" ng-class="{active: $index==theIndex}" class="labeli{{$index}}">
-                               {{prop.showPixel}}
+                            <a ng-click="setProp(prop,'showpixel')" ng-class="{active: $index==theIndex}" class="labeli{{$index}}">
+                               {{prop.showpixel}}
                             </a>
                         </li>
                     </ul>
@@ -60,7 +60,7 @@
                 <div id="collapseShowPixel" class="accordion-body collapse" style="height: 0">
                     <div class="">
                         <form>
-                              <input type="text" ng-model="showPixelValue" >
+                              <input type="text" ng-model="showpixelValue" >
                         </form>
                     </div>
                 </div>

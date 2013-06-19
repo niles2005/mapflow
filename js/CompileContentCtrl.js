@@ -123,51 +123,55 @@ MaskCanvas.prototype = {
 
 function CompileContentCtrl($scope) {
     $scope.props = [
-        {'exist': 0, "showPixel": 0.8, margin: 1},
-        {'exist': 0, "showPixel": 0.5},
-        {'exist': 0, "showPixel": 0.6},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.7},
-        {'exist': 1, "showPixel": 0.8},
-        {'exist': 1, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.9},
-        {'exist': 0, "showPixel": 1.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 1, "showPixel": 0.8},
-        {'exist': 1, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8},
-        {'exist': 0, "showPixel": 0.8}];
+        {'exist': 0, "showpixel": 0.8, margin: 1},
+        {'exist': 0, "showpixel": 0.5},
+        {'exist': 0, "showpixel": 0.6},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.7},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.9},
+        {'exist': 0, "showpixel": 1.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8}];
     $scope.existValue = 1;
-    $scope.showPixelValue = 1.0;
-    $scope.currentProp = 'exist';
+    $scope.showpixelValue = 1.0;
+    $scope.currentProp = '';
     $scope.setProp = function(prop,propName,index) {
-        prop[propName] = $scope[propName+'Value'];
-        $scope.theIndex = index;
-        $scope.currentProp = propName;
+//        prop[propName] = $scope[propName+'Value'];
+//        $scope.theIndex = index;
+//        $scope.currentProp = propName;
     };
 
     var maskCanvas = new MaskCanvas("MaskCanvas",$scope);
     maskCanvas.repaint();
     
     $('#collapseTwo').on('show', function () {
+        $scope.currentProp = 'exist';
         maskCanvas.doMask('listul');
     });
 
     $('#collapseTwo').on('hide', function () {
         maskCanvas.doRemoveMask();
+        $scope.currentProp = '';
     });
 
     $('#collapseShowPixel').on('show', function () {
+        $scope.currentProp = 'showpixel';
         maskCanvas.doMask('listul2');
     });
 
     $('#collapseShowPixel').on('hide', function () {
+        $scope.currentProp = '';
         maskCanvas.doRemoveMask();
     });
 }
