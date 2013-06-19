@@ -61,8 +61,8 @@ TreeConfig.prototype = {
                             if (!node._attr) {
                                 node._attr = {};
                             }
-                            var groupName = this.getGroup(childNode);
-                            node._attr['group'] = groupName;
+                            var treePathArr = this.getGroup(childNode,[]);
+                            node._attr['group'] = treePathArr;
                             node._attr[strName] = strValue.split("|");
 //                            console.dir(node._attr);
                         }
@@ -71,7 +71,7 @@ TreeConfig.prototype = {
 
                     var jli = $('<li><div></div><span class=' + tagName + '></span></li>');
                     var elementName = $(childNode).attr('name');
-                    jli.find(">span").text(elementName);
+                    jli.find('>span').text(elementName).hover(addHover,removeHover);
                     var li = jli[0];
                     li.onclick = this._clickListener;
                     jul.append(jli);
@@ -96,12 +96,18 @@ TreeConfig.prototype = {
         }
     },
 
-    getGroup: function (node) {
+    getGroup: function (node,treePath) {
         var tagName = node.tagName;
+        if (tagName) {
+            var nodeName = $(node).attr('name') ;
+            if(nodeName){
+                treePath.push(nodeName);
+            }
+        }
         if (tagName && tagName === 'group') {
-            return $(node).attr('name');
+            return treePath;
         } else if (node.parentElement) {
-            return this.getGroup(node.parentElement);
+            return this.getGroup(node.parentElement,treePath);
         } else {
             return null;
         }
@@ -126,7 +132,8 @@ TreeConfig.prototype = {
                             props[level] = {};
                         }
 
-                        var group = liObj._attr['group'];
+                        var treePathArr = liObj._attr['group'];
+                        var group = treePathArr[treePathArr.length - 1];
                         if (group) {
                             groupName = group;
                             for (var key in propsMap[group]) {
@@ -156,7 +163,8 @@ TreeConfig.prototype = {
 //            console.dir(angular.element($(this).get(0)).scope().p);
 //            Document.MY_SCOPE.getProps();
             if(self._scope) {
-                self._scope.selectNode(groupName,itemName,props);
+                self._scope.selectNode(treePathArr,props);
+//                self._scope.selectNode(groupName,itemName,props);
 //                self._scope.p = props;
 //                self._scope.$apply();
             }
@@ -179,6 +187,14 @@ TreeConfig.prototype = {
     }
 };
 
+function addHover(event) {
+    $(this).addClass("hover");
+}
+
+function removeHover(event) {
+    $(this).removeClass("hover");
+}
+
 var levelPropsArr = [];
 var propsMap = {
     area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
@@ -199,7 +215,7 @@ function CompileTreeCtrl($scope) {
         $scope.groupName = groupName;
         $scope.itemName = itemName;
         $scope.p = propsArr;
-        console.log(groupName + "-->" + itemName);
+        console.log(groupName + ">" + itemName);
         console.table(propsArr);
         $scope.$apply();
     };

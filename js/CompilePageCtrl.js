@@ -26,12 +26,24 @@ function CompilePageCtrl($scope) {
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
-    $scope.selectNode = function(groupName,itemName,propsArr) {
-        $scope.groupName = groupName;
-        $scope.itemName = itemName;
+    $scope.selectNode = function(groupName,propsArr) {
+//        $scope.groupName = groupName;
+//        $scope.itemName = itemName;
         $scope.props = propsArr;
-        console.log(groupName + "-->" + itemName);
-        console.table(propsArr);
+
+        $scope.navigationPath = "";
+        if (groupName && groupName instanceof Array) {
+            var treePath = "" ;
+            for (var i = groupName.length - 1; i > 0; i--) {
+
+                treePath.concat(groupName[i]).concat(" > ");
+            }
+            $scope.navigationPath = treePath;
+            console.log(treePath);
+        }
+
+//        console.log(groupName + "-->" + itemName);
+//        console.table(propsArr);
         $scope.$apply();
     };
 
