@@ -36,7 +36,7 @@ function CompilePageCtrl($scope) {
             var treePath = "" ;
             for (var i = groupName.length - 1; i > 0; i--) {
 
-                treePath.concat(groupName[i]).concat(" > ");
+                treePath.concat(groupName[i])//.concat(" > ");
             }
             $scope.navigationPath = treePath;
             console.log(treePath);
