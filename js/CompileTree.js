@@ -1,8 +1,9 @@
 'use strict';
 
-function TreeConfig(configFile) {
+function TreeConfig(configFile,scope) {
+    this._scope = scope;
     this._div = document.createElement("div");
-    if (configFile && typeof configFile == 'string') {
+    if (configFile && typeof configFile === 'string') {
         this._div.id = configFile;
     }
     this.url = configFile;
@@ -63,7 +64,7 @@ TreeConfig.prototype = {
                             var groupName = this.getGroup(childNode);
                             node._attr['group'] = groupName;
                             node._attr[strName] = strValue.split("|");
-                            console.dir(node._attr);
+//                            console.dir(node._attr);
                         }
                         continue;
                     }
@@ -108,14 +109,16 @@ TreeConfig.prototype = {
     },
 
     makeClickListener: function () {
-        return function (evnet) {
+        var self = this;
+        return function (event) {
             event.stopPropagation();
             event.preventDefault();
 
             var props = [];
             var liObj = this;
-            //check which tree
-//            var treeName = ...;//
+            var groupName;
+            
+            var itemName = liObj.outerText;
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {
@@ -125,6 +128,7 @@ TreeConfig.prototype = {
 
                         var group = liObj._attr['group'];
                         if (group) {
+                            groupName = group;
                             for (var key in propsMap[group]) {
                                 var propName = propsMap[group][key];
                                 if (props[level][propName]) {
@@ -147,11 +151,15 @@ TreeConfig.prototype = {
                     liObj = null;
                 }
             }
-            levelPropsArr = props;
-            angular.element($(this).get(0)).scope().getProps();
-            console.dir(angular.element($(this).get(0)).scope().p);
+//            levelPropsArr = props;
+//            angular.element($(this).get(0)).scope().getProps();
+//            console.dir(angular.element($(this).get(0)).scope().p);
 //            Document.MY_SCOPE.getProps();
-
+            if(self._scope) {
+                self._scope.selectNode(groupName,itemName,props);
+//                self._scope.p = props;
+//                self._scope.$apply();
+            }
 
             var jli = $(this);
             var jul = jli.find('>ul');
@@ -167,16 +175,16 @@ TreeConfig.prototype = {
                     jul.children().slideDown('slow');
                 }
             }
-        }
+        };
     }
-}
+};
 
 var levelPropsArr = [];
 var propsMap = {
     area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
     line: ["exist", "simlifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
     point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
-}
+};
 
 function CompileTreeCtrl($scope) {
 //    Document.MY_SCOPE = $scope ;
@@ -186,11 +194,25 @@ function CompileTreeCtrl($scope) {
         $scope.$apply();
         console.dir($scope);
     };
+    
+    $scope.selectNode = function(groupName,itemName,propsArr) {
+        $scope.groupName = groupName;
+        $scope.itemName = itemName;
+        $scope.p = propsArr;
+        console.log(groupName + "-->" + itemName);
+        console.table(propsArr);
+        $scope.$apply();
+    };
+
+    var treeDiv = document.getElementById("tree");
+    var tree = new TreeConfig("new.xml",$scope);
+    treeDiv.appendChild(tree._div);
+    tree.loadContent();
 
 }
 
 
-
+         
 
 
 

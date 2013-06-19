@@ -1,16 +1,5 @@
-
-        <link type="text/css" href="css/tree.css" rel="stylesheet" />
-        <script type="text/javascript">
-            $(document).ready(function() {
-            	var treeDiv = document.getElementById("tree");
-             	var tree = new TreeConfig("new.xml");
-            	treeDiv.appendChild(tree._div);
-            	tree.loadContent();
-            });
-        </script>
-
-
     	<div id="tree">
-    	
     	</div>
+         <div>{{groupName}}</div>
+         <div>{{itemName}}</div>
          <div>{{p}}<button ng-click="getProps()" >test</button></div>
