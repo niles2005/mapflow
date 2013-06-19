@@ -2,29 +2,30 @@ function CompileContentCtrl($scope) {
     $scope.test = "aab";
     $scope.props = [
         {'exist': 0, "showPixel": 0.8, margin: 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 1},
-        {'exist': 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 1},
-        {'exist': 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0}];
+        {'exist': 0, "showPixel": 0.5},
+        {'exist': 0, "showPixel": 0.6},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.7},
+        {'exist': 1, "showPixel": 0.8},
+        {'exist': 1, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.9},
+        {'exist': 0, "showPixel": 1.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 1, "showPixel": 0.8},
+        {'exist': 1, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8},
+        {'exist': 0, "showPixel": 0.8}];
     $scope.existValue = 1;
-    
-    $scope.setProp = function(prop) {
+    $scope.showPixelValue = 1.0;
+    $scope.setProp = function(prop,index) {
         prop.exist = $scope.existValue;
+        $scope.theIndex = index;
     };
     var $Mask;
     $scope.doMask = function() {
@@ -151,7 +152,7 @@ function CompileContentCtrl($scope) {
     $('#collapseTwo').on('show', function () {
         $scope.doMask();
     });
-    
+
     $('#collapseTwo').on('hide', function () {
         $scope.doRemoveMask();
     });

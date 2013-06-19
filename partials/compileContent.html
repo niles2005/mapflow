@@ -41,5 +41,31 @@
                 </div>
             </div>
         </div>
+
+
+         <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseShowPixel">
+                    showPixel
+                </a>
+                <div class="pagination " style="padding: 8px 15px;margin: 0;">
+                    <ul id='listul2'>
+                        <li ng-repeat="prop in props">
+                            <a ng-click="setProp(prop)" ng-class="{active: $index==theIndex}" class="labeli{{$index}}">
+                               {{prop.showPixel}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="collapseShowPixel" class="accordion-body collapse" style="height: 0">
+                    <div class="pagination accordion-inner">
+                        <form>
+                              <input type="     " >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
