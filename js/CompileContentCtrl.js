@@ -12,6 +12,7 @@ function MaskCanvas(canvasId,scope) {
     }, false);
     canvas.onselectstart = function() {
         return false;
+
     };
     canvas.width = this.width;
     canvas.height = this.height;
@@ -93,7 +94,7 @@ MaskCanvas.prototype = {
             for (var k in self._rectArr) {
                 var rect = self._rectArr[k];
                 if (rect.intersectsLine(self.pressX1, self.pressY1, self.pressX2, self.pressY2)) {
-                    self._scope.props[k]['exist'] = self._scope.existValue;
+                    self._scope.props[k][self._scope.currentProp] = self._scope[self._scope.currentProp + 'Value'];
                 }
             }
 
@@ -107,9 +108,9 @@ MaskCanvas.prototype = {
         bindEvent(document, "mousemove", onMouseMove);
         bindEvent(document, "mouseup", onMouseUp);
     },
-    doMask: function() {
+    doMask: function(elemtId) {
         if (!this._maskDiv) {
-            this._maskDiv = $('#listul').Mask();
+            this._maskDiv = $('#'+elemtId).Mask();
         }
     },
     doRemoveMask: function() {
@@ -122,39 +123,55 @@ MaskCanvas.prototype = {
 
 function CompileContentCtrl($scope) {
     $scope.props = [
-        {'exist': 0, "showPixel": 0.8, margin: 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 1},
-        {'exist': 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 1},
-        {'exist': 1},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0},
-        {'exist': 0}];
+        {'exist': 0, "showpixel": 0.8, margin: 1},
+        {'exist': 0, "showpixel": 0.5},
+        {'exist': 0, "showpixel": 0.6},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.7},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.9},
+        {'exist': 0, "showpixel": 1.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 1, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8},
+        {'exist': 0, "showpixel": 0.8}];
     $scope.existValue = 1;
-    
-    $scope.setProp = function(prop) {
-//        prop.exist = $scope.existValue;
+    $scope.showpixelValue = 1.0;
+    $scope.currentProp = '';
+    $scope.setProp = function(prop,propName,index) {
+//        prop[propName] = $scope[propName+'Value'];
+//        $scope.theIndex = index;
+//        $scope.currentProp = propName;
     };
+
     var maskCanvas = new MaskCanvas("MaskCanvas",$scope);
     maskCanvas.repaint();
     
     $('#collapseTwo').on('show', function () {
-        maskCanvas.doMask();
+        $scope.currentProp = 'exist';
+        maskCanvas.doMask('listul');
     });
-    
+
     $('#collapseTwo').on('hide', function () {
+        maskCanvas.doRemoveMask();
+        $scope.currentProp = '';
+    });
+
+    $('#collapseShowPixel').on('show', function () {
+        $scope.currentProp = 'showpixel';
+        maskCanvas.doMask('listul2');
+    });
+
+    $('#collapseShowPixel').on('hide', function () {
+        $scope.currentProp = '';
         maskCanvas.doRemoveMask();
     });
 }
