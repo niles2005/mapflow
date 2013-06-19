@@ -17,9 +17,14 @@
                 <div class="accordion" id="accordion2">
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            <div class="accordion-inner">
+                            <a class="">
                                 exist
                             </a>
+                            <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                <img src="img/cfg.png">
+                            </a>
+                            </div>
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
                                 <ul id='listul'>
                                     <li ng-repeat="prop in props">
@@ -29,8 +34,10 @@
                                     </li>
                                 </ul>
                             </div>
+                            
+                        </div>
                             <div id="collapseTwo" class="accordion-body collapse" style="height: 0">
-                                <div class="pagination accordion-inner">
+                                <div class="accordion-inner">
 
 
                                     <form>
@@ -40,22 +47,21 @@
                                         <label class="radio  inline">
                                             <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">
                                         </label>
-                                        <!--                            <label class="radio  inline">
-                                                                        <img style="border:1px solid" ng-click='doMask()' src="img/painter.jpg">
-                                                                        <img style="border:1px solid" ng-click='doRemoveMask()' src="img/painter.jpg">
-                                                                    </label>-->
-
                                     </form>
-
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseShowPixel">
-                                showpixel
-                            </a>
+                            <div class="accordion-inner">
+                                <a>
+                                    showpixel
+                                </a>
+                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseShowPixel">
+                                    <img src="img/cfg.png">
+                                </a>
+                            </div>
+                            
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
                                 <ul id='listul2'>
                                     <li ng-repeat="prop in props">
@@ -65,14 +71,14 @@
                                     </li>
                                 </ul>
                             </div>
+                        </div>
                             <div id="collapseShowPixel" class="accordion-body collapse" style="height: 0">
-                                <div class="">
+                                <div class="accordion-inner">
                                     <form>
                                         <input type="text" ng-model="showpixelValue" >
                                     </form>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
 

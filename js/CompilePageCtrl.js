@@ -31,7 +31,7 @@ function CompilePageCtrl($scope) {
         $scope.itemName = itemName;
         $scope.props = propsArr;
         console.log(groupName + "-->" + itemName);
-        console.table(propsArr);
+//        console.table(propsArr);
         $scope.$apply();
     };
 
