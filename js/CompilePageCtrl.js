@@ -1,8 +1,6 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
-    $scope.fields = [{name:"exist",type:"boolean"}, "simplifypixel", "showpixel", "showriverwidth", "shownamerange"];
-
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
@@ -26,13 +24,9 @@ function CompilePageCtrl($scope) {
         $scope.$apply();
     };
 
-    var treeDiv = document.getElementById("tree");
     var tree = new TreeConfig("new.xml",$scope);
-    treeDiv.appendChild(tree._div);
-    tree.loadContent(); 
     
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
-    maskCanvas.repaint();
 
     $('#collapseTwo').on('show', function () {
         $scope.currentProp = 'exist';

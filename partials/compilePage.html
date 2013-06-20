@@ -2,8 +2,20 @@
 
     <div class="row">
         <div class="span3">
-
-            <div id="tree">
+            <div class="tabbable" style="margin-bottom: 18px; ">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#treeTabArea" data-toggle="tab">Area</a></li>
+                    <li class=""><a href="#treeTabLine" data-toggle="tab">Line</a></li>
+                    <li class=""><a href="#treeTabPoint" data-toggle="tab">Point</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active treepanel" id="treeTabArea">
+                    </div>
+                    <div class="tab-pane treepanel" id="treeTabLine">
+                    </div>
+                    <div class="tab-pane treepanel" id="treeTabPoint">
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -25,16 +37,14 @@
                                 <a class="">
                                     exist
                                 </a>
-                                <a class="pull-right" data-toggle="collapse" data-parent="data-parent"
-                                                           href="#collapseTwo">
-                                    <img src="img/cfg.png">
+                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                    <img title="配置" src="img/cfg.png">
                                 </a>
                             </div>
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
                                 <ul id='listul'>
                                     <li ng-repeat="prop in props">
-                                        <a ng-click="setProp(prop,'exist')" ng-class="{active: $index==theIndex}"
-                                           class="labeli{{$index}}">
+                                        <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
                                             <img ng-src="img/exist{{prop.exist}}.png"/>
                                         </a>
                                     </li>
@@ -48,12 +58,10 @@
 
                                 <form>
                                     <label class="radio  inline">
-                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="1"
-                                               checked="true"><img src="img/valid.png">
+                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">
                                     </label>
                                     <label class="radio  inline">
-                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img
-                                            src="img/error.png">
+                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">
                                     </label>
                                 </form>
                             </div>
@@ -65,17 +73,15 @@
                                 <a>
                                     showpixel
                                 </a>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2"
-                                   href="#collapseShowPixel">
-                                    <img src="img/cfg.png">
+                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseShowPixel">
+                                    <img title="配置" src="img/cfg.png">
                                 </a>
                             </div>
 
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
                                 <ul id='listul2'>
                                     <li ng-repeat="prop in props">
-                                        <a ng-click="setProp(prop,'showpixel')" ng-class="{active: $index==theIndex}"
-                                           class="labeli{{$index}}">
+                                        <a ng-click="setProp(prop,'showpixel')" ng-class="{itemActives: $index==theIndex}" class="labeli{{$index}}">
                                             {{prop.showpixel}}
                                         </a>
                                     </li>

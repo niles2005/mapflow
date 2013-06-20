@@ -23,6 +23,7 @@ function MaskCanvas(canvasId,scope) {
         var xx = i * 44;
         this._rectArr.push(new Rect(xx, 0, 44, 36));
     }
+    this.repaint();
 }
 
 MaskCanvas.prototype = {
@@ -152,14 +153,13 @@ function CompileContentCtrl($scope) {
 //        $scope.currentProp = propName;
     };
 
-    var accordion2 = document.getElementById("accordion2");
-    new AccordionGroup($scope,accordion2);
+//    var accordion2 = document.getElementById("accordion2");
+//    new AccordionGroup($scope,accordion2);
 
 
 
 
     var maskCanvas = new MaskCanvas("MaskCanvas",$scope);
-    maskCanvas.repaint();
     
     $('#collapseTwo').on('show', function () {
         $scope.currentProp = 'exist';
@@ -182,3 +182,12 @@ function CompileContentCtrl($scope) {
     });
 }
 
+angular.module('DirectiveTest', [])
+    .directive('fundooRating', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                console.log("Recognized the fundoo-rating directive usage");
+            }
+        }
+    })
