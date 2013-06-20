@@ -20,6 +20,13 @@
 
         </div>
         <div class="span12">
+            <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
+            <mytest type="a"></mytest>
+            <br>
+            <mytest type="b"></mytest>
+            <br>
+            <mytest type="c"></mytest>
+
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
             </div>
@@ -46,6 +53,7 @@
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
                                             <img ng-src="img/exist{{prop.exist}}.png"/>
+                                            
                                         </a>
                                     </li>
                                 </ul>

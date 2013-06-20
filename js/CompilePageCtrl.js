@@ -1,6 +1,7 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
+    $scope.title = "test";
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
