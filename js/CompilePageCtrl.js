@@ -7,6 +7,7 @@ function CompilePageCtrl($scope) {
     $scope.currentProp = '';
 //    $scope.navigationPath = "";
     $scope.selectNode = function(navigationPath,propsArr) {
+
         $scope.props = propsArr;
 //        console.dir(groupName);
 //        if (navigationPath instanceof Array) {

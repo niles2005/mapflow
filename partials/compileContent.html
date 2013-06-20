@@ -1,5 +1,5 @@
 
-
+<div fundoo-rating></div>
 <div class="Mask" style='display: none;'><canvas id="MaskCanvas"></div></div>
 <div class="tempInfo">
     <div class="accordion" id="accordion2">
@@ -19,8 +19,6 @@
                 </div>
                 <div id="collapseTwo" class="accordion-body collapse" style="height: 0">
                     <div class="pagination accordion-inner">
-
-
                         <form>
                             <label class="radio  inline">
                                 <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">
@@ -28,44 +26,37 @@
                             <label class="radio  inline">
                                 <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">
                             </label>
-<!--                            <label class="radio  inline">
-                                <img style="border:1px solid" ng-click='doMask()' src="img/painter.jpg">
-                                <img style="border:1px solid" ng-click='doRemoveMask()' src="img/painter.jpg">
-                            </label>-->
 
                         </form>
-
-
-
                     </div>
                 </div>
             </div>
         </div>
 
 
-         <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseShowPixel">
-                    showpixel
-                </a>
-                <div class="pagination " style="padding: 8px 15px;margin: 0;">
-                    <ul id='listul2'>
-                        <li ng-repeat="prop in props">
-                            <a ng-click="setProp(prop,'showpixel')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
-                               {{prop.showpixel}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="collapseShowPixel" class="accordion-body collapse" style="height: 0">
-                    <div class="">
-                        <form>
-                              <input type="text" ng-model="showpixelValue" >
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+         <!--<div class="accordion-group">-->
+            <!--<div class="accordion-heading">-->
+                <!--<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseshowpixel">-->
+                    <!--showpixel-->
+                <!--</a>-->
+                <!--<div class="pagination " style="padding: 8px 15px;margin: 0;">-->
+                    <!--<ul id='listul2'>-->
+                        <!--<li ng-repeat="prop in props">-->
+                            <!--<a ng-click="setProp(prop,'showpixel')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">-->
+                               <!--{{prop.showpixel}}-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!--<div id="collapseShowPixel" class="accordion-body collapse" style="height: 0">-->
+                    <!--<div class="">-->
+                        <!--<form>-->
+                              <!--<input type="text" ng-model="showpixelValue" >-->
+                        <!--</form>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
 </div>
