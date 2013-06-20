@@ -145,12 +145,18 @@ function CompileContentCtrl($scope) {
         {'exist': 0, "showpixel": 0.8}];
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
-    $scope.currentProp = '';
+    $scope.currentProp = 'exist1';
     $scope.setProp = function(prop,propName,index) {
 //        prop[propName] = $scope[propName+'Value'];
 //        $scope.theIndex = index;
 //        $scope.currentProp = propName;
     };
+
+    var accordion2 = document.getElementById("accordion2");
+    new AccordionGroup($scope,accordion2);
+
+
+
 
     var maskCanvas = new MaskCanvas("MaskCanvas",$scope);
     maskCanvas.repaint();

@@ -1,13 +1,14 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
-
+    $scope.fields = [{name:"exist",type:"boolean"}, "simplifypixel", "showpixel", "showriverwidth", "shownamerange"];
 
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
 //    $scope.navigationPath = "";
     $scope.selectNode = function(navigationPath,propsArr) {
+
         $scope.props = propsArr;
 //        console.dir(groupName);
 //        if (navigationPath instanceof Array) {
