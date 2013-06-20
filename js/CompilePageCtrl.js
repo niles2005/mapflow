@@ -1,49 +1,27 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
-    $scope.props = [
-//        {'exist': 0, "showPixel": 0.8, margin: 1},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 1},
-//        {'exist': 1},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 1},
-//        {'exist': 1},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0},
-//        {'exist': 0}
-    ];
+
+
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
-    $scope.selectNode = function(groupName,propsArr) {
-//        $scope.groupName = groupName;
-//        $scope.itemName = itemName;
+//    $scope.navigationPath = "";
+    $scope.selectNode = function(navigationPath,propsArr) {
         $scope.props = propsArr;
+//        console.dir(groupName);
+//        if (navigationPath instanceof Array) {
+//            var treePath = "" ;
+//            for (var i = groupName.length - 1; i >= 0; i--) {
+//                if(i < groupName.length - 1)  {
+//                    treePath+=" > ";
+//                }
+//                treePath+=groupName[i];
+//            }
 
-        $scope.navigationPath = "";
-        if (groupName && groupName instanceof Array) {
-            var treePath = "" ;
-            for (var i = groupName.length - 1; i > 0; i--) {
-
-                treePath.concat(groupName[i])//.concat(" > ");
-            }
-            $scope.navigationPath = treePath;
-            console.log(treePath);
-        }
-
-//        console.log(groupName + "-->" + itemName);
-//        console.table(propsArr);
+//            console.dir(treePath);
+//        }
+        $scope.navigationPath = navigationPath;
         $scope.$apply();
     };
 
