@@ -22,8 +22,8 @@
         <div class="span12">
             <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
 
-            exist:{{existValue}}
-            <input type="text" ng-model="existValue">
+            exist:{{fields[0].exist}}
+            <input type="text" ng-model="fields[0].exist">
 
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
@@ -60,8 +60,8 @@
                         </div>
                         <div id="collapse{{myfield.name}}" class="accordion-body collapse" style="height: 0">
                             <div class="accordion-inner">
-                                <input type="text" ng-model="existValue">
-                                <!--<mytest/>-->
+                                <input type="text" ng-model="myfield.exist">
+                                <mytest/>
                             </div>
                         </div>
                     </div>

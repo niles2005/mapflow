@@ -45,7 +45,7 @@ angular.module('myApp.directives', []).
   .directive('mytest', function($compile){
     return {
       restrict: 'E',
-      scope:{existValue:"="},
+//      scope:{existValue:"="},
       link: function(scope, element, attrs) {
             console.dir(attrs);
             var type = scope.myfield.type;
@@ -67,14 +67,14 @@ angular.module('myApp.directives', []).
             } else if(type === 'boolean') {
                 var htmlText = '<form>' + 
                     '<label class="radio  inline">'+
-                    '    <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">'+
+                    '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">'+
                     '</label>'+
                     '<label class="radio  inline">'+
-                    '    <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">'+
+                    '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="0"><img src="img/error.png">'+
                     '</label>'+
                 '</form>';
-        element.replaceWith(htmlText);    
-                element.append($compile(htmlText)(scope));
+        element.replaceWith($compile(htmlText)(scope));    
+//                element.append($compile(htmlText)(scope));
 //                element.replaceWith(htmlText);    
             }
             
