@@ -12,6 +12,7 @@ function TreeConfig(configFile, scope) {
     this._clickListener = this.makeClickListener();
     this.loadContent();
 }
+var currGroupName = null;
 
 
 
@@ -63,21 +64,26 @@ TreeConfig.prototype = {
             if (node instanceof jQuery) {
                 jul.addClass(this._treeName);
             }
+
             for (var k in childNodes) {
                 var childNode = childNodes[k];
                 if (childNode.nodeType === 1) {
+                    var strName = $(childNode).attr('name');
                     var tagName = childNode.tagName;
-                    if (tagName && tagName === 'define') {
+                    if (tagName === 'group') {
+                        currGroupName = strName;
+                    } else if (tagName === 'define') {
                         continue;
-                    } else if (tagName && tagName === 'field') {
-                        var strName = $(childNode).attr('name');
+                    } else if (tagName === 'field') {
                         var strValue = $(childNode).attr('value');
                         if (strName && strValue) {
-                            var arr = strValue.split("|");
-                            for (var k in arr) {
-                                arr[k] = $.trim(arr[k]);
+                            if(node._attr) {
+                                var arr = strValue.split("|");
+                                for (var k in arr) {
+                                    arr[k] = $.trim(arr[k]);
+                                }
+                                node._attr[strName] = arr;
                             }
-                            node._attr[strName] = arr;
                         }
                         continue;
                     }
@@ -117,7 +123,24 @@ TreeConfig.prototype = {
             }
         }
     },
-    makeClickListener: function() {
+
+    listPathNames: function (node,arr) {
+        if(!node) {
+            return arr;
+        }
+        if(node._attr) {
+            arr.unshift(node._attr["name"]);
+        } else {
+            return arr;
+        }
+        var parent = node.parentElement;
+        if(parent) {
+            node  = parent.parentElement;
+        }
+        return this.listPathNames(node,arr);
+    },
+
+    makeClickListener: function () {
         var self = this;
         return function(event) {
             event.stopPropagation();
@@ -128,7 +151,7 @@ TreeConfig.prototype = {
             var liObj = this;
             var groupName = liObj._attr["groupName"];
 
-            var itemName = liObj._attr["name"];
+            var treePathArr = self.listPathNames(liObj,[]);
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {
@@ -157,10 +180,9 @@ TreeConfig.prototype = {
                     liObj = null;
                 }
             }
-            if (self._scope) {
-                self._scope.selectNode(groupName, itemName, props);
+            if(self._scope) {
+                self._scope.selectNode(treePathArr,props);
             }
-
 
             var jli = $(this);
             var jul = jli.find('>ul');
@@ -196,12 +218,12 @@ var propsMap = {
 };
 
 function CompileTreeCtrl($scope) {
-    $scope.selectNode = function(groupName, itemName, propsArr) {
-        $scope.groupName = groupName;
-        $scope.itemName = itemName;
+
+    $scope.selectNode = function(treePathArr,propsArr) {
+        $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
-        console.log(groupName + "-->" + itemName);
-//        console.table(propsArr);
+        console.dir(treePathArr);
+        console.table(propsArr);
         $scope.$apply();
     };
     var tree = new TreeConfig("new.xml", $scope);
