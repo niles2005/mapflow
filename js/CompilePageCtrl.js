@@ -1,7 +1,13 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
-    $scope.title = "test";
+    $scope.fields = [
+        {name:"exist",type:"boolean"},
+        {name:"simplifypixel",type:"int",defalutValue:"1"},
+        {name:"showpixel",type:"boolean"},
+        {name:"showriverwidth",type:"boolean"},
+        {name:"shownamerange",type:"boolean"}
+    ];
     $scope.existValue = 1;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
@@ -29,12 +35,13 @@ function CompilePageCtrl($scope) {
     
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
-    $('#collapseTwo').on('show', function () {
+    $('#collapseexist').on('show', function () {
+        console.dir("aaa")
         $scope.currentProp = 'exist';
-        maskCanvas.doMask('listul');
+        maskCanvas.doMask('listulexist');
     });
 
-    $('#collapseTwo').on('hide', function () {
+    $('#collapseexist').on('hide', function () {
         maskCanvas.doRemoveMask();
         $scope.currentProp = '';
     });

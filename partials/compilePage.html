@@ -21,11 +21,9 @@
         </div>
         <div class="span12">
             <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
-            <mytest type="a"></mytest>
-            <br>
-            <mytest type="b"></mytest>
-            <br>
-            <mytest type="c"></mytest>
+
+            exist:{{existValue}}
+            <input type="text" ng-model="existValue">
 
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
@@ -38,44 +36,36 @@
             </div>
             <div class="tempInfo">
                 <div class="accordion" id="accordion2">
-                    <div class="accordion-group">
+                    
+                    <div ng-repeat="myfield in fields" class="accordion-group">
                         <div class="accordion-heading">
                             <div class="accordion-inner">
                                 <a class="">
-                                    exist
+                                    {{myfield.name}}
                                 </a>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{myfield.name}}">
                                     <img title="配置" src="img/cfg.png">
                                 </a>
                             </div>
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
-                                <ul id='listul'>
+                                <ul id='listul{{myfield.name}}'>
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
                                             <img ng-src="img/exist{{prop.exist}}.png"/>
-                                            
                                         </a>
                                     </li>
                                 </ul>
                             </div>
 
                         </div>
-                        <div id="collapseTwo" class="accordion-body collapse" style="height: 0">
+                        <div id="collapse{{myfield.name}}" class="accordion-body collapse" style="height: 0">
                             <div class="accordion-inner">
-
-
-                                <form>
-                                    <label class="radio  inline">
-                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">
-                                    </label>
-                                    <label class="radio  inline">
-                                        <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">
-                                    </label>
-                                </form>
+                                <input type="text" ng-model="existValue">
+                                <!--<mytest/>-->
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-group">
+<!--                    <div class="accordion-group">
                         <div class="accordion-heading">
                             <div class="accordion-inner">
                                 <a>
@@ -103,7 +93,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
