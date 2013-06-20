@@ -23,6 +23,7 @@ function MaskCanvas(canvasId,scope) {
         var xx = i * 44;
         this._rectArr.push(new Rect(xx, 0, 44, 36));
     }
+    this.repaint();
 }
 
 MaskCanvas.prototype = {
@@ -153,7 +154,6 @@ function CompileContentCtrl($scope) {
     };
 
     var maskCanvas = new MaskCanvas("MaskCanvas",$scope);
-    maskCanvas.repaint();
     
     $('#collapseTwo').on('show', function () {
         $scope.currentProp = 'exist';

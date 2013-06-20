@@ -8,6 +8,8 @@ ul,ol {
     font-size: 14px;
     border:1px solid #7F9DB9;
     overflow: auto;
+    width:220px;
+    height:580px;
 }
 
 .treepanel ul.disabled{
@@ -25,12 +27,14 @@ ul,ol {
     -webkit-user-select: none;
     -moz-user-select:none;
 }
-.treepanel span.selected {
-    background-color:#ccc;
+.treepanel span.nodeselected {
+    background-color:#33A;
+    color:#FFF;
 }
-.treepanel span.hover { 
-    color: #0000bb; 
+.treepanel span.nodeHover { 
+    color: #bb0000; 
     cursor: default;
+    text-decoration:underline;
 }
 
 .treepanel .nodeopen {
@@ -75,4 +79,9 @@ ul,ol {
 
 .tree_mapstyle .group {
     background: url('../img/tree_mapstyle_group.png')  no-repeat 0 2px;
+}
+
+.nav {
+margin: 0;
+list-style: none;
 }
