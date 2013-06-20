@@ -20,6 +20,7 @@ angular.module('myApp.directives', []).
                 '<div class="title">{{title}}</div>' +
                 '<div class="body" ng-transclude></div>' +
                 '</div>',
+
             // The linking function will add behavior to the template
             link: function (scope, element, attrs) {
                 // Title element
@@ -42,39 +43,53 @@ angular.module('myApp.directives', []).
             }
         };
     })
-    .directive('mytest',function () {
+    .directive('mytest', function ($compile) {
         return {
             restrict: 'E',
+            scope: {existValue: "="},
             link: function (scope, element, attrs) {
-                console.dir(scope);
-
-                if (attrs.type === 'a') {
+                console.dir(attrs);
+                var type = scope.myfield.type;
+                if (type === 'a') {
                     var htmlText = '<div class="control-group">' +
                         '<label class="control-label" >' + scope.title + '</label>' +
                         '<div class="controls">' +
                         '</div>' +
                         '</div>';
                     element.replaceWith(htmlText);
-                } else if (attrs.type === 'b') {
-                    var htmlText = '<img src="img/exist' + scope.existValue + '.png"/>';
+                } else if (type === 'b') {
+                    var htmlText = '<img src="img/exist1.png"/>';
                     element.replaceWith(htmlText);
-                    element.repla
-                } else if (attrs.type === 'c') {
-                    var htmlText = '<input type="text" ng-model="showpixelValue">';
+                } else if (type === 'int') {
+                    var defalutValue = scope.myfield.defalutValue;
+                    var htmlText = '<input type="text" ng-model="existValue" value="' + defalutValue + '">';
+//                element.replaceWith(htmlText);    
+                    element.append($compile(htmlText)(scope));
+                } else if (type === 'boolean') {
+                    var htmlText = '<form>' +
+                        '<label class="radio  inline">' +
+                        '    <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">' +
+                        '</label>' +
+                        '<label class="radio  inline">' +
+                        '    <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">' +
+                        '</label>' +
+                        '</form>';
                     element.replaceWith(htmlText);
+                    element.append($compile(htmlText)(scope));
+//                element.replaceWith(htmlText);    
+
                 }
-
-
             }
-        };
-    }).directive('levelcycle', function () {
+        }
+    })
+    .directive('levelcycle', function () {
         return {
             restrict: 'E',
             link: function (scope, element, attrs) {
                 console.dir(scope);
                 var levelHtml = '';
-                if(scope.field === 'exist'){
-                    levelHtml = '<img src="img/exist'+scope.prop["exist"]+'.png"/>';
+                if (scope.field.name === 'exist') {
+                    levelHtml = '<img src="img/exist' + scope.prop["exist"] + '.png"/>';
                 }
                 levelHtml = scope.prop["showpixel"];
 
@@ -83,4 +98,6 @@ angular.module('myApp.directives', []).
 
         }
     });
+
+
   
