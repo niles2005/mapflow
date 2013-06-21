@@ -30,7 +30,7 @@ MaskCanvas.prototype = {
     repaint: function () {
         this.context.clearRect(0, 0, this.width, this.height);
 
-        this.context.strokeStyle = "rgb(0,0,0)";
+        this.context.strokeStyle = "rgb(250,0,0)";
         this.context.strokeRect(0, 0, this.width, this.height);
 
 
