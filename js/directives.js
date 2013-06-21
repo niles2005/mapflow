@@ -78,11 +78,11 @@ angular.module('myApp.directives', []).
                 element.replaceWith($compile(htmlText)(scope));
             }else if(type === 'fontstyle'){
                 console.dir(scope) ;
-                var htmlText = '<form>' +
+                var htmlText = '<div>' +
                     '<div class="fontStyleList" ng-click="setFontStyle(0)">Plain</div>' +
                     '<div class="fontStyleList" ng-click="setFontStyle(1)">Italic</div>' +
                     '<div class="fontStyleList" ng-click="setFontStyle(2)">Blod</div>' +
-                    '</form>';
+                    '</div>';
                 element.replaceWith($compile(htmlText)(scope));
             }
 

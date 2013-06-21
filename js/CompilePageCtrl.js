@@ -54,7 +54,11 @@ function CompilePageCtrl($scope) {
         $scope.props = propsArr;
         
         $scope.navigationPath = treePathArr;
-        $scope.fields = groupMap[groupName];
+        if($scope.fields !== groupMap[groupName]) {
+            $scope.fields = groupMap[groupName];
+            $scope.currentField = null;//remove select node
+        }
+        
         if(!$scope.$$phase) {
             $scope.$apply();
           }
