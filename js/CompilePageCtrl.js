@@ -2,7 +2,7 @@
 
 function CompilePageCtrl($scope) {
     $scope.fields = [
-        {name:"exist",type:"boolean"},
+        {name:"exist",type:"boolean",exist:"0"},
         {name:"simplifypixel",type:"int",defalutValue:"1"},
         {name:"showpixel",type:"boolean"},
         {name:"showriverwidth",type:"boolean"},

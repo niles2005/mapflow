@@ -23,8 +23,9 @@
             <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
 
 
-            exist:{{existValue}}
-            <input type="text" ng-model="existValue">
+            exist:{{fields[0].exist}}
+            <input type="text" ng-model="fields[0].exist">
+
 
 
             <div class="Mask" style='display: none;'>
@@ -54,8 +55,8 @@
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
 
-
-                                            <img ng-src="img/exist{{prop.exist}}.png"/>
+                                            <levelcycle/>
+                                            <!--<img ng-src="img/exist{{prop.exist}}.png"/>-->
 
                                         </a>
                                     </li>
@@ -65,8 +66,8 @@
                         </div>
                         <div id="collapse{{myfield.name}}" class="accordion-body collapse" style="height: 0">
                             <div class="accordion-inner">
-                                <input type="text" ng-model="existValue">
-                                <!--<mytest/>-->
+                                <input type="text" ng-model="myfield.exist">
+                                <mytest/>
                             </div>
                         </div>
                     </div>

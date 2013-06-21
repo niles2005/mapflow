@@ -9,7 +9,7 @@ angular.module('myApp.directives', []).
             elm.text(version);
         };
     }])
-    .directive('zippy', function () {
+    .directive('zippy',function () {
         return {
             restrict: 'C',
             // This HTML will replace the zippy directive.
@@ -20,7 +20,6 @@ angular.module('myApp.directives', []).
                 '<div class="title">{{title}}</div>' +
                 '<div class="body" ng-transclude></div>' +
                 '</div>',
-
             // The linking function will add behavior to the template
             link: function (scope, element, attrs) {
                 // Title element
@@ -42,11 +41,10 @@ angular.module('myApp.directives', []).
                 toggle();
             }
         };
-    })
-    .directive('mytest', function ($compile) {
+    }).directive('mytest', function ($compile) {
         return {
             restrict: 'E',
-            scope: {existValue: "="},
+//      scope:{existValue:"="},
             link: function (scope, element, attrs) {
                 console.dir(attrs);
                 var type = scope.myfield.type;
@@ -68,16 +66,14 @@ angular.module('myApp.directives', []).
                 } else if (type === 'boolean') {
                     var htmlText = '<form>' +
                         '<label class="radio  inline">' +
-                        '    <input type="radio" ng-model="existValue" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">' +
+                        '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">' +
                         '</label>' +
                         '<label class="radio  inline">' +
-                        '    <input type="radio" ng-model="existValue" name="optionsRadios" value="0"><img src="img/error.png">' +
+                        '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="0"><img src="img/error.png">' +
                         '</label>' +
                         '</form>';
-                    element.replaceWith(htmlText);
-                    element.append($compile(htmlText)(scope));
-//                element.replaceWith(htmlText);    
-
+                    element.replaceWith($compile(htmlText)(scope));
+//                element.append($compile(htmlText)(scope));
                 }
             }
         }
@@ -88,7 +84,7 @@ angular.module('myApp.directives', []).
             link: function (scope, element, attrs) {
                 console.dir(scope);
                 var levelHtml = '';
-                if (scope.field.name === 'exist') {
+                if (scope.myfield.name === 'exist') {
                     levelHtml = '<img src="img/exist' + scope.prop["exist"] + '.png"/>';
                 }
                 levelHtml = scope.prop["showpixel"];
