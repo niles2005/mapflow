@@ -78,11 +78,12 @@ angular.module('myApp.directives', []).
                 element.replaceWith($compile(htmlText)(scope));
             }else if(type === 'fontstyle'){
                 console.dir(scope) ;
-                var htmlText = '<form>' +
-                    '<div class="fontStyleList" ng-class = "fontStyle0" ng-click="setFontStyle(0)">Plain</div>' +
-                    '<div class="fontStyleList" ng-class = "fontStyle1" ng-click="setFontStyle(1)">Italic</div>' +
-                    '<div class="fontStyleList" ng-class = "fontStyle2" ng-click="setFontStyle(2)">Blod</div>' +
-                    '</form>';
+                var htmlText = '<div>'+
+                    '<div class="fontStyleList" ng-class = "fontStyle0" ng-click="setFontStyle(0)">正体 Plain</div>' +
+                    '<div class="fontStyleList" ng-class = "fontStyle1" ng-click="setFontStyle(1)">斜体 Italic</div>' +
+                    '<div class="fontStyleList" ng-class = "fontStyle2" ng-click="setFontStyle(2)">粗体 Blod</div>'+
+                    '</div>';
+
                 element.replaceWith($compile(htmlText)(scope));
             }
 
