@@ -222,15 +222,7 @@ TreeConfig.prototype = {
     }
 };
 
-<<<<<<< HEAD
-=======
 var selectTreeNodeArray = null;
-var propsMap = {
-    area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
-    line: ["exist", "simplifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
-    point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
-};
->>>>>>> 2507290c963096a297704a2fdc9cee11e9a3ba7b
 
 function CompileTreeCtrl($scope) {
 
