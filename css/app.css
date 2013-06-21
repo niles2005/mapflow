@@ -205,3 +205,12 @@ width: 100px;
     margin-right: 12px;
     cursor: default;
 }
+
+.fontStyleList:hover{
+    border-color: #d24352;
+}
+
+
+.fontSelected{
+    border-color: #d24352;
+}

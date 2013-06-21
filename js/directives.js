@@ -79,9 +79,9 @@ angular.module('myApp.directives', []).
             }else if(type === 'fontstyle'){
                 console.dir(scope) ;
                 var htmlText = '<form>' +
-                    '<div class="fontStyleList" ng-click="setFontStyle(0)">Plain</div>' +
-                    '<div class="fontStyleList" ng-click="setFontStyle(1)">Italic</div>' +
-                    '<div class="fontStyleList" ng-click="setFontStyle(2)">Blod</div>' +
+                    '<div class="fontStyleList" ng-class = "fontStyle0" ng-click="setFontStyle(0)">Plain</div>' +
+                    '<div class="fontStyleList" ng-class = "fontStyle1" ng-click="setFontStyle(1)">Italic</div>' +
+                    '<div class="fontStyleList" ng-class = "fontStyle2" ng-click="setFontStyle(2)">Blod</div>' +
                     '</form>';
                 element.replaceWith($compile(htmlText)(scope));
             }
