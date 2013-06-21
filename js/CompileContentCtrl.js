@@ -95,7 +95,7 @@ MaskCanvas.prototype = {
             for (var k in self._rectArr) {
                 var rect = self._rectArr[k];
                 if (rect.intersectsLine(self.pressX1, self.pressY1, self.pressX2, self.pressY2)) {
-                    self._scope.props[k][self._scope.currentProp] = self._scope.fields[0].value;
+                    self._scope.props[k][self._scope.currentField.name] = self._scope.currentField.value;
                 }
             }
 
@@ -108,6 +108,9 @@ MaskCanvas.prototype = {
         }
         bindEvent(document, "mousemove", onMouseMove);
         bindEvent(document, "mouseup", onMouseUp);
+    },
+    isMask: function() {
+        return this._maskDiv !== null;
     },
     doMask: function(elemtId) {
         if (!this._maskDiv) {

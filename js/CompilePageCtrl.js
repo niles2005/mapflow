@@ -1,64 +1,37 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
-    console.log("aaa")
     $scope.fields = [
         {name:"exist",type:"boolean",value:"0"},
-        {name:"simplifypixel",type:"int",defalutValue:"1"},
-        {name:"showpixel",type:"int"},
-        {name:"showriverwidth",type:"int"},
-        {name:"shownamerange",type:"int"}
+        {name:"simplifypixel",type:"float",value:"0.8"},
+        {name:"showpixel",type:"float",value:"1.1"},
+        {name:"showriverwidth",type:"float",value:"0.5"},
+        {name:"shownamerange",type:"float",value:"60"}
     ];
-    $scope.existValue = 0;
-    $scope.showpixelValue = 1.0;
-    $scope.currentProp = '';
-//    $scope.navigationPath = "";
-    $scope.doTest = function() {
-        $scope.currentProp = this.myfield.name;
-
-        maskCanvas.doMask('listulexist');
-        console.log("sssss");
-    }
+    $scope.currentField = null;
+    
+    $scope.doConfig = function() {
+        if(maskCanvas.isMask()) {
+            maskCanvas.doRemoveMask();
+            if($scope.currentField && $scope.currentField.name === this.myfield.name) {
+                $scope.currentProp = null;
+            } else {
+                $scope.currentField = this.myfield;
+                maskCanvas.doMask('listul' + this.myfield.name);
+            }
+        } else {
+            $scope.currentField = this.myfield;
+            maskCanvas.doMask('listul' + this.myfield.name);
+        }
+    };
     $scope.selectNode = function(navigationPath,propsArr) {
-
         $scope.props = propsArr;
-//        console.dir(groupName);
-//        if (navigationPath instanceof Array) {
-//            var treePath = "" ;
-//            for (var i = groupName.length - 1; i >= 0; i--) {
-//                if(i < groupName.length - 1)  {
-//                    treePath+=" > ";
-//                }
-//                treePath+=groupName[i];
-//            }
-
-//            console.dir(treePath);
-//        }
         $scope.navigationPath = navigationPath;
         $scope.$apply();
     };
 
-    var tree = new TreeConfig("new.xml",$scope);
+    new TreeConfig("new.xml",$scope);
     
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
-    $('#collapseexist').on('show', function () {
-        $scope.currentProp = 'exist';
-        maskCanvas.doMask('listulexist');
-    });
-
-    $('#collapseexist').on('hide', function () {
-        maskCanvas.doRemoveMask();
-        $scope.currentProp = '';
-    });
-
-    $('#collapseShowPixel').on('show', function () {
-        $scope.currentProp = 'showpixel';
-        maskCanvas.doMask('listul2');
-    });
-
-    $('#collapseShowPixel').on('hide', function () {
-        $scope.currentProp = '';
-        maskCanvas.doRemoveMask();
-    });
 }

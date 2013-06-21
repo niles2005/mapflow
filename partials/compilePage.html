@@ -43,7 +43,7 @@
                                 <a class="">
                                     {{myfield.name}}
                                 </a>
-                                <a class="pull-right" ng-click="doTest()" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{myfield.name}}">
+                                <a class="pull-right" ng-click="doConfig()" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{myfield.name}}">
                                     <img title="配置" src="img/cfg.png">
                                 </a>
                             </div>
@@ -51,7 +51,6 @@
                                 <ul id='listul{{myfield.name}}'>
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
-                                            <!--<img ng-src="img/exist{{prop.exist}}.png"/>-->
                                             <myitem/>
                                         </a>
                                     </li>
@@ -61,7 +60,7 @@
                         </div>
                         <div id="collapse{{myfield.name}}" class="accordion-body collapse" style="height: 0">
                             <div class="accordion-inner">
-                                <mytest/>
+                                <myinput/>
                             </div>
                         </div>
                     </div>
