@@ -216,7 +216,7 @@ TreeConfig.prototype = {
 
 var propsMap = {
     area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
-    line: ["exist", "simlifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
+    line: ["exist", "simplifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
     point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
 };
 

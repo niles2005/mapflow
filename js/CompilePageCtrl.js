@@ -1,23 +1,22 @@
 'use strict';
 
-var areaFields = [
+var groupMap = {
+    area: [
         {name:"exist",type:"boolean",value:"0"},
         {name:"simplifypixel",type:"float",value:"0.8"},
         {name:"showpixel",type:"float",value:"1.1"},
         {name:"showriverwidth",type:"float",value:"0.5"},
         {name:"shownamerange",type:"float",value:"60"}
-    ];
-    
-var lineFields = [
+    ],
+    line: [
         {name:"exist",type:"boolean",value:"0"},
         {name:"simplifypixel",type:"float",value:"0.8"},
         {name:"maxanglefilter",type:"float",value:"1.1"},
         {name:"namefilter",type:"float",value:"0.5"},
         {name:"nameblank",type:"float",value:"60"},
         {name:"namegroupmargin",type:"float",value:"60"}
-    ];
-    
-var pointFields = [
+    ],
+    point: [
         {name:"exist",type:"boolean",value:"0"},
         {name:"fontsize",type:"float",value:"0.8"},
         {name:"fontstyle",type:"float",value:"1.1"},
@@ -29,7 +28,8 @@ var pointFields = [
         {name:"sameclassrange", type:"float",value:"60"},
         {name:"sametyperange", type:"float",value:"60"},
         {name:"samenamerange", type:"float",value:"60"}
-    ];
+    ]
+};
     
 function CompilePageCtrl($scope) {
     $scope.fields = [];
@@ -50,16 +50,10 @@ function CompilePageCtrl($scope) {
     };
     $scope.selectNode = function(navigationPath,propsArr) {
         $scope.props = propsArr;
-        console.dir(propsArr)
+        
         $scope.navigationPath = navigationPath;
-        if(navigationPath && navigationPath[0]) {
-            if(navigationPath[0] === "area") {
-                $scope.fields = areaFields;
-            } else if(navigationPath[0] === "line") {
-                $scope.fields = lineFields;
-            } else if(navigationPath[0] === "point") {
-                $scope.fields = pointFields;
-            }
+        if(navigationPath) {
+            $scope.fields = groupMap[navigationPath[0]];
         }
         $scope.$apply();
     };
