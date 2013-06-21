@@ -129,7 +129,8 @@ TreeConfig.prototype = {
             return;
         }
         if(node._attr) {
-            arr.unshift(node._attr["name"]);
+//            arr.unshift(node._attr["name"]);
+            arr.unshift(node);
         } else {
             return;
         }
@@ -143,17 +144,23 @@ TreeConfig.prototype = {
     makeClickListener: function () {
         var self = this;
         return function(event) {
-            event.stopPropagation();
-            event.preventDefault();
+            if(event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
 
 
             var props = [];
             var liObj = this;
             var groupName = liObj._attr["groupName"];
 
+            var treeNodeArr = [];
             var treePathArr = [];
-            self.listPathNames(liObj,treePathArr);
-            treePathArr.unshift(groupName);
+            self.listPathNames(liObj,treeNodeArr);
+            for(var k in treeNodeArr) {
+                treePathArr.push(treeNodeArr[k]._attr["name"]);
+            }
+            selectTreeNodeArray = treeNodeArr;
             
             while (liObj) {
                 if (liObj._attr) {
@@ -184,7 +191,7 @@ TreeConfig.prototype = {
                 }
             }
             if(self._scope) {
-                self._scope.selectNode(treePathArr,props);
+                self._scope.selectNode(groupName,treePathArr,props);
             }
 
             var jli = $(this);
@@ -192,7 +199,7 @@ TreeConfig.prototype = {
             if (jul.length > 0) {
                 var jdiv = jli.find('>div');
                 if (jdiv.hasClass('nodeopen')) {
-                    if (event.target instanceof HTMLDivElement) {//点击+/-才可以展开/关闭树，点击内容部分不能关闭，可以打开，参考windows目录
+                    if (event && event.target instanceof HTMLDivElement) {//点击+/-才可以展开/关闭树，点击内容部分不能关闭，可以打开，参考windows目录
                         jdiv.removeClass('nodeopen');
                         jdiv.addClass('nodeclosed');
                         jul.children().slideUp('slow');
@@ -214,6 +221,7 @@ TreeConfig.prototype = {
     }
 };
 
+var selectTreeNodeArray = null;
 var propsMap = {
     area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
     line: ["exist", "simplifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
