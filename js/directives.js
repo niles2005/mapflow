@@ -86,8 +86,9 @@ angular.module('myApp.directives', []).
                 var levelHtml = '';
                 if (scope.myfield.name === 'exist') {
                     levelHtml = '<img src="img/exist' + scope.prop["exist"] + '.png"/>';
+                }else{
+                    levelHtml = scope.prop[scope.myfield.name];
                 }
-                levelHtml = scope.prop["showpixel"];
 
                 element.replaceWith(levelHtml);
             }
