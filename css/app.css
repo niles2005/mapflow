@@ -206,3 +206,14 @@ width: 100px;
     cursor: default;
 }
 
+<<<<<<< HEAD
+=======
+.fontStyleList:hover{
+    border-color: #d24352;
+}
+
+
+.fontSelected{
+    border-color: #d24352;
+}
+>>>>>>> ac16451ba43ef0f1a3a0c686d049583463f9c09c

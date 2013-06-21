@@ -69,8 +69,11 @@ function CompilePageCtrl($scope) {
         }
     };
 
-    $scope.setFontStyle = function(fontStyle){
-        this.myfield.value =  fontStyle;
+    $scope.setFontStyle = function(fontStyleIndex){
+        $scope.fontStyle0 = $scope.fontStyle1 = $scope.fontStyle2 = "";
+        $scope["fontStyle" + fontStyleIndex] =  "fontSelected";
+
+        this.myfield.value =  fontStyleIndex;
         $scope.currentField = this.myfield;
     } ;
     
