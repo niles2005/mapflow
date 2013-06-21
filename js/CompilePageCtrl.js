@@ -1,17 +1,24 @@
 'use strict';
 
 function CompilePageCtrl($scope) {
+    console.log("aaa")
     $scope.fields = [
-        {name:"exist",type:"boolean",exist:"0"},
+        {name:"exist",type:"boolean",value:"0"},
         {name:"simplifypixel",type:"int",defalutValue:"1"},
-        {name:"showpixel",type:"boolean"},
-        {name:"showriverwidth",type:"boolean"},
-        {name:"shownamerange",type:"boolean"}
+        {name:"showpixel",type:"int"},
+        {name:"showriverwidth",type:"int"},
+        {name:"shownamerange",type:"int"}
     ];
-    $scope.existValue = 1;
+    $scope.existValue = 0;
     $scope.showpixelValue = 1.0;
     $scope.currentProp = '';
 //    $scope.navigationPath = "";
+    $scope.doTest = function() {
+        $scope.currentProp = this.myfield.name;
+
+        maskCanvas.doMask('listulexist');
+        console.log("sssss");
+    }
     $scope.selectNode = function(navigationPath,propsArr) {
 
         $scope.props = propsArr;
@@ -36,7 +43,6 @@ function CompilePageCtrl($scope) {
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
     $('#collapseexist').on('show', function () {
-        console.dir("aaa")
         $scope.currentProp = 'exist';
         maskCanvas.doMask('listulexist');
     });

@@ -45,6 +45,7 @@ angular.module('myApp.directives', []).
         return {
             restrict: 'E',
 //      scope:{existValue:"="},
+
             link: function (scope, element, attrs) {
                 console.dir(attrs);
                 var type = scope.myfield.type;
@@ -73,28 +74,42 @@ angular.module('myApp.directives', []).
                         '</label>' +
                         '</form>';
                     element.replaceWith($compile(htmlText)(scope));
-//                element.append($compile(htmlText)(scope));
                 }
             }
         }
     })
-    .directive('levelcycle', function () {
+    .directive('myitem', function ($compile) {
         return {
             restrict: 'E',
+//      scope:{existValue:"="},
             link: function (scope, element, attrs) {
-                console.dir(scope);
-                var levelHtml = '';
-                if (scope.myfield.name === 'exist') {
-                    levelHtml = '<img src="img/exist' + scope.prop["exist"] + '.png"/>';
-                }else{
-                    levelHtml = scope.prop[scope.myfield.name];
+//            console.dir(attrs);
+                var type = scope.myfield.type;
+                if (type === 'a') {
+                    var htmlText = '<div class="control-group">' +
+                        '<label class="control-label" >' + scope.title + '</label>' +
+                        '<div class="controls">' +
+                        '</div>' +
+                        '</div>';
+                    element.replaceWith(htmlText);
+                } else if (type === 'b') {
+                    var htmlText = '<img src="img/exist1.png"/>';
+                    element.replaceWith(htmlText);
+                } else if (type === 'int') {
+                    var defalutValue = scope.myfield.defalutValue;
+                    var htmlText = '<input type="text" ng-model="existValue" value="' + defalutValue + '">';
+//                element.replaceWith(htmlText);    
+                    element.append($compile(htmlText)(scope));
+                } else if (type === 'boolean') {
+                    var htmlText = '<img ng-src="img/exist{{prop.exist}}.png"/>';
+                    element.replaceWith($compile(htmlText)(scope));
+//                element.append($compile(htmlText)(scope));
+//                element.replaceWith(htmlText);    
                 }
 
-                element.replaceWith(levelHtml);
+
             }
-
-        }
+        };
     });
-
 
   
