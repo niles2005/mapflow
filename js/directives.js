@@ -80,4 +80,3 @@ angular.module('myApp.directives', []).
         }
     };
 });
-

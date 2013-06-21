@@ -190,6 +190,7 @@ angular.module('DirectiveTest', [])
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
+                console.dir(attrs);
                 console.log("Recognized the fundoo-rating directive usage");
             }
         }

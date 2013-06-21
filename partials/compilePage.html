@@ -22,8 +22,11 @@
         <div class="span12">
             <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
 
+
             exist:{{fields[0].exist}}
             <input type="text" ng-model="fields[0].exist">
+
+
 
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
@@ -52,6 +55,7 @@
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
                                             <myitem/>
+
                                         </a>
                                     </li>
                                 </ul>
