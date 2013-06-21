@@ -47,7 +47,7 @@ angular.module('myApp.directives', []).
       restrict: 'E',
 //      scope:{existValue:"="},
       link: function(scope, element, attrs) {
-            console.dir(attrs);
+//            console.dir(attrs);
             var type = scope.myfield.type;
             if(type === 'a') {
                 var htmlText = '<div class="control-group">' +
@@ -67,13 +67,46 @@ angular.module('myApp.directives', []).
             } else if(type === 'boolean') {
                 var htmlText = '<form>' + 
                     '<label class="radio  inline">'+
-                    '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">'+
+                    '    <input type="radio" ng-model="myfield.value" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">'+
                     '</label>'+
                     '<label class="radio  inline">'+
-                    '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="0"><img src="img/error.png">'+
+                    '    <input type="radio" ng-model="myfield.value" name="optionsRadios" value="0"><img src="img/error.png">'+
                     '</label>'+
                 '</form>';
         element.replaceWith($compile(htmlText)(scope));    
+//                element.append($compile(htmlText)(scope));
+//                element.replaceWith(htmlText);    
+            }
+            
+   
+      }
+    };
+  })
+  .directive('myitem', function($compile){
+    return {
+      restrict: 'E',
+//      scope:{existValue:"="},
+      link: function(scope, element, attrs) {
+//            console.dir(attrs);
+            var type = scope.myfield.type;
+            if(type === 'a') {
+                var htmlText = '<div class="control-group">' +
+                '<label class="control-label" >' + scope.title + '</label>' +
+                    '<div class="controls">' +
+                    '</div>' +
+                '</div>';
+                element.replaceWith(htmlText);    
+            } else if(type === 'b') {
+                var htmlText = '<img src="img/exist1.png"/>';
+                element.replaceWith(htmlText);    
+            } else if(type === 'int') {
+                var defalutValue = scope.myfield.defalutValue;
+                var htmlText = '<input type="text" ng-model="existValue" value="' + defalutValue + '">';
+//                element.replaceWith(htmlText);    
+                element.append($compile(htmlText)(scope));
+            } else if(type === 'boolean') {
+                var htmlText = '<img ng-src="img/exist{{prop.exist}}.png"/>';
+                element.replaceWith($compile(htmlText)(scope));    
 //                element.append($compile(htmlText)(scope));
 //                element.replaceWith(htmlText);    
             }

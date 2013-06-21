@@ -95,7 +95,7 @@ MaskCanvas.prototype = {
             for (var k in self._rectArr) {
                 var rect = self._rectArr[k];
                 if (rect.intersectsLine(self.pressX1, self.pressY1, self.pressX2, self.pressY2)) {
-                    self._scope.props[k][self._scope.currentProp] = self._scope[self._scope.currentProp + 'Value'];
+                    self._scope.props[k][self._scope.currentProp] = self._scope.fields[0].value;
                 }
             }
 
@@ -103,7 +103,7 @@ MaskCanvas.prototype = {
             self.repaint();
             unbindEvent(document, "mousemove", onMouseMove);
             unbindEvent(document, "mouseup", onMouseUp);
-
+            
             self._scope.$apply();
         }
         bindEvent(document, "mousemove", onMouseMove);
