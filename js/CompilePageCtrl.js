@@ -39,6 +39,7 @@ function CompilePageCtrl($scope) {
         if(maskCanvas.isMask()) {
             maskCanvas.doRemoveMask();
             if($scope.currentField && $scope.currentField.name === this.myfield.name) {
+                $scope.currentField = null;
             } else {
                 $scope.currentField = this.myfield;
                 maskCanvas.doMask('listul' + this.myfield.name);
@@ -48,14 +49,20 @@ function CompilePageCtrl($scope) {
             maskCanvas.doMask('listul' + this.myfield.name);
         }
     };
-    $scope.selectNode = function(navigationPath,propsArr) {
+    $scope.selectNode = function(groupName,treePathArr,propsArr) {
+        $scope.groupName = groupName;
         $scope.props = propsArr;
         
-        $scope.navigationPath = navigationPath;
-        if(navigationPath) {
-            $scope.fields = groupMap[navigationPath[0]];
+        $scope.navigationPath = treePathArr;
+        $scope.fields = groupMap[groupName];
+        if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+    };
+    $scope.clickTreeNode = function(index) {
+        if(selectTreeNodeArray && index < selectTreeNodeArray.length - 1) {
+            selectTreeNodeArray[index].onclick();
         }
-        $scope.$apply();
     };
 
     $scope.setFontStyle = function(fontStyle){

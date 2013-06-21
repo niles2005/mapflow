@@ -23,10 +23,11 @@
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
             </div>
-            <div style="display: block;height: 28px;">
-                 <span ng-repeat="path in navigationPath">
-                    <a href="{{path}}"  >{{ path }}</a>
-                    <span ng-show=" ! $last ">-></span>
+            <div style="display: block;height: 28px;cursor:default;">
+                {{ groupName }}
+                 <span ng-repeat="path in navigationPath" >
+                    <span>-></span>
+                    <a ng-click="clickTreeNode($index)" style="cursor:pointer">{{ path }}</a>
                  </span>
             </div>
             <div class="tempInfo">
