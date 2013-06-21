@@ -196,3 +196,12 @@ width: 100px;
 .groupFocus {
     color: #f00;
 }
+
+.fontStyleList {
+    background-color: lightgreen;
+    display: inline;
+    border-style: solid;
+    border-color: #0e90d2 ;
+    margin-right: 12px;
+    cursor: default;
+}

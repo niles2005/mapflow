@@ -19,7 +19,7 @@ var groupMap = {
     point: [
         {name:"exist",type:"boolean",value:"0"},
         {name:"fontsize",type:"float",value:"0.8"},
-        {name:"fontstyle",type:"float",value:"1.1"},
+        {name:"fontstyle",type:"fontstyle",value:"1"},
         {name:"iconstyle",type:"float",value:"0.5"},
         {name:"labelorient",type:"float",value:"60"},
         {name:"labellevel",type:"float",value:"60"},
@@ -57,6 +57,11 @@ function CompilePageCtrl($scope) {
         }
         $scope.$apply();
     };
+
+    $scope.setFontStyle = function(fontStyle){
+        this.myfield.value =  fontStyle;
+        $scope.currentField = this.myfield;
+    } ;
     
     new TreeConfig("new.xml",$scope);
     

@@ -48,7 +48,7 @@ angular.module('myApp.directives', []).
         link: function(scope, element, attrs) {
 //            console.dir(attrs);
             var type = scope.myfield.type;
-            if (type === 'float') {
+            if (type === 'float'|| type === 'fontstyle') {
                 var htmlText = '<span>{{prop.' + scope.$parent.myfield.name + '}}</span>';
                 element.replaceWith($compile(htmlText)(scope));
             } else if (type === 'boolean') {
@@ -76,7 +76,16 @@ angular.module('myApp.directives', []).
                         '</label>' +
                         '</form>';
                 element.replaceWith($compile(htmlText)(scope));
+            }else if(type === 'fontstyle'){
+                console.dir(scope) ;
+                var htmlText = '<form>' +
+                    '<div class="fontStyleList" ng-click="setFontStyle(0)">Plain</div>' +
+                    '<div class="fontStyleList" ng-click="setFontStyle(1)">Italic</div>' +
+                    '<div class="fontStyleList" ng-click="setFontStyle(2)">Blod</div>' +
+                    '</form>';
+                element.replaceWith($compile(htmlText)(scope));
             }
+
         }
     };
 });

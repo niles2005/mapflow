@@ -162,16 +162,17 @@ TreeConfig.prototype = {
                             props[level] = {};
                         }
 
-                        for (var key in propsMap[groupName]) {
-                            var propName = propsMap[groupName][key];
-                            if (props[level][propName]) {
+                        for (var propArray in groupMap[groupName]) {
+                                var propName = groupMap[groupName][propArray].name;
+                                if (props[level][propName]) {
 
-                            } else {
-                                if (liObj._attr[propName]) {
-                                    var index = level > liObj._attr[propName].length - 1 ? liObj._attr[propName].length - 1 : level;
-                                    props[level][propName] = liObj._attr[propName][index];
+                                } else {
+                                    if (liObj._attr[propName]) {
+                                        var index = level > liObj._attr[propName].length - 1 ? liObj._attr[propName].length - 1 : level;
+                                        props[level][propName] = liObj._attr[propName][index];
+                                    }
                                 }
-                            }
+
                         }
                     }
 
@@ -214,11 +215,6 @@ TreeConfig.prototype = {
     }
 };
 
-var propsMap = {
-    area: ["exist", "simplifypixel", "showpixel", "showriverwidth", "shownamerange"],
-    line: ["exist", "simplifypixel", "maxanglefilter", "namefilter", "nameblank", "namegroupmargin"],
-    point: ["exist", "fontsize", "fontstyle", "iconstyle", "labelorient", "labellevel", "labelmargin", "labelcharspace", "sameclassrange", "sametyperange", "samenamerange"]
-};
 
 function CompileTreeCtrl($scope) {
 
