@@ -4,112 +4,79 @@
 
 
 angular.module('myApp.directives', []).
-    directive('appVersion', ['version', function (version) {
-        return function (scope, elm, attrs) {
+        directive('appVersion', ['version', function(version) {
+        return function(scope, elm, attrs) {
             elm.text(version);
         };
     }])
-    .directive('zippy',function () {
-        return {
-            restrict: 'C',
-            // This HTML will replace the zippy directive.
-            replace: true,
-            transclude: true,
-            scope: { title: '@zippyTitle' },
-            template: '<div>' +
+        .directive('zippy', function() {
+    return {
+        restrict: 'C',
+        // This HTML will replace the zippy directive.
+        replace: true,
+        transclude: true,
+        scope: {title: '@zippyTitle'},
+        template: '<div>' +
                 '<div class="title">{{title}}</div>' +
                 '<div class="body" ng-transclude></div>' +
                 '</div>',
-            // The linking function will add behavior to the template
-            link: function (scope, element, attrs) {
-                // Title element
-                var title = angular.element(element.children()[0]),
-                // Opened / closed state
+        // The linking function will add behavior to the template
+        link: function(scope, element, attrs) {
+            // Title element
+            var title = angular.element(element.children()[0]),
+                    // Opened / closed state
                     opened = true;
 
-                // Clicking on title should open/close the zippy
-                title.bind('click', toggle);
+            // Clicking on title should open/close the zippy
+            title.bind('click', toggle);
 
-                // Toggle the closed/opened state
-                function toggle() {
-                    opened = !opened;
-                    element.removeClass(opened ? 'closed' : 'opened');
-                    element.addClass(opened ? 'opened' : 'closed');
-                }
-
-                // initialize the zippy
-                toggle();
+            // Toggle the closed/opened state
+            function toggle() {
+                opened = !opened;
+                element.removeClass(opened ? 'closed' : 'opened');
+                element.addClass(opened ? 'opened' : 'closed');
             }
-        };
-    }).directive('mytest', function ($compile) {
-        return {
-            restrict: 'E',
-//      scope:{existValue:"="},
 
-            link: function (scope, element, attrs) {
-                console.dir(attrs);
-                var type = scope.myfield.type;
-                if (type === 'a') {
-                    var htmlText = '<div class="control-group">' +
-                        '<label class="control-label" >' + scope.title + '</label>' +
-                        '<div class="controls">' +
-                        '</div>' +
-                        '</div>';
-                    element.replaceWith(htmlText);
-                } else if (type === 'b') {
-                    var htmlText = '<img src="img/exist1.png"/>';
-                    element.replaceWith(htmlText);
-                } else if (type === 'int') {
-                    var defalutValue = scope.myfield.defalutValue;
-                    var htmlText = '<input type="text" ng-model="existValue" value="' + defalutValue + '">';
-//                element.replaceWith(htmlText);    
-                    element.append($compile(htmlText)(scope));
-                } else if (type === 'boolean') {
-                    var htmlText = '<form>' +
-                        '<label class="radio  inline">' +
-                        '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">' +
-                        '</label>' +
-                        '<label class="radio  inline">' +
-                        '    <input type="radio" ng-model="myfield.exist" name="optionsRadios" value="0"><img src="img/error.png">' +
-                        '</label>' +
-                        '</form>';
-                    element.replaceWith($compile(htmlText)(scope));
-                }
+            // initialize the zippy
+            toggle();
+        }
+    };
+})
+.directive('myitem', function($compile) {
+    return {
+        restrict: 'E',
+        link: function(scope, element, attrs) {
+//            console.dir(attrs);
+            var type = scope.myfield.type;
+            if (type === 'float') {
+                var htmlText = '<span>{{prop.' + scope.$parent.myfield.name + '}}</span>';
+                element.replaceWith($compile(htmlText)(scope));
+            } else if (type === 'boolean') {
+                var htmlText = '<img ng-src="img/exist{{prop.' + scope.$parent.myfield.name + '}}.png"/>';
+                element.replaceWith($compile(htmlText)(scope));
             }
         }
-    })
-    .directive('myitem', function ($compile) {
-        return {
-            restrict: 'E',
-//      scope:{existValue:"="},
-            link: function (scope, element, attrs) {
-//            console.dir(attrs);
-                var type = scope.myfield.type;
-                if (type === 'a') {
-                    var htmlText = '<div class="control-group">' +
-                        '<label class="control-label" >' + scope.title + '</label>' +
-                        '<div class="controls">' +
-                        '</div>' +
-                        '</div>';
-                    element.replaceWith(htmlText);
-                } else if (type === 'b') {
-                    var htmlText = '<img src="img/exist1.png"/>';
-                    element.replaceWith(htmlText);
-                } else if (type === 'int') {
-                    var defalutValue = scope.myfield.defalutValue;
-                    var htmlText = '<input type="text" ng-model="existValue" value="' + defalutValue + '">';
-//                element.replaceWith(htmlText);    
-                    element.append($compile(htmlText)(scope));
-                } else if (type === 'boolean') {
-                    var htmlText = '<img ng-src="img/exist{{prop.exist}}.png"/>';
-                    element.replaceWith($compile(htmlText)(scope));
-//                element.append($compile(htmlText)(scope));
-//                element.replaceWith(htmlText);    
-                }
-
-
+    };
+})
+.directive('myinput', function($compile) {
+    return {
+        restrict: 'E',
+        link: function(scope, element, attrs) {
+            var type = scope.myfield.type;
+            if (type === 'float') {
+                var htmlText = '<input type="text" ng-model="myfield.value">';
+                element.replaceWith($compile(htmlText)(scope));
+            } else if (type === 'boolean') {
+                var htmlText = '<form>' +
+                        '<label class="radio  inline">' +
+                        '    <input type="radio" ng-model="myfield.value" name="optionsRadios" value="1" checked="true"><img src="img/valid.png">' +
+                        '</label>' +
+                        '<label class="radio  inline">' +
+                        '    <input type="radio" ng-model="myfield.value" name="optionsRadios" value="0"><img src="img/error.png">' +
+                        '</label>' +
+                        '</form>';
+                element.replaceWith($compile(htmlText)(scope));
             }
-        };
-    });
-
-  
+        }
+    };
+});
