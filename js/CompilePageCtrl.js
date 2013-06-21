@@ -39,6 +39,7 @@ function CompilePageCtrl($scope) {
         if(maskCanvas.isMask()) {
             maskCanvas.doRemoveMask();
             if($scope.currentField && $scope.currentField.name === this.myfield.name) {
+                $scope.currentField = null;
             } else {
                 $scope.currentField = this.myfield;
                 maskCanvas.doMask('listul' + this.myfield.name);
