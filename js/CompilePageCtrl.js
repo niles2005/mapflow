@@ -1,34 +1,66 @@
 'use strict';
 
-function CompilePageCtrl($scope) {
-    $scope.fields = [
-        {name:"exist",type:"boolean",value:"0",focus:false},
-        {name:"simplifypixel",type:"float",value:"0.8",focus:false},
-        {name:"showpixel",type:"float",value:"1.1",focus:false},
-        {name:"showriverwidth",type:"float",value:"0.5",focus:false},
-        {name:"shownamerange",type:"float",value:"60",focus:false}
+var areaFields = [
+        {name:"exist",type:"boolean",value:"0"},
+        {name:"simplifypixel",type:"float",value:"0.8"},
+        {name:"showpixel",type:"float",value:"1.1"},
+        {name:"showriverwidth",type:"float",value:"0.5"},
+        {name:"shownamerange",type:"float",value:"60"}
     ];
+    
+var lineFields = [
+        {name:"exist",type:"boolean",value:"0"},
+        {name:"simplifypixel",type:"float",value:"0.8"},
+        {name:"maxanglefilter",type:"float",value:"1.1"},
+        {name:"namefilter",type:"float",value:"0.5"},
+        {name:"nameblank",type:"float",value:"60"},
+        {name:"namegroupmargin",type:"float",value:"60"}
+    ];
+    
+var pointFields = [
+        {name:"exist",type:"boolean",value:"0"},
+        {name:"fontsize",type:"float",value:"0.8"},
+        {name:"fontstyle",type:"float",value:"1.1"},
+        {name:"iconstyle",type:"float",value:"0.5"},
+        {name:"labelorient",type:"float",value:"60"},
+        {name:"labellevel",type:"float",value:"60"},
+        {name:"labelmargin", type:"float",value:"60"},
+        {name:"labelcharspace", type:"float",value:"60"},
+        {name:"sameclassrange", type:"float",value:"60"},
+        {name:"sametyperange", type:"float",value:"60"},
+        {name:"samenamerange", type:"float",value:"60"}
+    ];
+    
+function CompilePageCtrl($scope) {
+    $scope.fields = [];
     $scope.currentField = null;
     
     $scope.doConfig = function() {
         if(maskCanvas.isMask()) {
             maskCanvas.doRemoveMask();
             if($scope.currentField && $scope.currentField.name === this.myfield.name) {
-                $scope.currentField.focus = false;
             } else {
                 $scope.currentField = this.myfield;
-                $scope.currentField.focus = true;
                 maskCanvas.doMask('listul' + this.myfield.name);
             }
         } else {
             $scope.currentField = this.myfield;
-            $scope.currentField.focus = true;
             maskCanvas.doMask('listul' + this.myfield.name);
         }
     };
     $scope.selectNode = function(navigationPath,propsArr) {
         $scope.props = propsArr;
+        console.dir(propsArr)
         $scope.navigationPath = navigationPath;
+        if(navigationPath && navigationPath[0]) {
+            if(navigationPath[0] === "area") {
+                $scope.fields = areaFields;
+            } else if(navigationPath[0] === "line") {
+                $scope.fields = lineFields;
+            } else if(navigationPath[0] === "point") {
+                $scope.fields = pointFields;
+            }
+        }
         $scope.$apply();
     };
     
