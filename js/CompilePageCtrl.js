@@ -2,11 +2,11 @@
 
 function CompilePageCtrl($scope) {
     $scope.fields = [
-        {name:"exist",type:"boolean",value:"0"},
-        {name:"simplifypixel",type:"float",value:"0.8"},
-        {name:"showpixel",type:"float",value:"1.1"},
-        {name:"showriverwidth",type:"float",value:"0.5"},
-        {name:"shownamerange",type:"float",value:"60"}
+        {name:"exist",type:"boolean",value:"0",focus:false},
+        {name:"simplifypixel",type:"float",value:"0.8",focus:false},
+        {name:"showpixel",type:"float",value:"1.1",focus:false},
+        {name:"showriverwidth",type:"float",value:"0.5",focus:false},
+        {name:"shownamerange",type:"float",value:"60",focus:false}
     ];
     $scope.currentField = null;
     
@@ -14,13 +14,15 @@ function CompilePageCtrl($scope) {
         if(maskCanvas.isMask()) {
             maskCanvas.doRemoveMask();
             if($scope.currentField && $scope.currentField.name === this.myfield.name) {
-                $scope.currentProp = null;
+                $scope.currentField.focus = false;
             } else {
                 $scope.currentField = this.myfield;
+                $scope.currentField.focus = true;
                 maskCanvas.doMask('listul' + this.myfield.name);
             }
         } else {
             $scope.currentField = this.myfield;
+            $scope.currentField.focus = true;
             maskCanvas.doMask('listul' + this.myfield.name);
         }
     };
@@ -29,7 +31,7 @@ function CompilePageCtrl($scope) {
         $scope.navigationPath = navigationPath;
         $scope.$apply();
     };
-
+    
     new TreeConfig("new.xml",$scope);
     
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);

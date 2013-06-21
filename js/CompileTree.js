@@ -126,12 +126,12 @@ TreeConfig.prototype = {
 
     listPathNames: function (node,arr) {
         if(!node) {
-            return arr;
+            return;
         }
         if(node._attr) {
             arr.unshift(node._attr["name"]);
         } else {
-            return arr;
+            return;
         }
         var parent = node.parentElement;
         if(parent) {
@@ -151,7 +151,10 @@ TreeConfig.prototype = {
             var liObj = this;
             var groupName = liObj._attr["groupName"];
 
-            var treePathArr = self.listPathNames(liObj,[]);
+            var treePathArr = [];
+            self.listPathNames(liObj,treePathArr);
+            treePathArr.unshift(groupName);
+            
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {

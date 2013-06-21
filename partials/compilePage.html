@@ -20,20 +20,12 @@
 
         </div>
         <div class="span12">
-            <div class="zippy" zippy-title="Details: {{title}}...">{{text}}</div>
-
-
-            exist:{{fields[0].exist}}
-            <input type="text" ng-model="fields[0].exist">
-
-
-
             <div class="Mask" style='display: none;'>
                 <canvas id="MaskCanvas1">
             </div>
-            <div>
+            <div style="display: block;height: 28px;">
                  <span ng-repeat="path in navigationPath">
-                    <a href="{{path}}">{{ path }}</a>
+                    <a href="{{path}}"  >{{ path }}</a>
                     <span ng-show=" ! $last ">-></span>
                  </span>
             </div>
@@ -43,7 +35,7 @@
                     <div ng-repeat="myfield in fields" class="accordion-group">
                         <div class="accordion-heading">
                             <div class="accordion-inner">
-                                <a class="">
+                                <a ng-class="{groupFocus: currentField.name == myfield.name}">
                                     {{myfield.name}}
                                 </a>
                                 <a class="pull-right" ng-click="doConfig()" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{myfield.name}}">
@@ -51,7 +43,7 @@
                                 </a>
                             </div>
                             <div class="pagination " style="padding: 8px 15px;margin: 0;">
-                                <ul id='listul{{myfield.name}}'>
+                                <ul id='listul{{myfield.name}}' style="display: block;">
                                     <li ng-repeat="prop in props">
                                         <a ng-click="setProp(prop,'exist')" ng-class="{itemActive: $index==theIndex}" class="labeli{{$index}}">
                                             <myitem/>
@@ -62,7 +54,7 @@
                             </div>
 
                         </div>
-                        <div id="collapse{{myfield.name}}" class="accordion-body collapse" style="height: 0">
+                        <div id="collapse{{myfield.name}}" class="accordion-body collapse" >
                             <div class="accordion-inner">
                                 <myinput/>
                             </div>
