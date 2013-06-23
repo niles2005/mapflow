@@ -20,7 +20,7 @@ var groupMap = {
         {name:"exist",type:"boolean",value:"0"},
         {name:"fontsize",type:"float",value:"0.8"},
         {name:"fontstyle",type:"fontstyle",value:"1"},
-        {name:"iconstyle",type:"float",value:"0.5"},
+        {name:"iconstyle",type:"iconstyle",value:"1"},
         {name:"labelorient",type:"float",value:"60"},
         {name:"labellevel",type:"float",value:"60"},
         {name:"labelmargin", type:"float",value:"60"},
@@ -74,8 +74,15 @@ function CompilePageCtrl($scope) {
         $scope["fontStyle" + fontStyleIndex] =  "fontSelected";
 
         this.myfield.value =  fontStyleIndex;
-        $scope.currentField = this.myfield;
     } ;
+
+    $scope.setLabelOrient = function($event){
+        var $td =  $($event.target);
+        var $table = $td.parent().parent();
+        this.myfield.value =  $td.find(">span").text();
+        $table.find("td").removeClass("labelOrientSelected");
+        $td.addClass("labelOrientSelected");
+    }
     
     new TreeConfig("new.xml",$scope);
     

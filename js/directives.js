@@ -48,7 +48,7 @@ angular.module('myApp.directives', []).
         link: function(scope, element, attrs) {
 //            console.dir(attrs);
             var type = scope.myfield.type;
-            if (type === 'float'|| type === 'fontstyle') {
+            if (type === 'float'|| type === 'fontstyle'||  type === 'iconstyle') {
                 var htmlText = '<span>{{prop.' + scope.$parent.myfield.name + '}}</span>';
                 element.replaceWith($compile(htmlText)(scope));
             } else if (type === 'boolean') {
@@ -77,12 +77,19 @@ angular.module('myApp.directives', []).
                         '</form>';
                 element.replaceWith($compile(htmlText)(scope));
             }else if(type === 'fontstyle'){
-                var htmlText = '<div>'+
-                    '<div class="fontStyleList" ng-class = "fontStyle0" ng-click="setFontStyle(0)">正体 Plain</div>' +
-                    '<div class="fontStyleList" ng-class = "fontStyle1" ng-click="setFontStyle(1)">斜体 Italic</div>' +
-                    '<div class="fontStyleList" ng-class = "fontStyle2" ng-click="setFontStyle(2)">粗体 Blod</div>'+
+                var htmlText = '<div class="fontStyleList">'+
+                    '<div ng-class = "fontStyle0" ng-click="setFontStyle(0)">正体 Plain</div>' +
+                    '<div ng-class = "fontStyle1" ng-click="setFontStyle(1)">斜体 Italic</div>' +
+                    '<div ng-class = "fontStyle2" ng-click="setFontStyle(2)">粗体 Blod</div>'+
                     '</div>';
 
+                element.replaceWith($compile(htmlText)(scope));
+            }else if(type === 'iconstyle'){
+                var htmlText = '<table cellspacing="2" class="labelOrient" ng-click=setLabelOrient($event)>'+
+                    '<tr><td>左上<span>1</span></td><td>上<span>2</span></td><td>右上<span>3</span></td></tr>' +
+                    '<tr><td>左中<span>4</span></td><td>只有图标<span>0</span></td><td>右中<span>5</span></td></tr>' +
+                    '<tr><td>左下<span>6</span></td><td>下<span>7</span></td><td>右下<span>8</span></td></tr>' +
+                    '</table>';
                 element.replaceWith($compile(htmlText)(scope));
             }
 

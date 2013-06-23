@@ -196,8 +196,11 @@ width: 100px;
 .groupFocus {
     color: #f00;
 }
-
 .fontStyleList {
+    text-align: center;
+}
+
+.fontStyleList div{
     background-color: lightgreen;
     display: inline;
     border-style: solid;
@@ -206,14 +209,38 @@ width: 100px;
     cursor: default;
 }
 
-<<<<<<< HEAD
-=======
-.fontStyleList:hover{
+.fontStyleList div:hover{
     border-color: #d24352;
 }
 
-
-.fontSelected{
+.fontStyleList div.fontSelected{
     border-color: #d24352;
 }
->>>>>>> ac16451ba43ef0f1a3a0c686d049583463f9c09c
+
+.labelOrient{
+    margin: 0px auto;
+    border:1px solid #9BDF70;
+    background-color: #F0FBEB ;
+    cursor: default;
+}
+
+.labelOrient td{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border:1px solid #9bdf70;
+}
+
+.labelOrient td span{
+    display: none;
+}
+
+.labelOrient td:hover{
+    background-color: #4673fb;
+    cursor: crosshair;
+}
+
+.labelOrientSelected{
+    background-color: #4673fb;
+}
+
