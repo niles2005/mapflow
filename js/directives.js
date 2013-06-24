@@ -48,7 +48,7 @@ angular.module('myApp.directives', []).
         link: function(scope, element, attrs) {
 //            console.dir(attrs);
             var type = scope.myfield.type;
-            if (type === 'float'|| type === 'fontstyle'||  type === 'iconstyle') {
+            if (type === 'float'|| type === 'fontstyle'||  type === 'labelorient') {
                 var htmlText = '<span>{{prop.' + scope.$parent.myfield.name + '}}</span>';
                 element.replaceWith($compile(htmlText)(scope));
             } else if (type === 'boolean') {
@@ -84,8 +84,8 @@ angular.module('myApp.directives', []).
                     '</div>';
 
                 element.replaceWith($compile(htmlText)(scope));
-            }else if(type === 'iconstyle'){
-                var htmlText = '<table cellspacing="2" class="labelOrient" ng-click=setLabelOrient($event)>'+
+            }else if(type === 'labelorient'){
+                var htmlText = '<table  border="1px" class="labelOrient" ng-click=setLabelOrient($event)>'+
                     '<tr><td>左上<span>1</span></td><td>上<span>2</span></td><td>右上<span>3</span></td></tr>' +
                     '<tr><td>左中<span>4</span></td><td>只有图标<span>0</span></td><td>右中<span>5</span></td></tr>' +
                     '<tr><td>左下<span>6</span></td><td>下<span>7</span></td><td>右下<span>8</span></td></tr>' +

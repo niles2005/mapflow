@@ -219,12 +219,13 @@ width: 100px;
 
 .labelOrient{
     margin: 0px auto;
-    border:1px solid #9BDF70;
+    border:solid #9BDF70;
     background-color: #F0FBEB ;
-    cursor: default;
 }
 
 .labelOrient td{
+    border-spacing: 3px;
+    padding: 3px;
     width: 30px;
     height: 30px;
     text-align: center;
