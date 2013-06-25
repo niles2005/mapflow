@@ -84,8 +84,10 @@ function CompilePageCtrl($scope) {
         $td.addClass("labelOrientSelected");
     }
     
-    new TreeConfig("new.xml",$scope);
-    
+    var treeConfig = new TreeConfig("new.xml",$scope);
+    new CompileTreeRightMenu(treeConfig);
+
+
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
 }

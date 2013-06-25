@@ -149,7 +149,6 @@ TreeConfig.prototype = {
                 event.preventDefault();
             }
 
-
             var props = [];
             var liObj = this;
             var groupName = liObj._attr["groupName"];
@@ -161,7 +160,6 @@ TreeConfig.prototype = {
                 treePathArr.push(treeNodeArr[k]._attr["name"]);
             }
             selectTreeNodeArray = treeNodeArr;
-            
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {
