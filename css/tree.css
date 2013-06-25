@@ -20,18 +20,17 @@ ul,ol {
     margin: 0;
 }
 
-.treepanel span {
-    padding: 1px 0 1px 18px;
+.treepanel .treeLabel {
     display: inline-block;
     white-space: nowrap;
     -webkit-user-select: none;
     -moz-user-select:none;
 }
-.treepanel span.nodeselected {
+.treepanel .treeLabel.nodeselected {
     background-color:#33A;
     color:#FFF;
 }
-.treepanel span.nodeHover { 
+.treepanel .treeLabel.nodeHover { 
     color: #bb0000; 
     cursor: default;
     text-decoration:underline;
@@ -56,9 +55,6 @@ ul,ol {
 .tree_mapview .item {
     background: url('../img/tree_mapview_item.png')  no-repeat 0 1px;
 }
-.tree_mapview .mmde {
-    background: url('../img/tree_mapview_mmde.png')  no-repeat 0 2px;
-}
 
 .tree_mapview .group {
     background: url('../img/tree_mapview_group-open.gif')  no-repeat 0 2px;
@@ -73,8 +69,20 @@ ul,ol {
     background: url('../img/tree_mapstyle_element.png')  no-repeat 0 3px;
 }
 
+
 .tree_mapstyle .item {
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select:none;                  
+    width:16px;
+    height:16px;
+    display: inline-block;
     background: url('../img/tree_mapstyle_element.png')  no-repeat 0 3px;
+}
+
+.tree_mapstyle .labelInput {
+    padding: 0;
+    margin: 0;
 }
 
 .tree_mapstyle .group {

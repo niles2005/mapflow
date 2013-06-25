@@ -47,8 +47,8 @@ CompileTreeRightMenu.prototype = {
         return function (event) {
             var jQli = $(currentNode).parent();
             var newLi =  jQli.clone();
-            var jQnameSpan = $(newLi.find('>span'));
-            var jQinput = $('<input type="text" style="width:100px;">');
+            var jQnameSpan = $(newLi.find('.treeLabel'));
+            var jQinput = $('<input class=labelInput type="text" style="width:100px;">');
             jQinput.keypress(self.insertNewName(jQnameSpan,jQinput,self._tree._clickListener));
             jQinput.bind('click', function(){
                     return false;  //在输入到输入框时，不响应onclick事件！
