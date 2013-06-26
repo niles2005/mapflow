@@ -7,6 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
+
+var currentTreeNode = null;
+
 function CompileTreeRightMenu(treeConfig) {
     this._tree =  treeConfig;
     this._treesDiv = treeConfig._jAreaDiv.parent();
@@ -15,6 +18,7 @@ function CompileTreeRightMenu(treeConfig) {
 
 CompileTreeRightMenu.prototype = {
     menuPanel: $('<ul id="config-tree-edit"></ul>'),
+
     init: function (document) {
 
         this._treesDiv.bind("contextmenu",function(){
@@ -26,11 +30,11 @@ CompileTreeRightMenu.prototype = {
         var jQAdd =  $('<a>添加配置项</a>');
         jQAdd.click(this._addNode());
         var jQAddChild =  $('<a>添加子配置项</a>');
-        jQAddChild.click(this._addNode);
+        jQAddChild.click(this._addNode(true));
         var jQEdit =  $('<a>配置项改名</a>');
-        jQEdit.click(this._editNode);
+        jQEdit.click(this._editNode());
         var jQDel =  $('<a>删除配置项</a>');
-        jQDel.click(this._deleteNode);
+        jQDel.click(this._deleteNode());
 
         this.menuPanel.append($("<li></li>").wrapInner(jQAdd));
         this.menuPanel.append($("<li></li>").wrapInner(jQAddChild));
@@ -41,22 +45,21 @@ CompileTreeRightMenu.prototype = {
         this.menuPanel.hide();
     },
 
-    _addNode:function(){
+    _addNode:function(asChild){
         var self = this;
         var menuPanel = this.menuPanel;
-        return function (event) {
-            var jQli = $(currentNode).parent();
+        return function () {
+            var jQli = $(currentTreeNode).parent();
             var newLi =  jQli.clone();
             var jQnameSpan = $(newLi.find('>span'));
-            var jQinput = $('<input type="text" style="width:100px;">');
+            var jQinput = $('<input type="text"  placeholder="Enter a name here" style="width:120px;">');
             jQinput.keypress(self.insertNewName(jQnameSpan,jQinput,self._tree._clickListener));
             jQinput.bind('click', function(){
-                    return false;  //在输入到输入框时，不响应onclick事件！
+                return false;  //在输入到输入框时，不响应onclick事件！
             } );
             jQinput.bind('blur' ,function(){
                 newLi.remove();
             });
-            jQinput.val(jQnameSpan.text());
             jQnameSpan.hide();
             newLi.append(jQinput);
             if(newLi.find('>ul')){
@@ -64,17 +67,47 @@ CompileTreeRightMenu.prototype = {
                 $(newLi.find('>div')).removeClass();
             }
             newLi[0]._attr = jQuery.extend({}, jQli[0]._attr); // 不能写成 newLi[0]._attr = jQli[0]._attr，这时是两个引用指向同一个_attr对象
-
+            if (asChild) {
+                jQli.append(newLi);
+            }
             newLi.insertAfter(jQli);
             menuPanel.hide();
+            jQinput.focus();
         }
     } ,
 
     _editNode:function(){
-                console.log("todo edit here!");
+        var self = this;
+        var menuPanel = this.menuPanel;
+        return function(){
+            var jQli = $(currentTreeNode).parent();
+            var jQnameSpan = $(jQli.find('>span'));
+            var jQinput = $('<input type="text" style="width:100px;">');
+            jQinput.keypress(self.insertNewName(jQnameSpan,jQinput));
+            jQinput.bind('click', function(){
+                return false;  //在输入到输入框时，不响应onclick事件！
+            } );
+            jQinput.bind('blur' ,function(){
+                jQinput.remove();
+                jQnameSpan.fadeIn(200);
+            });
+            jQinput.val(jQnameSpan.text());
+            jQnameSpan.hide();
+            jQli.append(jQinput);
+            menuPanel.hide();
+            jQinput.focus();
+        }
+
     } ,
     _deleteNode:function(){
-                console.log("todo delete here!");
+        var menuPanel = this.menuPanel;
+        return function(){
+            var jQli = $(currentTreeNode).parent();
+            jQli.remove();
+            menuPanel.hide();
+        }
+
+
     } ,
     insertNewName : function(spanNode,inputNode,treeClickListener){
         return function(event){
@@ -84,8 +117,8 @@ CompileTreeRightMenu.prototype = {
                 inputNode.fadeOut(200);
                 spanNode.parent()[0]._attr["name"] = inputNode.val();
                 spanNode.parent().click(treeClickListener);
-
-                inputNode.unbind();
+//                inputNode.unbind();
+                inputNode.remove();
             }
         }
     },
@@ -96,7 +129,7 @@ CompileTreeRightMenu.prototype = {
                 if(event.target.tagName !== 'SPAN' && event.target.className.slice(0,4) !== 'item' ){
                             return false;   // 只有在树的节点上单击时才有弹出菜单
                  }
-                 currentNode = event.target;
+                 currentTreeNode = event.target;
 
                 var _menuW = self.menuPanel.outerWidth();
                 var _menuH = self.menuPanel.outerHeight();
@@ -129,5 +162,3 @@ CompileTreeRightMenu.prototype = {
 
 
 }
-
-var currentNode = null;
