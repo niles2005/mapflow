@@ -50,34 +50,31 @@ CompileTreeRightMenu.prototype = {
             var jQli = $(currentTreeNode).parent();
             if (!asChild) {
                 console.log("add to root");
-                jQli = $('#treeTabArea>ul>li');
+                jQli = $('#treeTabArea');
+
             }
-            var newLi =  jQli.clone();
-            if(newLi.find('>ul')){
-                console.log( 'remove children')
-                $(newLi.find('>ul')).remove();  //去除它的子节点
-                $(newLi.find('span')).remove();
-                $(newLi.find('div')).remove();
-            }
+
+            var newLi =  $(self._tree.newNode(jQli[0]));
+
             var jQnameSpan = $(newLi.find('.treeLabel'));
             var jQinput = $('<input class=labelInput type="text" style="width:120px;">');
             jQinput.keypress(self.insertNewName(jQnameSpan,jQinput,self._tree._clickListener));
             jQinput.bind('click', function(){
                 return false;  //在输入到输入框时，不响应onclick事件！
             } );
-            jQinput.bind('blur' ,function(){
-                newLi.remove();
-            });
+//            jQinput.bind('blur' ,function(){
+//                newLi.remove();
+//            });
 
             jQinput.val('new node');
             jQnameSpan.hide();
             newLi.append(jQinput);
 
-            newLi[0]._attr = jQuery.extend({}, jQli[0]._attr); // 不能写成 newLi[0]._attr = jQli[0]._attr，这时是两个引用指向同一个_attr对象
+//            newLi[0]._attr = jQuery.extend({}, jQli[0]._attr); // 不能写成 newLi[0]._attr = jQli[0]._attr，这时是两个引用指向同一个_attr对象
             if (asChild) {
-                jQli.append(newLi);
+                jQli.append($('<ul class="tree_mapstyle"></ul>').wrapInner(newLi));
             }else{
-                newLi.insertAfter(jQli);
+                ($('<ul class="tree_mapstyle"></ul>').wrapInner(newLi)).insertAfter(jQli);
             }
             menuPanel.hide();
             jQinput.focus();
@@ -124,8 +121,8 @@ CompileTreeRightMenu.prototype = {
                 } else{
                     spanNode.parent()[0]._attr = {};
                 }
-                spanNode.parent()[0]._attr["name"] = inputNode.val();
-                spanNode.parent().click(treeClickListener);
+//                spanNode.parent()[0]._attr["name"] = inputNode.val();
+//                spanNode.parent().click(treeClickListener);
 //                inputNode.unbind();
                 inputNode.remove();
             }
