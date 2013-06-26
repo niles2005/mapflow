@@ -286,15 +286,7 @@ TreeConfig.prototype = {
         this.menuPanel.hide();
     },
 
-    _addNode:function(){
-        var self = this;
-        var menuPanel = this.menuPanel;
-        return function (event) {
-            var jQli = $(currentTreeNode).parent();
-            self.newNode(jQli[0]);
-        }
 
-    },
     popup: function () {
         var self = this;
         function popupClick() {
@@ -331,6 +323,21 @@ TreeConfig.prototype = {
                 self.menuPanel.hide();
             }
         }
+    } ,
+    _addNode:function(){
+        var self = this;
+        var menuPanel = this.menuPanel;
+        return function (event) {
+            var jQli = $(currentTreeNode).parent();
+            self.newNode(jQli[0]);
+        }
+
+    },
+    deleteNode:function(){
+        this.menuPanel.hide();
+        var jQli = $(currentTreeNode).parent();
+        jQli.remove();
+
     }
 };
 
