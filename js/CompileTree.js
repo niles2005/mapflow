@@ -124,6 +124,9 @@ TreeConfig.prototype = {
         }
     },
     newNode: function(node,elementName) {
+        if (this._selectLI) {
+            $(this._selectLI).find(">span").removeClass("nodeselected");
+        }
         var groupName;
         if(node._attr) {
             groupName = node._attr["groupName"];
@@ -133,9 +136,10 @@ TreeConfig.prototype = {
         if(!elementName) {
             elementName = defaultNewNodeName;
         }
-        var jli = $('<li><div></div><span class=item></span><span class=treeLabel></span></li>');
-        jli.find(".treeLabel").text(elementName);
+        var jli = $('<li><div></div><span class=item></span><span style="display:none;" class=treeLabel></span><input class=labelInput type="text" value="' + elementName + '" style="width:120px;"></li>');
+//        jli.find(".treeLabel").text(elementName);
         jli.find('.treeLabel').hover(this._addHover,this._removeHover);
+        
         var li = jli[0];
         li._attr = {};
         li._attr["groupName"] = groupName;
@@ -165,6 +169,14 @@ TreeConfig.prototype = {
 //        } else {
             jli.css('cursor', 'default');
 //        }
+        var jQLabel = jli.find(".treeLabel");
+        var jQinput = jli.find('.labelInput');
+        jQinput.bind('blur' ,function(){
+            jQLabel.text(jQinput.val());
+            jQinput.hide();
+            jQLabel.show();
+        });
+        jQinput.focus();
         return jli;
     },
 
