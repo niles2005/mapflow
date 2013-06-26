@@ -94,7 +94,7 @@ margin: 0;
 list-style: none;
 }
 
-#config-tree-edit {position:absolute;padding:0 4px;width:120px;border:1px solid #B8CBCB;box-shadow:2px 2px 5px #666;background:#FFF;z-index:9;overflow:hidden;}
+#config-tree-edit {cursor:default;position:absolute;padding:0 4px;width:120px;border:1px solid #B8CBCB;box-shadow:2px 2px 5px #666;background:#FFF;z-index:9;overflow:hidden;}
 #config-tree-edit li {float:left;margin-top:-1px;padding:4px 0;width:120px;height:25px;line-height:25px;border-top:1px solid #B8CBCB;list-style:none;}
 #config-tree-edit a, #config-tree-edit a:visited {display:block;text-indent:20px;color:#333;text-decoration:none;}
 #config-tree-edit a:hover {color:#FFF;background-color:#348CCC;text-decoration:none;}

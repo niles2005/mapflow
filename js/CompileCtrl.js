@@ -181,7 +181,7 @@ function CompileCtrl($scope) {
 		drawModule(context, module0D, '0D(Label)', rect0DArr);
 
 		if (pressX1 && pressY1 && pressX2 && pressY2) {
-            drawHotArea(context,pressX1 , pressY1 , pressX2 , pressY2);
+                    drawHotArea(context,pressX1 , pressY1 , pressX2 , pressY2);
 		}
 
 		context.restore();
@@ -222,11 +222,11 @@ function CompileCtrl($scope) {
 			pressX2 = null;
 			pressY2 = null;
 			repaint();
-			unbindEvent(document, "mousemove", onMouseMove);
-			unbindEvent(document, "mouseup", onMouseUp);
+			unbindEvent(canvas, "mousemove", onMouseMove);
+			unbindEvent(canvas, "mouseup", onMouseUp);
 		}
-		bindEvent(document, "mousemove", onMouseMove);
-		bindEvent(document, "mouseup", onMouseUp);
+		bindEvent(canvas, "mousemove", onMouseMove);
+		bindEvent(canvas, "mouseup", onMouseUp);
 	}
 
 	function drawModule(context, module, moduleName, rects) {

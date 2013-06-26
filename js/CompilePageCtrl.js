@@ -88,7 +88,6 @@ function CompilePageCtrl($scope) {
     }
 
     var treeConfig = new TreeConfig("new.xml",$scope);
-    var treeRightMenu = new CompileTreeRightMenu(treeConfig);
-    var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
+    treeConfig.initMenuPanel();
 
 }

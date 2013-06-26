@@ -13,7 +13,7 @@ function TreeConfig(configFile, scope) {
     this.loadContent();
 }
 var currGroupName = null;
-
+var asChild = false;
 var defaultNewNodeName = "NewNode";
 
 TreeConfig.prototype = {
@@ -124,18 +124,22 @@ TreeConfig.prototype = {
         }
     },
     newNode: function(node,elementName) {
+        if (this._selectLI) {
+            $(this._selectLI).find(">span").removeClass("nodeselected");
+        }
         var groupName;
         if(node._attr) {
-            groupName = node._attr[groupName];
+            groupName = node._attr["groupName"];
         } else {
             return;
         }
         if(!elementName) {
             elementName = defaultNewNodeName;
         }
-        var jli = $('<li><div></div><span class=item></span><span class=treeLabel></span></li>');
-        jli.find(".treeLabel").text(elementName);
+        var jli = $('<li><div></div><span class=item></span><span style="display:none;" class=treeLabel></span><input class=labelInput type="text" value="' + elementName + '" style="width:120px;"></li>');
+//        jli.find(".treeLabel").text(elementName);
         jli.find('.treeLabel').hover(this._addHover,this._removeHover);
+        
         var li = jli[0];
         li._attr = {};
         li._attr["groupName"] = groupName;
@@ -144,20 +148,25 @@ TreeConfig.prototype = {
         li.onclick = this._clickListener;
         var jul = $(node).find("ul");
         if(jul) {
+            if(jul.length == 0) {
+                jul = $('<ul>');
+                if (node._attr) {
+                    jul.addClass(this._treeName);
+                }
+                $(node).append(jul);
+            }
             jul.append(jli);
         }
-//        jul.append(jli);
-//        if (subUL.length > 0) {//有子节点
-//            if (node._attr) {//LI node,has _attr
-//                subUL.children().hide();
-//                jli.find('>div').addClass('nodeclosed');
-//            } else {//root node(div),don't has _attr
-//                jli.find('>div').addClass('nodeopen');
-//            }
-//            jli.css('cursor', 'pointer');
-//        } else {
-            jli.css('cursor', 'default');
-//        }
+
+        jli.css('cursor', 'default');
+        var jQLabel = jli.find(".treeLabel");
+        var jQinput = jli.find('.labelInput');
+        jQinput.bind('blur' ,function(){
+            jQLabel.text(jQinput.val());
+            jQinput.hide();
+            jQLabel.show();
+        });
+        jQinput.focus();
         return jli;
     },
 
@@ -254,6 +263,74 @@ TreeConfig.prototype = {
             jli.find(">span").addClass("nodeselected");
             self._selectLI = this;
         };
+    },
+    menuPanel: $('<ul id="config-tree-edit"></ul>'),
+    initMenuPanel : function(){
+        this._jAreaDiv.parent().bind("contextmenu",function(){
+            return false;  //去除默认右键弹出菜单
+        });
+        this._jAreaDiv.parent().find(">div").mousedown( this.popup());
+
+        var jQAdd =  $('<a>添加1</a>');
+        jQAdd.click(this._addNode());
+//        var jQEdit =  $('<a>从命名</a>');
+//        jQEdit.click(this._editNode());
+//        var jQDel =  $('<a>删除</a>');
+//        jQDel.click(function(){$('#confirm').modal()} );
+
+        this.menuPanel.append($("<li></li>").wrapInner(jQAdd));
+//        this.menuPanel.append($("<li></li>").wrapInner(jQEdit));
+//        this.menuPanel.append($("<li></li>").wrapInner(jQDel));
+
+        this.menuPanel.appendTo(this._jAreaDiv.parent());
+        this.menuPanel.hide();
+    },
+
+    _addNode:function(){
+        var self = this;
+        var menuPanel = this.menuPanel;
+        return function (event) {
+            var jQli = $(currentTreeNode).parent();
+            self.newNode(jQli[0]);
+        }
+
+    },
+    popup: function () {
+        var self = this;
+        function popupClick() {
+            self.menuPanel.hide();
+            unbindEvent(document,'click',popupClick);
+        }
+        return function (event) {
+            if (event.button == 2) {
+                if(event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel' ){
+                    asChild  = true;   // 只有在树的节点上单击时才有弹出菜单
+                }else{
+                    asChild  = false;
+                }
+                currentTreeNode = event.target;
+
+                var _menuW = self.menuPanel.outerWidth();
+                var _menuH = self.menuPanel.outerHeight();
+                var _winW = $(window).width();
+                var _winH = $(window).height();
+                var showX ,showY;
+                if(event.pageX || event.pageY){
+                    showX = event.pageX + _menuW > _winW ? event.pageX - _menuW : event.pageX;
+                    showY = event.pageY + _menuH > _winH ? event.pageY - _menuH : event.pageY;
+                } else {
+//                    coord = {x:event.clientX + document.body.scrollLeft, y:event.clientY + document.body.scrollTop};
+                }
+                self.menuPanel.css({'left':showX, 'top':showY}).fadeIn(300);
+                bindEvent(document,'click',popupClick);
+            }else if(event.button == 1){
+                if(event.target.tagName !== 'SPAN' && event.target.className.slice(0,4) !== 'item' ){
+
+                }
+            } else {
+                self.menuPanel.hide();
+            }
+        }
     }
 };
 
