@@ -17,6 +17,9 @@ function CompileTreeRightMenu(treeConfig) {
     this.init();
 }
 
+
+
+
 CompileTreeRightMenu.prototype = {
     menuPanel: $('<ul id="config-tree-edit"></ul>'),
 
@@ -46,41 +49,46 @@ CompileTreeRightMenu.prototype = {
     _addNode:function(){
         var self = this;
         var menuPanel = this.menuPanel;
-        return function () {
+        return function (event) {
+//            event.stopPropagation();
+//            event.preventDefault();
+            console.dir(currentTreeNode)
             var jQli = $(currentTreeNode).parent();
-            if (!asChild) {
-                console.log("add to root");
-                jQli = $('#treeTabArea>ul>li');
-            }
-            var newLi =  jQli.clone();
-            if(newLi.find('>ul')){
-                console.log( 'remove children')
-                $(newLi.find('>ul')).remove();  //去除它的子节点
-                $(newLi.find('span')).remove();
-                $(newLi.find('div')).remove();
-            }
-            var jQnameSpan = $(newLi.find('.treeLabel'));
-            var jQinput = $('<input class=labelInput type="text" style="width:120px;">');
-            jQinput.keypress(self.insertNewName(jQnameSpan,jQinput,self._tree._clickListener));
-            jQinput.bind('click', function(){
-                return false;  //在输入到输入框时，不响应onclick事件！
-            } );
-            jQinput.bind('blur' ,function(){
-                newLi.remove();
-            });
-
-            jQinput.val('new node');
-            jQnameSpan.hide();
-            newLi.append(jQinput);
-
-            newLi[0]._attr = jQuery.extend({}, jQli[0]._attr); // 不能写成 newLi[0]._attr = jQli[0]._attr，这时是两个引用指向同一个_attr对象
-            if (asChild) {
-                jQli.append(newLi);
-            }else{
-                newLi.insertAfter(jQli);
-            }
-            menuPanel.hide();
-            jQinput.focus();
+            console.dir(jQli);
+            self._tree.newNode(jQli[0]);
+//            if (!asChild) {
+//                console.log("add to root");
+//                jQli = $('#treeTabArea>ul>li');
+//            }
+//            var newLi =  jQli.clone();
+//            if(newLi.find('>ul')){
+//                console.log( 'remove children')
+//                $(newLi.find('>ul')).remove();  //去除它的子节点
+//                $(newLi.find('span')).remove();
+//                $(newLi.find('div')).remove();
+//            }
+//            var jQnameSpan = $(newLi.find('.treeLabel'));
+//            var jQinput = $('<input class=labelInput type="text" style="width:120px;">');
+//            jQinput.keypress(self.insertNewName(jQnameSpan,jQinput,self._tree._clickListener));
+//            jQinput.bind('click', function(){
+//                return false;  //在输入到输入框时，不响应onclick事件！
+//            } );
+//            jQinput.bind('blur' ,function(){
+//                newLi.remove();
+//            });
+//
+//            jQinput.val('new node');
+//            jQnameSpan.hide();
+//            newLi.append(jQinput);
+//
+//            newLi[0]._attr = jQuery.extend({}, jQli[0]._attr); // 不能写成 newLi[0]._attr = jQli[0]._attr，这时是两个引用指向同一个_attr对象
+//            if (asChild) {
+//                jQli.append(newLi);
+//            }else{
+//                newLi.insertAfter(jQli);
+//            }
+//            menuPanel.hide();
+//            jQinput.focus();
         }
     } ,
 
@@ -133,6 +141,10 @@ CompileTreeRightMenu.prototype = {
     },
     popup: function () {
         var self = this;
+        function popupClick() {
+            self.menuPanel.hide();
+            unbindEvent(document,'click',popupClick);
+        }
         return function (event) {
             if (event.button == 2) {
                 if(event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel' ){
@@ -154,12 +166,14 @@ CompileTreeRightMenu.prototype = {
                 } else {
 //                    coord = {x:event.clientX + document.body.scrollLeft, y:event.clientY + document.body.scrollTop};
                 }
-                self.menuPanel.css({'left':showX, 'top':showY}).fadeIn(300).mouseleave(function(){
-                    // 屏蔽菜单上的点击
-//                    return false;
-//                    console.dir(self.menuPanel.find('li'));
-                    self.menuPanel.hide();
-                });
+                self.menuPanel.css({'left':showX, 'top':showY}).fadeIn(300);
+//                        .mouseleave(function(){
+//                    // 屏蔽菜单上的点击
+////                    return false;
+////                    console.dir(self.menuPanel.find('li'));
+//                    self.menuPanel.hide();
+//                });
+                bindEvent(document,'click',popupClick);
             }else if(event.button == 1){
                 if(event.target.tagName !== 'SPAN' && event.target.className.slice(0,4) !== 'item' ){
 

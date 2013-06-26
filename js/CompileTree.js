@@ -126,7 +126,7 @@ TreeConfig.prototype = {
     newNode: function(node,elementName) {
         var groupName;
         if(node._attr) {
-            groupName = node._attr[groupName];
+            groupName = node._attr["groupName"];
         } else {
             return;
         }
@@ -144,6 +144,13 @@ TreeConfig.prototype = {
         li.onclick = this._clickListener;
         var jul = $(node).find("ul");
         if(jul) {
+            if(jul.length == 0) {
+                jul = $('<ul>');
+                if (node._attr) {
+                    jul.addClass(this._treeName);
+                }
+                $(node).append(jul);
+            }
             jul.append(jli);
         }
 //        jul.append(jli);
