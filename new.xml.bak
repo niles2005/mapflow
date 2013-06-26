@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <config>
-	<define name="icons" value="CN@BASE|US@BASE|CA@BASE|$@BASE"/>
 	<group name="area" fields="exist,simplifypixel,showpixel,showriverwidth,shownamerange">
 		<item name="base">
 			<field name="exist" value="1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
