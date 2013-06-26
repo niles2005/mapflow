@@ -15,6 +15,7 @@ function TreeConfig(configFile, scope) {
 var currGroupName = null;
 var asChild = false;
 var defaultNewNodeName = "NewNode";
+var currentTreeNode = null;
 
 TreeConfig.prototype = {
     loadContent: function() {
@@ -40,12 +41,18 @@ TreeConfig.prototype = {
             var groupNode = arr[k];
             if (groupNode.nodeType === 1 && groupNode.tagName === 'group') {
                 var groupName = $(groupNode).attr('name');
+                var treeDiv;
                 if (groupName === 'area') {
-                    this.makeTreeItem(this._jAreaDiv, groupName, groupNode.childNodes);
+                    treeDiv = this._jAreaDiv.get(0);
                 } else if (groupName === 'line') {
-                    this.makeTreeItem(this._jLineDiv, groupName, groupNode.childNodes);
+                    treeDiv = this._jLineDiv.get(0);
                 } else if (groupName === 'point') {
-                    this.makeTreeItem(this._jPointDiv, groupName, groupNode.childNodes);
+                    treeDiv = this._jPointDiv.get(0);
+                }
+                if(treeDiv) {
+                    treeDiv._attr = {};
+                    treeDiv._attr["groupName"] = groupName;
+                    this.makeTreeItem(treeDiv, groupName, groupNode.childNodes);
                 }
             }
         }
@@ -60,9 +67,7 @@ TreeConfig.prototype = {
     makeTreeItem: function(node, groupName, childNodes) {
         if (childNodes.length > 0) {
             var jul = $('<ul>');
-            if (node._attr) {
-                jul.addClass(this._treeName);
-            }
+            jul.addClass(this._treeName);
 
             for (var k in childNodes) {
                 var childNode = childNodes[k];
@@ -105,7 +110,7 @@ TreeConfig.prototype = {
                     }
                     var subUL = jli.find('>ul');
                     if (subUL.length > 0) {//有子节点
-                        if (node._attr) {//LI node,has _attr
+                        if (node._attr && node._attr['name']) {//LI node,has _attr
                             subUL.children().hide();
                             jli.find('>div').addClass('nodeclosed');
                         } else {//root node(div),don't has _attr
@@ -137,7 +142,6 @@ TreeConfig.prototype = {
             elementName = defaultNewNodeName;
         }
         var jli = $('<li><div></div><span class=item></span><span style="display:none;" class=treeLabel></span><input class=labelInput type="text" value="' + elementName + '" style="width:120px;"></li>');
-//        jli.find(".treeLabel").text(elementName);
         jli.find('.treeLabel').hover(this._addHover,this._removeHover);
         
         var li = jli[0];
@@ -146,15 +150,18 @@ TreeConfig.prototype = {
         li._attr["name"] = elementName;
 
         li.onclick = this._clickListener;
-        var jul = $(node).find("ul");
+        var jul = $(node).find(">ul");
         if(jul) {
-            if(jul.length == 0) {
+            var nodeDiv = $(node).find('>div');
+            if(jul.length === 0) {
                 jul = $('<ul>');
-                if (node._attr) {
-                    jul.addClass(this._treeName);
-                }
+                jul.addClass(this._treeName);
                 $(node).append(jul);
+            } else {
+                $(node).find('>ul').children().slideDown();
             }
+            nodeDiv.removeClass('nodeclosed');
+            nodeDiv.addClass('nodeopen');
             jul.append(jli);
         }
 
@@ -162,7 +169,9 @@ TreeConfig.prototype = {
         var jQLabel = jli.find(".treeLabel");
         var jQinput = jli.find('.labelInput');
         jQinput.bind('blur' ,function(){
-            jQLabel.text(jQinput.val());
+            var newName = jQinput.val();
+            jQLabel.text(newName);
+            li._attr["name"] = newName;
             jQinput.hide();
             jQLabel.show();
         });
