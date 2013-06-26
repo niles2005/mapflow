@@ -83,6 +83,7 @@ function CompilePageCtrl($scope) {
         $table.find("td").removeClass("labelOrientSelected");
         $td.addClass("labelOrientSelected");
     }
+    $scope.deleteTreeNodeName;
     $scope.deleteTreeNode = function(){
         treeConfig.deleteNode();
     }

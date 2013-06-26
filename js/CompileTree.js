@@ -280,13 +280,17 @@ TreeConfig.prototype = {
             return false;  //去除默认右键弹出菜单
         });
         this._jAreaDiv.parent().find(">div").mousedown( this.popup());
-
-        var jQAdd =  $('<a>添加1</a>');
+        var self = this;
+        var jQAdd =  $('<a>添加</a>');
         jQAdd.click(this._addNode());
-        var jQEdit =  $('<a>从命名</a>');
+        var jQEdit =  $('<a>重命名</a>');
         jQEdit.click(this._editNode());
         var jQDel =  $('<a>删除</a>');
-        jQDel.click(function(){$('#confirm').modal()} );
+        jQDel.click(function(){
+            self._scope.deleteTreeNodeName = currentTreeNode.textContent;
+            self._scope.$apply();
+            $('#confirm').modal() ;
+        } );
 
         this.menuPanel.append($("<li></li>").wrapInner(jQAdd));
         this.menuPanel.append($("<li></li>").wrapInner(jQEdit));
