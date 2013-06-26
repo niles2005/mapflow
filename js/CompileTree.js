@@ -88,10 +88,10 @@ TreeConfig.prototype = {
                         continue;
                     }
 
-                    var jli = $('<li><div></div><span class=' + tagName + '></span></li>');
+                    var jli = $('<li><div></div><span class=' + tagName + '></span><span class=treeLabel></span></li>');
                     var elementName = $(childNode).attr('name');
-                    jli.find(">span").text(elementName);
-                    jli.find('>span').hover(addHover,removeHover);
+                    jli.find(".treeLabel").text(elementName);
+                    jli.find('.treeLabel').hover(addHover,removeHover);
                     var li = jli[0];
                     li._attr = {};
                     li._attr["groupName"] = groupName;
