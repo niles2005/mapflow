@@ -50,11 +50,7 @@ CompileTreeRightMenu.prototype = {
         var self = this;
         var menuPanel = this.menuPanel;
         return function (event) {
-//            event.stopPropagation();
-//            event.preventDefault();
-            console.dir(currentTreeNode)
             var jQli = $(currentTreeNode).parent();
-            console.dir(jQli);
             self._tree.newNode(jQli[0]);
 //            if (!asChild) {
 //                console.log("add to root");
