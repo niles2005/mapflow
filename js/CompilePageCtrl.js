@@ -83,11 +83,12 @@ function CompilePageCtrl($scope) {
         $table.find("td").removeClass("labelOrientSelected");
         $td.addClass("labelOrientSelected");
     }
-    
+    $scope.deleteTreeNode = function(){
+        treeRightMenu.deleteNode();
+    }
+
     var treeConfig = new TreeConfig("new.xml",$scope);
-    new CompileTreeRightMenu(treeConfig);
-
-
+    var treeRightMenu = new CompileTreeRightMenu(treeConfig);
     var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
 }
