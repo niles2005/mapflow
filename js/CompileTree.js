@@ -14,7 +14,7 @@ function TreeConfig(configFile, scope) {
 }
 var currGroupName = null;
 
-
+var defaultNewNodeName = "NewNode";
 
 TreeConfig.prototype = {
     loadContent: function() {
@@ -51,17 +51,16 @@ TreeConfig.prototype = {
         }
 //        this.makeTreeItem(this._jAreaDiv, arr);
     },
+    _addHover: function(event) {
+        $(this).addClass("nodeHover");
+    },
+    _removeHover: function(event) {
+        $(this).removeClass("nodeHover");
+    },
     makeTreeItem: function(node, groupName, childNodes) {
-        function addHover(event) {
-            $(this).addClass("nodeHover");
-        }
-
-        function removeHover(event) {
-            $(this).removeClass("nodeHover");
-        }
         if (childNodes.length > 0) {
             var jul = $('<ul>');
-            if (node instanceof jQuery) {
+            if (node._attr) {
                 jul.addClass(this._treeName);
             }
 
@@ -69,12 +68,12 @@ TreeConfig.prototype = {
                 var childNode = childNodes[k];
                 if (childNode.nodeType === 1) {
                     var strName = $(childNode).attr('name');
-                    var tagName = childNode.tagName;
-                    if (tagName === 'group') {
+                    var elementType = childNode.tagName;
+                    if (elementType === 'group') {
                         currGroupName = strName;
-                    } else if (tagName === 'define') {
+                    } else if (elementType === 'define') {
                         continue;
-                    } else if (tagName === 'field') {
+                    } else if (elementType === 'field') {
                         var strValue = $(childNode).attr('value');
                         if (strName && strValue) {
                             if(node._attr) {
@@ -87,11 +86,12 @@ TreeConfig.prototype = {
                         }
                         continue;
                     }
+                    var elementName = $(childNode).attr('name');
 
-                    var jli = $('<li><div></div><span class=' + tagName + '></span><span class=treeLabel></span></li>');
+                    var jli = $('<li><div></div><span class=' + elementType + '></span><span class=treeLabel></span></li>');
                     var elementName = $(childNode).attr('name');
                     jli.find(".treeLabel").text(elementName);
-                    jli.find('.treeLabel').hover(addHover,removeHover);
+                    jli.find('.treeLabel').hover(this._addHover,this._removeHover);
                     var li = jli[0];
                     li._attr = {};
                     li._attr["groupName"] = groupName;
@@ -105,11 +105,11 @@ TreeConfig.prototype = {
                     }
                     var subUL = jli.find('>ul');
                     if (subUL.length > 0) {//有子节点
-                        if (node instanceof jQuery) {
-                            jli.find('>div').addClass('nodeopen');
-                        } else {
+                        if (node._attr) {//LI node,has _attr
                             subUL.children().hide();
                             jli.find('>div').addClass('nodeclosed');
+                        } else {//root node(div),don't has _attr
+                            jli.find('>div').addClass('nodeopen');
                         }
                         jli.css('cursor', 'pointer');
                     } else {
@@ -122,6 +122,43 @@ TreeConfig.prototype = {
 
             }
         }
+    },
+    newNode: function(node,elementName) {
+        var groupName;
+        if(node._attr) {
+            groupName = node._attr[groupName];
+        } else {
+            return;
+        }
+        if(!elementName) {
+            elementName = defaultNewNodeName;
+        }
+        var jli = $('<li><div></div><span class=item></span><span class=treeLabel></span></li>');
+        jli.find(".treeLabel").text(elementName);
+        jli.find('.treeLabel').hover(this._addHover,this._removeHover);
+        var li = jli[0];
+        li._attr = {};
+        li._attr["groupName"] = groupName;
+        li._attr["name"] = elementName;
+
+        li.onclick = this._clickListener;
+        var jul = $(node).find("ul");
+        if(jul) {
+            jul.append(jli);
+        }
+//        jul.append(jli);
+//        if (subUL.length > 0) {//有子节点
+//            if (node._attr) {//LI node,has _attr
+//                subUL.children().hide();
+//                jli.find('>div').addClass('nodeclosed');
+//            } else {//root node(div),don't has _attr
+//                jli.find('>div').addClass('nodeopen');
+//            }
+//            jli.css('cursor', 'pointer');
+//        } else {
+            jli.css('cursor', 'default');
+//        }
+        return jli;
     },
 
     listPathNames: function (node,arr) {
