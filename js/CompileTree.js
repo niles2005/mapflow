@@ -388,7 +388,6 @@ TreeConfig.prototype = {
         this.menuPanel.hide();
         var jQli = $(currentTreeNode).parent();
         jQli.remove();
-
     }
 };
 
