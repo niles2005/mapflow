@@ -94,5 +94,7 @@ function CompilePageCtrl($scope) {
     }
 
     var treeConfig = new TreeConfig("new.xml",$scope);
+	
+	var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
 }
