@@ -281,9 +281,9 @@ TreeConfig.prototype = {
         });
         this._jAreaDiv.parent().find(">div").mousedown( this.popup());
         var self = this;
-        var jQAdd =  $('<a>添加</a>');
+        var jQAdd =  $('<a>添加1</a>');
         jQAdd.click(this._addNode());
-        var jQEdit =  $('<a>重命名</a>');
+        var jQEdit =  $('<a>从命名</a>');
         jQEdit.click(this._editNode());
         var jQDel =  $('<a>删除</a>');
         jQDel.click(function(){
