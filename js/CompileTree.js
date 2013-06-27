@@ -130,6 +130,9 @@ TreeConfig.prototype = {
             }
         }
     },
+
+
+
     listPathNames: function(node, arr) {
         if(node instanceof HTMLLIElement) {
             arr.unshift(node);
@@ -184,12 +187,14 @@ TreeConfig.prototype = {
                     liNode = null;
                 }
             }
+
             if (this._scope) {
                 this._scope.selectNode(groupName, treePathArr, props);
             }
             //增加节点选择背景
             if (this._selectLI && this._selectLI !== theNode) {
                 $(this._selectLI).find(">span").removeClass("nodeselected");
+
             }
             this._selectLI = theNode;
             $(this._selectLI).find(">span").addClass("nodeselected");
@@ -233,6 +238,7 @@ TreeConfig.prototype = {
         });
         this._jAreaDiv.parent().find(">div").mousedown(this.popup());
         var self = this;
+
         var jQAdd = $('<a>添加</a>');
         jQAdd.click(this._addNode());
         var jQEdit = $('<a>重命名</a>');
@@ -307,7 +313,8 @@ TreeConfig.prototype = {
             if (node._attr) {
                 groupName = node._attr["groupName"];
             } else {
-                return;
+                groupName =  $('.tab-pane.treepanel.active').find('li:first')[0]._attr["groupName"];
+//                return;
             }
             var elementName = TreeConfig.defaultNewNodeName;
             var jli = $('<li><div></div><span class=item></span><span style="display:none;" class=treeLabel></span><input class=labelInput type="text" value="' + elementName + '" style="width:120px;"></li>');
@@ -331,7 +338,18 @@ TreeConfig.prototype = {
                 }
                 nodeDiv.removeClass('nodeclosed');
                 nodeDiv.addClass('nodeopen');
-                jul.append(jli);
+                if (asChild) {
+                    jul.append(jli);
+                }else{
+                    console.log('not child')
+                    jul = $('<ul>');
+                    jul.addClass(this._treeName);
+                    var defaultLi =   $('.tab-pane.treepanel.active').find('li:first');
+                    jli[0]._attr = jQuery.extend({}, defaultLi[0]._attr );
+                    jul.append(jli);
+                    jul.insertAfter(defaultLi);
+                }
+
             }
 
             jli.css('cursor', 'default');
@@ -360,6 +378,7 @@ TreeConfig.prototype = {
             });
 
             jQinput.focus();
+
         };
     },
     _editNode: function() {
@@ -376,8 +395,8 @@ TreeConfig.prototype = {
             var jQli = $(li);
             
             var jQnameSpan = $(jQli.find('.treeLabel'));
-            var jQinput = $('<input type="text" style="width:100px;">');
-            jQinput.keypress(function(event) {
+            var jQinput = $('<input type="text" class="labelInput" style="width:100px;">');
+                jQinput.keypress(function(event) {
                 if (event.keyCode === 13) {
                     var newName = jQinput.val();
                     jQnameSpan.text(newName);
@@ -422,8 +441,16 @@ TreeConfig.prototype = {
     deleteNode: function() {
         this.menuPanel.hide();
         var jQli = $(this.currentTreeNode);
-        jQli.remove();
-        this.selectLINode();
+
+        if(jQli.siblings().filter("li").length === 0){
+            var jQUl = jQli.parent();
+            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+            jQDiv.removeClass('nodeopen') ;
+            jQUl.remove();
+        }else{
+            jQli.remove();
+        }
+		this.selectLINode();
     }
 };
 
