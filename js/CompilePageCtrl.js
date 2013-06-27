@@ -58,14 +58,19 @@ function CompilePageCtrl($scope) {
             $scope.fields = groupMap[groupName];
             $scope.currentField = null;//remove select node
         }
-        
         if(!$scope.$$phase) {
             $scope.$apply();
           }
     };
+    $scope.reselectNode = function(treePathArr) {
+        $scope.navigationPath = treePathArr;
+        if(!$scope.$$phase) {
+            $scope.$apply();
+        }
+    },
     $scope.clickTreeNode = function(index) {
-        if(selectTreeNodeArray && index < selectTreeNodeArray.length - 1) {
-            selectTreeNodeArray[index].onclick();
+        if(treeConfig.selectTreeNodeArray && index < treeConfig.selectTreeNodeArray.length - 1) {
+            treeConfig.selectTreeNodeArray[index].onclick();
         }
     };
 

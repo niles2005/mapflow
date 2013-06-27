@@ -10,13 +10,14 @@ function TreeConfig(configFile, scope) {
     this._jPointDiv.empty();
     this._url = configFile;
     this._clickListener = this.makeClickListener();
+    this._initMenuPanel();
     this.loadContent();
-    this.initMenuPanel();
+    this.currentTreeNode = null;
+    this.selectTreeNodeArray = null;
 }
-var currGroupName = null;
+
 var asChild = false;
-var defaultNewNodeName = "NewNode";
-var currentTreeNode = null;
+TreeConfig.defaultNewNodeName = "NewNode";
 
 TreeConfig.prototype = {
     loadContent: function() {
@@ -50,14 +51,13 @@ TreeConfig.prototype = {
                 } else if (groupName === 'point') {
                     treeDiv = this._jPointDiv.get(0);
                 }
-                if(treeDiv) {
+                if (treeDiv) {
                     treeDiv._attr = {};
                     treeDiv._attr["groupName"] = groupName;
-                    this.makeTreeItem(treeDiv, groupName, groupNode.childNodes);
+                    this._makeTreeItem(treeDiv, groupName, groupNode.childNodes);
                 }
             }
         }
-//        this.makeTreeItem(this._jAreaDiv, arr);
     },
     _addHover: function(event) {
         $(this).addClass("nodeHover");
@@ -65,7 +65,7 @@ TreeConfig.prototype = {
     _removeHover: function(event) {
         $(this).removeClass("nodeHover");
     },
-    makeTreeItem: function(node, groupName, childNodes) {
+    _makeTreeItem: function(node, groupName, childNodes) {
         if (childNodes.length > 0) {
             var jul = $('<ul>');
             jul.addClass(this._treeName);
@@ -76,13 +76,12 @@ TreeConfig.prototype = {
                     var strName = $(childNode).attr('name');
                     var elementType = childNode.tagName;
                     if (elementType === 'group') {
-                        currGroupName = strName;
                     } else if (elementType === 'define') {
                         continue;
                     } else if (elementType === 'field') {
                         var strValue = $(childNode).attr('value');
                         if (strName && strValue) {
-                            if(node._attr) {
+                            if (node._attr) {
                                 var arr = strValue.split("|");
                                 for (var k in arr) {
                                     arr[k] = $.trim(arr[k]);
@@ -97,7 +96,7 @@ TreeConfig.prototype = {
                     var jli = $('<li><div></div><span class=' + elementType + '></span><span class=treeLabel></span></li>');
                     var elementName = $(childNode).attr('name');
                     jli.find(".treeLabel").text(elementName);
-                    jli.find('.treeLabel').hover(this._addHover,this._removeHover);
+                    jli.find('.treeLabel').hover(this._addHover, this._removeHover);
                     var li = jli[0];
                     li._attr = {};
                     li._attr["groupName"] = groupName;
@@ -107,7 +106,7 @@ TreeConfig.prototype = {
                     jul.append(jli);
 
                     if (childNode.childNodes.length > 0) {
-                        this.makeTreeItem(li, groupName, childNode.childNodes);
+                        this._makeTreeItem(li, groupName, childNode.childNodes);
                     }
                     var subUL = jli.find('>ul');
                     if (subUL.length > 0) {//有子节点
@@ -117,10 +116,8 @@ TreeConfig.prototype = {
                         } else {//root node(div),don't has _attr
                             jli.find('>div').addClass('nodeopen');
                         }
-                        jli.css('cursor', 'pointer');
-                    } else {
-                        jli.css('cursor', 'default');
                     }
+                    jli.css('cursor', 'default');
                 }
                 if (jul.find('>li').length > 0) {
                     $(node).append(jul);
@@ -129,22 +126,25 @@ TreeConfig.prototype = {
             }
         }
     },
-    newNode: function(node,elementName) {
+    _newNode: function(node, elementName) {
         if (this._selectLI) {
             $(this._selectLI).find(">span").removeClass("nodeselected");
         }
         var groupName;
-        if(node._attr) {
+        if (node._attr) {
             groupName = node._attr["groupName"];
         } else {
-            return;
+            groupName = $(node).find('li')[0]._attr["groupName"];
+            console.log(groupName)
+//            return;
         }
-        if(!elementName) {
-            elementName = defaultNewNodeName;
+        console.log(asChild)
+        if (!elementName) {
+            elementName = TreeConfig.defaultNewNodeName;
         }
         var jli = $('<li><div></div><span class=item></span><span style="display:none;" class=treeLabel></span><input class=labelInput type="text" value="' + elementName + '" style="width:120px;"></li>');
-        jli.find('.treeLabel').hover(this._addHover,this._removeHover);
-        
+        jli.find('.treeLabel').hover(this._addHover, this._removeHover);
+
         var li = jli[0];
         li._attr = {};
         li._attr["groupName"] = groupName;
@@ -152,55 +152,78 @@ TreeConfig.prototype = {
 
         li.onclick = this._clickListener;
         var jul = $(node).find(">ul");
-        if(jul) {
+        if (jul) {
             var nodeDiv = $(node).find('>div');
-            if(jul.length === 0) {
+            if (jul.length === 0) {
                 jul = $('<ul>');
                 jul.addClass(this._treeName);
                 $(node).append(jul);
             } else {
-                $(node).find('>ul').children().slideDown();
+                jul.children().slideDown();
             }
             nodeDiv.removeClass('nodeclosed');
             nodeDiv.addClass('nodeopen');
-            jul.append(jli);
+            if (asChild) {
+                jul.append(jli);
+            }else{
+                jul = $('<ul>');
+                jul.addClass(this._treeName);
+                jli[0]._attr = jQuery.extend({},  $(node).find('>li')[0]._attr );
+                jul.append(jli);
+                jul.insertAfter($(node));
+            }
         }
+
 
         jli.css('cursor', 'default');
         var jQLabel = jli.find(".treeLabel");
         var jQinput = jli.find('.labelInput');
-        jQinput.bind('blur' ,function(){
+        jQinput.bind('blur', function() {
             var newName = jQinput.val();
             jQLabel.text(newName);
             li._attr["name"] = newName;
-            jQinput.hide();
+            jQinput.remove();
             jQLabel.show();
         });
+        jQinput.keypress(function(event) {
+            if (event.keyCode === 13) {
+                var newName = jQinput.val();
+                jQLabel.text(newName);
+                li._attr["name"] = newName  ;
+                jQLabel.fadeIn(200);
+                jQinput.fadeOut(200);
+                if (jQLabel.parent()[0]._attr) {
+
+                } else {
+                    jQLabel.parent()[0]._attr = {};
+                }
+                jQinput.remove();
+            }
+        });
+
         jQinput.focus();
         return jli;
     },
-
-    listPathNames: function (node,arr) {
-        if(!node) {
+    listPathNames: function(node, arr) {
+        if (!node) {
             return;
         }
-        if(node._attr) {
+        if (node._attr) {
 //            arr.unshift(node._attr["name"]);
             arr.unshift(node);
         } else {
             return;
         }
         var parent = node.parentElement;
-        if(parent) {
-            node  = parent.parentElement;
+        if (parent) {
+            node = parent.parentElement;
         }
-        return this.listPathNames(node,arr);
+        return this.listPathNames(node, arr);
     },
-
-    makeClickListener: function () {
+    makeClickListener: function() {
         var self = this;
         return function(event) {
-            if(event) {
+            if (event) {
                 event.stopPropagation();
                 event.preventDefault();
             }
@@ -211,11 +234,11 @@ TreeConfig.prototype = {
 
             var treeNodeArr = [];
             var treePathArr = [];
-            self.listPathNames(liObj,treeNodeArr);
-            for(var k in treeNodeArr) {
+            self.listPathNames(liObj, treeNodeArr);
+            for (var k in treeNodeArr) {
                 treePathArr.push(treeNodeArr[k]._attr["name"]);
             }
-            selectTreeNodeArray = treeNodeArr;
+            self.selectTreeNodeArray = treeNodeArr;
             while (liObj) {
                 if (liObj._attr) {
                     for (var level = 0; level < 20; level++) {
@@ -224,15 +247,15 @@ TreeConfig.prototype = {
                         }
 
                         for (var propArray in groupMap[groupName]) {
-                                var propName = groupMap[groupName][propArray].name;
-                                if (props[level][propName]) {
+                            var propName = groupMap[groupName][propArray].name;
+                            if (props[level][propName]) {
 
-                                } else {
-                                    if (liObj._attr[propName]) {
-                                        var index = level > liObj._attr[propName].length - 1 ? liObj._attr[propName].length - 1 : level;
-                                        props[level][propName] = liObj._attr[propName][index];
-                                    }
+                            } else {
+                                if (liObj._attr[propName]) {
+                                    var index = level > liObj._attr[propName].length - 1 ? liObj._attr[propName].length - 1 : level;
+                                    props[level][propName] = liObj._attr[propName][index];
                                 }
+                            }
 
                         }
                     }
@@ -245,8 +268,9 @@ TreeConfig.prototype = {
                     liObj = null;
                 }
             }
-            if(self._scope) {
-                self._scope.selectNode(groupName,treePathArr,props);
+            if (self._scope) {
+                console.dir(treePathArr)
+                self._scope.selectNode(groupName, treePathArr, props);
             }
 
             var jli = $(this);
@@ -274,23 +298,24 @@ TreeConfig.prototype = {
             self._selectLI = this;
         };
     },
-    menuPanel: $('<ul id="config-tree-edit"></ul>'),
-    initMenuPanel : function(){
-        this._jAreaDiv.parent().bind("contextmenu",function(){
+    _initMenuPanel: function() {
+        this.menuPanel= $('<ul id="config-tree-edit"></ul>');
+        this._jAreaDiv.parent().bind("contextmenu", function() {
             return false;  //去除默认右键弹出菜单
         });
-        this._jAreaDiv.parent().find(">div").mousedown( this.popup());
+        this._jAreaDiv.parent().find(">div").mousedown(this.popup());
         var self = this;
-        var jQAdd =  $('<a>添加1</a>');
+
+        var jQAdd = $('<a>添加</a>');
         jQAdd.click(this._addNode());
-        var jQEdit =  $('<a>从命名</a>');
+        var jQEdit = $('<a>重命名</a>');
         jQEdit.click(this._editNode());
-        var jQDel =  $('<a>删除</a>');
-        jQDel.click(function(){
-            self._scope.deleteTreeNodeName = currentTreeNode.textContent;
+        var jQDel = $('<a>删除</a>');
+        jQDel.click(function() {
+            self._scope.deleteTreeNodeName = self.currentTreeNode.textContent;
             self._scope.$apply();
-            $('#confirm').modal() ;
-        } );
+            $('#confirm').modal();
+        });
 
         this.menuPanel.append($("<li></li>").wrapInner(jQAdd));
         this.menuPanel.append($("<li></li>").wrapInner(jQEdit));
@@ -299,108 +324,121 @@ TreeConfig.prototype = {
         this.menuPanel.appendTo(this._jAreaDiv.parent());
         this.menuPanel.hide();
     },
-    insertNewName : function(spanNode,inputNode){
-        return function(event){
-            if(event.keyCode == 13){
-                spanNode.text(inputNode.val());
-                spanNode.fadeIn(200);
-                inputNode.fadeOut(200);
-                if (spanNode.parent()[0]._attr) {
-
-                } else{
-                    spanNode.parent()[0]._attr = {};
-                }
-//
-                inputNode.remove();
-            }
-        }
-    },
-
-    popup: function () {
+    popup: function() {
         var self = this;
         function popupClick() {
             self.menuPanel.hide();
-            unbindEvent(document,'click',popupClick);
+            unbindEvent(document, 'click', popupClick);
         }
-        return function (event) {
-            if (event.button == 2) {
-                if(event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel' ){
-                    asChild  = true;   // 只有在树的节点上单击时才有弹出菜单
-                }else{
-                    asChild  = false;
+        return function(event) {
+            if (event.button === 2) {
+                if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
+                    asChild = true;   // 只有在树的节点上单击时才有弹出菜单
+                } else {
+                    asChild = false;
                 }
-                currentTreeNode = event.target;
+                self.currentTreeNode = event.target;
 
                 var _menuW = self.menuPanel.outerWidth();
                 var _menuH = self.menuPanel.outerHeight();
                 var _winW = $(window).width();
                 var _winH = $(window).height();
-                var showX ,showY;
-                if(event.pageX || event.pageY){
+                var showX, showY;
+                if (event.pageX || event.pageY) {
                     showX = event.pageX + _menuW > _winW ? event.pageX - _menuW : event.pageX;
                     showY = event.pageY + _menuH > _winH ? event.pageY - _menuH : event.pageY;
                 } else {
 //                    coord = {x:event.clientX + document.body.scrollLeft, y:event.clientY + document.body.scrollTop};
                 }
-                self.menuPanel.css({'left':showX, 'top':showY}).fadeIn(300);
-                bindEvent(document,'click',popupClick);
-            }else if(event.button == 1){
-                if(event.target.tagName !== 'SPAN' && event.target.className.slice(0,4) !== 'item' ){
+                self.menuPanel.css({'left': showX, 'top': showY}).fadeIn(300);
+                bindEvent(document, 'click', popupClick);
+            } else if (event.button === 1) {
+                if (event.target.tagName !== 'SPAN' && event.target.className.slice(0, 4) !== 'item') {
 
                 }
             } else {
                 self.menuPanel.hide();
             }
-        }
-    } ,
-    _addNode:function(){
-        var self = this;
-        var menuPanel = this.menuPanel;
-        return function (event) {
-            var jQli = $(currentTreeNode).parent();
-            var newli = self.newNode(jQli[0]);
-            var jQLabel = newli.find(".treeLabel");
-            var jQinput = newli.find('.labelInput');
-            jQinput.keypress(self.insertNewName(jQLabel,jQinput));
-        }
-
+        };
     },
-    _editNode:function(){
+    _addNode: function() {
         var self = this;
         var menuPanel = this.menuPanel;
-        return function(){
-            var jQli = $(currentTreeNode).parent();
+        return function(event) {
+            var jQli = $(self.currentTreeNode).parent();
+            console.dir(jQli);
+            self._newNode(jQli[0]);
+        };
+    },
+    _editNode: function() {
+        var self = this;
+        var menuPanel = this.menuPanel;
+        return function() {
+            if (self._selectLI) {
+                $(self._selectLI).find(">span").removeClass("nodeselected");
+            }
+            var jQli = $(self.currentTreeNode).parent();
             var jQnameSpan = $(jQli.find('.treeLabel'));
-            var jQinput = $('<input type="text" style="width:100px;">');
-            jQinput.keypress(self.insertNewName(jQnameSpan,jQinput));
-            jQinput.bind('click', function(){
+            var jQinput = $('<input type="text" class="labelInput" style="width:100px;">');
+                jQinput.keypress(function(event) {
+                if (event.keyCode === 13) {
+                    var newName = jQinput.val();
+                    jQnameSpan.text(newName);
+                    jQnameSpan.fadeIn(200);
+                    jQinput.fadeOut(200);
+                    var attr = jQli[0]._attr;
+                    if(attr) {
+                        attr["name"] = newName;
+                    }
+                    jQinput.remove();
+                    
+                    var treePathArr = [];
+                    for (var k in self.selectTreeNodeArray) {
+                        treePathArr.push(self.selectTreeNodeArray[k]._attr["name"]);
+                    }
+                    self._scope.reselectNode(treePathArr);
+                }
+            });
+            jQinput.bind('click', function() {
                 return false;  //在输入到输入框时，不响应onclick事件！
-            } );
-            jQinput.bind('blur' ,function(){
-                jQinput.remove();
+            });
+            jQinput.bind('blur', function() {
+                var newName = jQinput.val();
+                jQnameSpan.text(newName);
                 jQnameSpan.fadeIn(200);
+                jQinput.fadeOut(200);
+                var attr = jQli[0]._attr;
+                if(attr) {
+                    attr["name"] = newName;
+                }
+                jQinput.remove();
             });
             jQinput.val(jQnameSpan.text());
             jQnameSpan.hide();
             jQli.append(jQinput);
             menuPanel.hide();
             jQinput.focus();
-        }
-
-    } ,
-    deleteNode:function(){
+        };
+    },
+    deleteNode: function() {
         this.menuPanel.hide();
-        var jQli = $(currentTreeNode).parent();
-        jQli.remove();
-
+        var jQli = $(this.currentTreeNode).parent();
+        if(jQli.siblings().filter("li").length === 0){
+            var jQUl = jQli.parent();
+            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+            jQDiv.removeClass('nodeopen') ;
+            jQUl.remove();
+        }else{
+            jQli.remove();
+        }
     }
 };
 
-var selectTreeNodeArray = null;
+
 
 function CompileTreeCtrl($scope) {
 
-    $scope.selectNode = function(treePathArr,propsArr) {
+    $scope.selectNode = function(treePathArr, propsArr) {
         $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
         console.dir(treePathArr);
