@@ -192,6 +192,9 @@
     <ul class="toc_section">
       <li>- <a href="#list">list</a></li>
       <li>- <a href="#file">file</a></li>
+      <li>- <a href="#add">add</a></li>
+      <li>- <a href="#rename">rename</a></li>
+      <li>- <a href="#delete">delete</a></li>
     </ul>
 
 
@@ -263,6 +266,38 @@
 </p>
         <br>
         
+      <p id="add">
+        <b class="header">add</b><code>http://127.0.0.1/mapflow/work?module=template&action=add&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中增加节点。
+	
+</p>
+        <br>
+
+      <p id="rename">
+        <b class="header">rename</b><code>http://127.0.0.1/mapflow/work?module=template&action=rename&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中改变指定节点名称。
+	
+</p>
+        <br>
+
+      <p id="delete">
+        <b class="header">delete</b><code>http://127.0.0.1/mapflow/work?module=template&action=delete&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中删除指定节点。
+	
+</p>
+        <br>
 
 
 
