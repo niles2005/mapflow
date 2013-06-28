@@ -176,7 +176,7 @@
   <div id="sidebar" class="interface">
 
     <a class="toc_title" href="#">
-      MapFlow <span class="version">(0.1.1)</span>
+      Mapflow <span class="version">(0.1.1)</span>
     </a>
     <ul class="toc_section">
       <li>» <a href="https://github.com/niles2005/mapflow">GitHub Repository</a></li>
@@ -274,6 +274,10 @@
       <p>
         Python's <a href="http://docs.python.org/library/itertools.html">itertools</a>.
       </p>
+      <p>
+        Python's <a href="http://learning.github.io/underscore/">underscore</a>.
+      </p>
+      
 
       <h2 id="changelog">Change Log</h2>
 
