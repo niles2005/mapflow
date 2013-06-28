@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width">
+  <title>mapflow interface</title>
+  <style>
+    body {
+      font-size: 14px;
+      line-height: 22px;
+      background: #f4f4f4 url(docs/images/background.png);
+      color: #000;
+      font-family: Helvetica Neue, Helvetica, Arial;
+    }
+    .interface {
+      font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
+    }
+    div#sidebar {
+      background: #fff;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 15px 0 30px 30px;
+      border-right: 1px solid #bbb;
+      box-shadow: 0 0 20px #ccc; -webkit-box-shadow: 0 0 20px #ccc; -moz-box-shadow: 0 0 20px #ccc;
+    }
+    a.toc_title, a.toc_title:visited {
+      display: block;
+      color: black;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+      a.toc_title:hover {
+        text-decoration: underline;
+      }
+      #sidebar .version {
+        font-size: 10px;
+        font-weight: normal;
+      }
+    ul.toc_section {
+      font-size: 11px;
+      line-height: 14px;
+      margin: 5px 0 0 0;
+      padding-left: 0px;
+      list-style-type: none;
+      font-family: Lucida Grande;
+    }
+      .toc_section li {
+        cursor: pointer;
+        margin: 0 0 3px 0;
+      }
+        .toc_section li a {
+          text-decoration: none;
+          color: black;
+        }
+          .toc_section li a:hover {
+            text-decoration: underline;
+          }
+    div.container {
+      width: 550px;
+      margin: 40px 0 50px 260px;
+    }
+    img#logo {
+      width: 396px;
+      height: 69px;
+    }
+    div.warning {
+      margin-top: 15px;
+      font: bold 11px Arial;
+      color: #770000;
+    }
+    p {
+      margin: 20px 0;
+      width: 550px;
+    }
+    a, a:visited {
+      color: #444;
+    }
+    a:active, a:hover {
+      color: #000;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      padding-top: 20px;
+    }
+      h2 {
+        font-size: 20px;
+      }
+    b.header {
+      font-size: 16px;
+      line-height: 30px;
+    }
+    span.alias {
+      font-size: 14px;
+      font-style: italic;
+      margin-left: 20px;
+    }
+    table, tr, td {
+      margin: 0; padding: 0;
+    }
+      td {
+        padding: 2px 12px 2px 0;
+      }
+      table .rule {
+        height: 1px;
+        background: #ccc;
+        margin: 5px 0;
+      }
+    ul {
+      list-style-type: circle;
+      padding: 0 0 0 20px;
+    }
+      li {
+        width: 500px;
+        margin-bottom: 10px;
+      }
+      code, pre, tt {
+        font-family: Monaco, Consolas, "Lucida Console", monospace;
+        font-size: 12px;
+        line-height: 18px;
+        font-style: normal;
+      }
+        tt {
+          padding: 0px 3px;
+          background: #fff;
+          border: 1px solid #ddd;
+          zoom: 1;
+        }
+        code {
+          margin-left: 20px;
+        }
+        pre {
+          font-size: 12px;
+          padding: 2px 0 2px 15px;
+          border-left: 5px solid #bbb;
+          margin: 0px 0 30px;
+        }
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (max-width: 640px),
+          only screen and (-o-min-device-pixel-ratio: 3/2) and (max-width: 640px),
+          only screen and (min-device-pixel-ratio: 1.5) and (max-width: 640px) {
+      img {
+        max-width: 100%;
+      }
+      div#sidebar {
+        -webkit-overflow-scrolling: initial;
+        position: relative;
+        width: 90%;
+        height: 120px;
+        left: 0;
+        top: -7px;
+        padding: 10px 0 10px 30px;
+        border: 0;
+      }
+      img#logo {
+        width: auto;
+        height: auto;
+      }
+      div.container {
+        margin: 0;
+        width: 100%;
+      }
+      p, div.container ul {
+        max-width: 98%;
+        overflow-x: scroll;
+      }
+      pre {
+        overflow: scroll;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar" class="interface">
+
+    <a class="toc_title" href="#">
+      Mapflow <span class="version">(0.1.1)</span>
+    </a>
+    <ul class="toc_section">
+      <li>» <a href="https://github.com/niles2005/mapflow">GitHub Repository</a></li>
+    </ul>
+
+    <a class="toc_title" href="#">
+      Introduction
+    </a>
+
+    <a class="toc_title" href="#templates">
+      templates
+    </a>
+    <ul class="toc_section">
+      <li>- <a href="#list">list</a></li>
+      <li>- <a href="#file">file</a></li>
+    </ul>
+
+
+    <a class="toc_title" href="#links">
+      Links
+    </a>
+
+    <a class="toc_title" href="#changelog">
+      Change Log
+    </a>
+
+  </div>
+
+  <div class="container">
+
+    <p id="introduction">
+      <img id="logo" src="mapflow.png" alt="Mapflow">
+    </p>
+
+    <p>
+      <a href="https://github.com/niles2005/mapflow">Mapflow</a> 是一个提供在线一体化的地图编译，
+      配置，发布平台。
+    </p>
+
+    <p>
+      
+    </p>
+
+ 
+    <div id="documentation">
+
+      <h2 id="templates">Map compile templates</h2>
+	<p>
+      		template是地图服务器后台编译使用的数据配置表，采用xml文件格式。
+    	</p>
+	
+      <p id="list">
+        <b class="header">list</b><code>http://127.0.0.1/mapflow/work?action=template.list</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>[{"name":"new2.xml","id":"TC_21132756"},{"name":"new.xml","id":"TC_15021407"}]</pre>
+        返回当前服务端支持的所有template列表。对于每个template，显示name，id属性。
+        <br>当服务端集合为空时，返回空集合: []
+        
+      </p>
+      <br>
+
+
+      <p id="file">
+        <b class="header">file</b><code>http://127.0.0.1/mapflow/work?action=template.file.new.xml</code>
+        <br><span class="alias">Return: <b>Text(xml)</b></span>
+        <pre>&lt;config id="TC_15021407"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;group name="area"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="base"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;field name="exist" value="1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;field name="simplifypixel" value="1.5|1.2| 0.8|0.8|0.8|0.7|0.6| 0.5|0.5|0.4|0.4|0.3| 0.3|0.3|0.2|0.2|0.2| 0.1|0.1|0.1"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;field name="showpixel" value="1|1| 1|1|1|1|1| 1|1|1|1|1| 1|1|1|1|1| 1|1|1"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;field name="showriverwidth" value="0.4"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;field name="shownamerange" value="50|50| 50|50|50|50|50| 50|50|50|50|50| 50|50|50|50|50| 0|0|0"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="waterway"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="tourism"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="sport"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="shop"/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item name="railway"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+</pre>
+
+	返回指定文件名的template文件内容。
+	
+</p>
+        <br>
+        
+
+
+
+
+      <h2 id="links">Links &amp; Suggested Reading</h2>
+
+
+
+      <p>
+        Python's <a href="http://docs.python.org/library/itertools.html">itertools</a>.
+      </p>
+      <p>
+        Python's <a href="http://learning.github.io/underscore/">underscore</a>.
+      </p>
+      
+
+      <h2 id="changelog">Change Log</h2>
+
+
+
+
+      <p>
+        <b class="header">0.1.1</b><br>
+        实现地图配置模版的template的界面设计，服务接口。
+      </p>
+
+      <p>
+        <b class="header">0.1.0</b><br>
+        初始版本。
+      </p>
+
+
+    </div>
+
+  </div>
+
+
+
+
+</body></html>

@@ -93,6 +93,8 @@ function CompilePageCtrl($scope) {
         treeConfig.deleteNode();
     }
 
-    var treeConfig = new TreeConfig("new.xml",$scope);
+    var treeConfig = new TreeConfig("/mapflow/work?action=template.file.new.xml",$scope);
+	
+	var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
 }
