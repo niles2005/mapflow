@@ -263,9 +263,20 @@ TreeConfig.prototype = {
         this.menuPanel.appendTo(this._jAreaDiv.parent());
         this.menuPanel.hide();
 
-        $(window).keypress(function(event){
+//        bindEvent(window,"onkeydown" ,function(event){
+//            console.dir(this);
+//            console.dir(event.keyCode)
+//            if(self._selectLI && event.keyCode==113){
+//                console.dir(self._selectLI);
+//                self._editNode()();
+//            }
+//        });
+
+        $(window).keydown(function(event){
             console.dir(this);
-            if(event.keyCode===113){
+            console.dir(event.keyCode)
+            if(self._selectLI && event.keyCode==113){
+                console.dir(self._selectLI);
                 self._editNode()();
             }
         });
