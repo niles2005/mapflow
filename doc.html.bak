@@ -192,6 +192,9 @@
     <ul class="toc_section">
       <li>- <a href="#list">list</a></li>
       <li>- <a href="#file">file</a></li>
+      <li>- <a href="#add">add</a></li>
+      <li>- <a href="#rename">rename</a></li>
+      <li>- <a href="#delete">delete</a></li>
     </ul>
 
 
@@ -229,7 +232,7 @@
     	</p>
 	
       <p id="list">
-        <b class="header">list</b><code>http://127.0.0.1/mapflow/work?action=template.list</code>
+        <b class="header">list</b><code>http://127.0.0.1/mapflow/work?module=template&action=list</code>
         <br><span class="alias">Return: <b>JSON</b></span>
         <pre>[{"name":"new2.xml","id":"TC_21132756"},{"name":"new.xml","id":"TC_15021407"}]</pre>
         返回当前服务端支持的所有template列表。对于每个template，显示name，id属性。
@@ -240,7 +243,7 @@
 
 
       <p id="file">
-        <b class="header">file</b><code>http://127.0.0.1/mapflow/work?action=template.file.new.xml</code>
+        <b class="header">file</b><code>http://127.0.0.1/mapflow/work?module=template&action=content&name=new.xml</code>
         <br><span class="alias">Return: <b>Text(xml)</b></span>
         <pre>&lt;config id="TC_15021407"&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;group name="area"&gt;
@@ -263,6 +266,38 @@
 </p>
         <br>
         
+      <p id="add">
+        <b class="header">add</b><code>http://127.0.0.1/mapflow/work?module=template&action=add&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中增加节点。
+	
+</p>
+        <br>
+
+      <p id="rename">
+        <b class="header">rename</b><code>http://127.0.0.1/mapflow/work?module=template&action=rename&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中改变指定节点名称。
+	
+</p>
+        <br>
+
+      <p id="delete">
+        <b class="header">delete</b><code>http://127.0.0.1/mapflow/work?module=template&action=delete&name=new.xml&node=area.base</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中删除指定节点。
+	
+</p>
+        <br>
 
 
 
@@ -275,7 +310,7 @@
         Python's <a href="http://docs.python.org/library/itertools.html">itertools</a>.
       </p>
       <p>
-        Python's <a href="http://learning.github.io/underscore/">underscore</a>.
+        <a href="http://learning.github.io/underscore/">underscore</a>.
       </p>
       
 
