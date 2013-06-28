@@ -13,7 +13,9 @@ function TreeConfig(configFile, scope) {
     this._initMenuPanel();
     this.loadContent();
     this.currentTreeNode = null;
+    this.targetTreeNode = null;
     this.selectTreeNodeArray = null;
+
 }
 
 var asChild = false;
@@ -91,12 +93,12 @@ TreeConfig.prototype = {
                         }
                         continue;
                     }
-                    var elementName = $(childNode).attr('name');
 
                     var jli = $('<li><div></div><span class=' + elementType + '></span><span class=treeLabel></span></li>');
                     var elementName = $(childNode).attr('name');
                     jli.find(".treeLabel").text(elementName);
                     jli.find('.treeLabel').hover(this._addHover, this._removeHover);
+                    jli.find('.treeLabel').mouseover(this._treeNodeMouseOver());
                     var li = jli[0];
                     li._attr = {};
                     li._attr["groupName"] = groupName;
@@ -263,7 +265,7 @@ TreeConfig.prototype = {
             unbindEvent(document, 'click', popupClick);
         }
         return function(event) {
-            if (event.button === 2) {
+            if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true;   // 只有在树的节点上单击时才有弹出菜单
                 } else {
@@ -284,15 +286,51 @@ TreeConfig.prototype = {
                 }
                 self.menuPanel.css({'left': showX, 'top': showY}).fadeIn(300);
                 bindEvent(document, 'click', popupClick);
-            } else if (event.button === 1) {
-                if (event.target.tagName !== 'SPAN' && event.target.className.slice(0, 4) !== 'item') {
+            } else if (event.which === 1) {
+                if (event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel') {
+                    self.currentTreeNode = $(event.target).parent();
+                    var dragUl =  self.currentTreeNode.clone();
+                    var showX =   self.currentTreeNode.offset().left;
+                    var showY =   self.currentTreeNode.offset().top;
+                    dragUl.css({'position':'absolute','pointer-events': 'none','background-color':'#3488ff','opacity': 0.5,'left':showX,'top':showY});
+                    var offsetX = event.pageX - showX;
+                    var offsetY = event.pageY - showY;
 
+                    $(document).mousemove(function(){
+                        return function(evt){
+                            if (evt.which === 1) {
+                                self.currentTreeNode.append(dragUl);
+                                dragUl.css({'left': evt.pageX - offsetX, 'top': evt.pageY - offsetY});
+                            }
+                        }
+                    }());
+                    $(document).mouseup(function(){
+                        dragUl.remove();
+
+                        $(document).unbind();
+                        if(self.targetTreeNode ){
+                            console.log('tree node transfer');
+                            $(self.targetTreeNode).append($('<ul></ul>').wrapInner(self.currentTreeNode));
+                            self.targetTreeNode = null;
+                        }
+                    });
                 }
             } else {
                 self.menuPanel.hide();
             }
         };
     },
+
+    _treeNodeMouseOver : function(){
+        var self = this;
+        return function(event){
+            if (event.which  === 1) {
+                console.log( $(this).parent()[0]._attr["name"] + ' on mouse over')
+                self.targetTreeNode = $(this).parent();
+            }
+        }
+    } ,
+
     _addNode: function() {
         var self = this;
         var menuPanel = this.menuPanel;
