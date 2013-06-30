@@ -306,13 +306,14 @@ TreeConfig.prototype = {
                 if (event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel') {
                     self.currentTreeNode = $(event.target).parent()[0];
                     var dragTreeNode = $(event.target).parent();
-
                     var dragUl =  dragTreeNode.clone();
                     var showX =   dragTreeNode.offset().left;
                     var showY =   dragTreeNode.offset().top;
                     dragUl.css({'position':'absolute','pointer-events': 'none','background-color':'#3488ff','opacity': 0.5,'left':showX,'top':showY});
                     var offsetX = event.pageX - showX;
                     var offsetY = event.pageY - showY;
+
+                    $(window).unbind('keydown');  // 防止多次bind
                     $(window).keydown(function(event){    //bind 响应F2改名
                         if(self._selectLI && event.keyCode==113){
                             console.dir(self._selectLI);
@@ -451,7 +452,7 @@ TreeConfig.prototype = {
     _editNode: function() {
         var self = this;
         var menuPanel = this.menuPanel;
-        $(window).unbind();
+        $(window).unbind('keydown');
         return function() {
             if (self._selectLI) {
                 $(self._selectLI).find(">span").removeClass("nodeselected");
@@ -464,26 +465,14 @@ TreeConfig.prototype = {
             
             var jQnameSpan = $(jQli.find('>span.treeLabel'));
             var jQinput = $('<input type="text" class="labelInput" style="width:100px;">');
-                jQinput.keypress(function(event) {
-                if (event.keyCode === 13) {
-                    var newName = jQinput.val();
-                    jQnameSpan.text(newName);
-                    jQnameSpan.fadeIn(200);
-                    jQinput.fadeOut(200);
-                    var attr = jQli[0]._attr;
-                    if(attr) {
-                        attr["name"] = newName;
-                    }
-                    jQinput.remove();
-
-                    self.selectLINode(li);
-                }
-            });
-            jQinput.bind('click', function() {
-                return false;  //在输入到输入框时，不响应onclick事件！
-            });
-            jQinput.bind('blur', function() {
+            function setNewName(){
                 var newName = jQinput.val();
+                if(newName.length === 0){
+                    console.dir(newName)
+                    $('#nullNameAlert').modal();
+                    jQinput.focus();
+                    return;
+                }
                 jQnameSpan.text(newName);
                 jQnameSpan.fadeIn(200);
                 jQinput.fadeOut(200);
@@ -493,6 +482,17 @@ TreeConfig.prototype = {
                 }
                 jQinput.remove();
                 self.selectLINode(li);
+            };
+            jQinput.keypress(function(event) {
+                if (event.keyCode === 13) {
+                   setNewName();
+                }
+            });
+            jQinput.bind('blur', function() {
+                setNewName();
+            });
+            jQinput.bind('click', function() {
+                return false;  //在输入到输入框时，不响应onclick事件！
             });
             jQinput.val(jQnameSpan.text());
             var jQChildNode =  jQli.find('>ul:first');
