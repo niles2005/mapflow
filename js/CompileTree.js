@@ -209,6 +209,7 @@ TreeConfig.prototype = {
     },
     makeClickListener: function() {
         var self = this;
+
         return function(event) {
             if (event) {
                 event.stopPropagation();
@@ -263,23 +264,6 @@ TreeConfig.prototype = {
         this.menuPanel.appendTo(this._jAreaDiv.parent());
         this.menuPanel.hide();
 
-//        bindEvent(window,"onkeydown" ,function(event){
-//            console.dir(this);
-//            console.dir(event.keyCode)
-//            if(self._selectLI && event.keyCode==113){
-//                console.dir(self._selectLI);
-//                self._editNode()();
-//            }
-//        });
-
-        $(window).keydown(function(event){
-            console.dir(this);
-            console.dir(event.keyCode)
-            if(self._selectLI && event.keyCode==113){
-                console.dir(self._selectLI);
-                self._editNode()();
-            }
-        });
 
 
     },
@@ -320,33 +304,52 @@ TreeConfig.prototype = {
                 bindEvent(document, 'click', popupClick);
             } else if (event.which === 1) {
                 if (event.target.tagName == 'SPAN' && event.target.className.slice(0,9) == 'treeLabel') {
-                    self.currentTreeNode = $(event.target).parent();
-                    var dragUl =  self.currentTreeNode.clone();
-                    var showX =   self.currentTreeNode.offset().left;
-                    var showY =   self.currentTreeNode.offset().top;
+                    self.currentTreeNode = $(event.target).parent()[0];
+                    var dragTreeNode = $(event.target).parent();
+
+                    var dragUl =  dragTreeNode.clone();
+                    var showX =   dragTreeNode.offset().left;
+                    var showY =   dragTreeNode.offset().top;
                     dragUl.css({'position':'absolute','pointer-events': 'none','background-color':'#3488ff','opacity': 0.5,'left':showX,'top':showY});
                     var offsetX = event.pageX - showX;
                     var offsetY = event.pageY - showY;
-
+                    $(window).keydown(function(event){    //bind 响应F2改名
+                        if(self._selectLI && event.keyCode==113){
+                            console.dir(self._selectLI);
+                            self._editNode()();
+                        }
+                    });
                     $(document).mousemove(function(){
                         return function(evt){
                             if (evt.which === 1) {
-                                self.currentTreeNode.append(dragUl);
+                                dragTreeNode.append(dragUl);
                                 dragUl.css({'left': evt.pageX - offsetX, 'top': evt.pageY - offsetY});
                             }
                         }
-                    }());
+                    }());  //mousemove返回的方法直接运行
                     $(document).mouseup(function(){
                         dragUl.remove();
-                        $(document).unbind();
                         if(self.targetTreeNode ){
-                            console.log('tree node transfer');
-                            var wrapperUl = $('<ul>');
-                            wrapperUl.addClass(this._treeName);
-                            $(self.targetTreeNode).append(wrapperUl.wrapInner(self.currentTreeNode));
-                            self.selectLINode(self.currentTreeNode[0]);
+                            if(dragTreeNode.siblings().filter("li").length === 0){
+                                var jQUl = dragTreeNode.parent();
+                                var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                                jQDiv.removeClass('nodeopen') ;
+                                jQUl.remove();
+                            }
+                            if ($(self.targetTreeNode).find('>ul').length === 0) {
+                                var wrapperUl = $('<ul>');
+                                wrapperUl.addClass(self._treeName);
+                                $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
+                            }else{
+                                $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
+                            }
+
+                            $(self.targetTreeNode)[0].onclick();
+                            self.selectLINode(self.currentTreeNode);
                             self.targetTreeNode = null;
                         }
+                        $(document).unbind('mousemove');
+                        $(document).unbind('mouseup');
                     });
                 }
             } else {
@@ -448,6 +451,7 @@ TreeConfig.prototype = {
     _editNode: function() {
         var self = this;
         var menuPanel = this.menuPanel;
+        $(window).unbind();
         return function() {
             if (self._selectLI) {
                 $(self._selectLI).find(">span").removeClass("nodeselected");
@@ -500,6 +504,7 @@ TreeConfig.prototype = {
             jQnameSpan.hide();
             menuPanel.hide();
             jQinput.focus();
+
         };
     },
     deleteNode: function() {
