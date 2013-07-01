@@ -35,7 +35,12 @@ div {
   padding: 0;
 }
 
-
+.doc {
+  right:0;
+  padding-right:5px;
+  position: absolute;
+  top:0;
+}
 
 .projects li {
 clear: both;

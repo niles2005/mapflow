@@ -215,6 +215,9 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
+            if(self.menuPanel.is(':visible')) {
+                self.menuPanel.hide();
+            }
             
             var liNode = this;
             self.selectLINode(liNode);
@@ -508,18 +511,27 @@ TreeConfig.prototype = {
         };
     },
     deleteNode: function() {
-        this.menuPanel.hide();
-        var jQli = $(this.currentTreeNode);
+        $.ajax({
+          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=area.base.test",
+          dataType : "json",
+        }).done(function(data) {
+            if(data && data.status === 'ok') {
+                this.menuPanel.hide();
+                var jQli = $(this.currentTreeNode);
 
-        if(jQli.siblings().filter("li").length === 0){
-            var jQUl = jQli.parent();
-            var jQDiv = jQUl.siblings().filter("div.nodeopen");
-            jQDiv.removeClass('nodeopen') ;
-            jQUl.remove();
-        }else{
-            jQli.remove();
-        }
-		this.selectLINode();
+                if(jQli.siblings().filter("li").length === 0){
+                    var jQUl = jQli.parent();
+                    var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                    jQDiv.removeClass('nodeopen') ;
+                    jQUl.remove();
+                }else{
+                    jQli.remove();
+                }
+                this.selectLINode();
+            } else {
+
+            }
+        });
     }
 };
 

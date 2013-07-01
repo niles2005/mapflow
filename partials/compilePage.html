@@ -104,10 +104,11 @@
             <h3>确认</h3>
         </div>
         <div class="modal-body">
-            <p>您确定要删除"{{deleteTreeNodeName}}"节点</p>
+            <p>您确定要删除"{{deleteTreeNodeName}}"节点?</p>
+            <p style="color:red">删除出错：此节点不存在！?</p>
         </div>
         <div class="modal-footer">
-            <a data-dismiss="modal" class="btn btn-primary" ng-click="deleteTreeNode()">确定</a>
+            <a class="btn btn-primary" ng-click="deleteTreeNode()">确定</a>
             <a data-dismiss="modal" class="btn">放弃</a>
         </div>
     </div>
