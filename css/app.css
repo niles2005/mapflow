@@ -245,5 +245,9 @@ width: 100px;
     background-color: #4673fb;
 }
 
+.treeDrag{
+    /*background-color: #fb40af;*/
+        cursor: hand;
+}
 
 
