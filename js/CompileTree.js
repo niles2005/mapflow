@@ -214,9 +214,12 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
-            if (self.menuPanel.is(':visible')) {
+
+            if(self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
+            
+
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
@@ -249,10 +252,11 @@ TreeConfig.prototype = {
 
         var jQAdd = $('<a>添加</a>');
         jQAdd.click(this._addNode());
-        var jQEdit = $('<a>重命名</a>');
+        var jQEdit = $('<a id="manurename">重命名</a>');
         jQEdit.click(this._editNode());
-        var jQDel = $('<a>删除</a>');
+        var jQDel = $('<a id="manuremove">删除</a>');
         jQDel.click(function() {
+            self.resetModal();
             self._scope.deleteTreeNodeName = '您确定要删除节点“'+self.currentTreeNode.textContent+'”？';
             self._scope.$apply();
             $('#confirm').modal();
@@ -279,8 +283,12 @@ TreeConfig.prototype = {
             if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true; // 只有在树的节点上单击时才有弹出菜单
+                    $('#manurename').parent().show();
+                    $('#manuremove').parent().show();
                 } else {
                     asChild = false;
+                     $('#manurename').parent().hide();
+                     $('#manuremove').parent().hide();
                 }
                 var jqNode = $(event.target).parent();
                 self.currentTreeNode = jqNode[0];
@@ -530,27 +538,39 @@ TreeConfig.prototype = {
     deleteNode: function() {
         this.menuPanel.hide();
 
-        if (this._scope.deleteTreeNodeName.length <= 16) {
-            $('#deleteAlert').hide();
-            $('#confirmButton').text('重试');
-            $('#deleteMessage').text('failed');
-            return;
-        }
-        var jQli = $(this.currentTreeNode);
-        if (jQli.siblings().filter("li").length === 0) {
-            var jQUl = jQli.parent();
-            var jQDiv = jQUl.siblings().filter("div.nodeopen");
-            jQDiv.removeClass('nodeopen');
-            jQUl.remove();
-        } else {
-            jQli.remove();
-        }
-        this.selectLINode();
+        var self  = this;
+        $.ajax({
+          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=area.base.test",
+          dataType : "json"
+        }).done(function(data) {
+            if(data && data.status === 'ok') {
+                var jQli = $(self.currentTreeNode);
+                if(jQli.siblings().filter("li").length === 0){
+                    var jQUl = jQli.parent();
+                    var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                    jQDiv.removeClass('nodeopen') ;
+                    jQUl.remove();
+                }else{
+                    jQli.remove();
+                }
+                $('#deleteAlert').hide();
+                $('#confirmButton').hide();
+                $('#abortButton').text('完成');
+                $('#deleteMessage').text('ok');
+                self.selectLINode();
+            } else {
+                $('#deleteAlert').hide();
+                $('#confirmButton').text('重试');
+                $('#deleteMessage').text('failed');
+                return;
+            }
+        });
     },
-
     resetModal: function(){
         $('#deleteAlert').show();
+        $('#confirmButton').show();
         $('#confirmButton').text('确定');
+        $('#abortButton').text('放弃');
         $('#deleteMessage').text('');
     }
 

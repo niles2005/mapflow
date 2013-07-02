@@ -31,7 +31,7 @@ var groupMap = {
     ]
 };
     
-function CompilePageCtrl($scope) {
+function CompilePageCtrl($scope,$http) {
     $scope.fields = [];
     $scope.currentField = null;
     
@@ -92,10 +92,11 @@ function CompilePageCtrl($scope) {
     $scope.deleteTreeNodeMessage;
     $scope.deleteTreeNode = function(){
         treeConfig.deleteNode();
+
     }
 
-    var treeConfig = new TreeConfig("new.xml",$scope);
-//    var treeConfig = new TreeConfig("/mapflow/work?action=template.file.new.xml",$scope);
+    // var treeConfig = new TreeConfig("new.xml",$scope);
+    var treeConfig = new TreeConfig("/mapflow/work?module=template&action=content&name=new.xml",$scope);
 
 	var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 
