@@ -195,6 +195,7 @@
       <li>- <a href="#add">add</a></li>
       <li>- <a href="#rename">rename</a></li>
       <li>- <a href="#delete">delete</a></li>
+      <li>- <a href="#move">move</a></li>
     </ul>
 
 
@@ -278,12 +279,13 @@
         <br>
 
       <p id="rename">
-        <b class="header">rename</b><code>http://127.0.0.1/mapflow/work?module=template&action=rename&name=new.xml&node=area.base.test</code>
+        <b class="header">rename</b><code>http://127.0.0.1/mapflow/work?module=template&action=rename&name=new.xml&node=area.base.shop^shop1</code>
         <br><span class="alias">Return: <b>JSON</b></span>
         <pre>{"status":"ok"}
 	</pre>
 
-	在指定模版树中改变指定节点名称。
+	在指定模版树中改变指定节点名称。<br>
+	在node参数中，使用符号^分隔改名前节点路径，及改名后的节点名称。改名的名称中不能出现.,^,等非文件名支持的字符。
 	
 </p>
         <br>
@@ -295,6 +297,18 @@
 	</pre>
 
 	在指定模版树中删除指定节点。
+	
+</p>
+        <br>
+
+      <p id="move">
+        <b class="header">move</b><code>http://127.0.0.1/mapflow/work?module=template&action=move&name=new.xml&node=area.base.office^area.base.place</code>
+        <br><span class="alias">Return: <b>JSON</b></span>
+        <pre>{"status":"ok"}
+	</pre>
+
+	在指定模版树中移动节点到目标节点。<br>
+	在node参数中，使用符号^分隔移动的源节点路径，及目标节点路径。目标节点路径不能为空，如果需移动为顶层路径，需指明节点类别名称(area,line)
 	
 </p>
         <br>

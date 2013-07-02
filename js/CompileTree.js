@@ -214,16 +214,10 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
-<<<<<<< HEAD
             if(self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
             
-=======
-            if (self.menuPanel.is(':visible')) {
-                self.menuPanel.hide();
-            }
->>>>>>> 3f77d7fa0972a64dbbdfeb1fe7fd9ba3ccce40b5
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
@@ -535,29 +529,6 @@ TreeConfig.prototype = {
         };
     },
     deleteNode: function() {
-<<<<<<< HEAD
-        $.ajax({
-          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=area.base.test",
-          dataType : "json",
-        }).done(function(data) {
-            if(data && data.status === 'ok') {
-                this.menuPanel.hide();
-                var jQli = $(this.currentTreeNode);
-
-                if(jQli.siblings().filter("li").length === 0){
-                    var jQUl = jQli.parent();
-                    var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                    jQDiv.removeClass('nodeopen') ;
-                    jQUl.remove();
-                }else{
-                    jQli.remove();
-                }
-                this.selectLINode();
-            } else {
-
-            }
-        });
-=======
         this.menuPanel.hide();
         var jQli = $(this.currentTreeNode);
 
@@ -570,7 +541,6 @@ TreeConfig.prototype = {
             jQli.remove();
         }
         this.selectLINode();
->>>>>>> 3f77d7fa0972a64dbbdfeb1fe7fd9ba3ccce40b5
     }
 };
 
