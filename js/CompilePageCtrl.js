@@ -89,8 +89,10 @@ function CompilePageCtrl($scope,$http) {
         $td.addClass("labelOrientSelected");
     }
     $scope.deleteTreeNodeName;
+    $scope.deleteTreeNodeMessage;
     $scope.deleteTreeNode = function(){
         treeConfig.deleteNode();
+
     }
 
     // var treeConfig = new TreeConfig("new.xml",$scope);
