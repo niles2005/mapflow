@@ -517,11 +517,18 @@ TreeConfig.prototype = {
             function setNewName() {
                 var newName = jQinput.val();
                 if (newName.length === 0) {
-                    console.dir(newName)
-                    $('#nullNameAlert').modal();
+                    $('#alertMessage').text('节点名不能为空');
+                    $('#alertModal').modal();
                     jQinput.focus();
                     return;
                 }
+                if (newName.indexOf('.') >= 0){
+                    $('#alertMessage').text('节点名不能含有"."');
+                    $('#alertModal').modal();
+                    jQinput.focus();
+                    return;
+                }
+
                 jQnameSpan.text(newName);
                 jQnameSpan.fadeIn(200);
                 jQinput.fadeOut(200);
