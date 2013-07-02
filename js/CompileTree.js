@@ -404,6 +404,20 @@ TreeConfig.prototype = {
         }
     },
 
+    nodePathName: function(liNode){
+        var nodes = [] ;
+        var nodeName = '';
+        this.listPathNames(liNode ,nodes ) ;
+        for(var i in nodes) {
+            if(i==0){
+                nodeName = nodes[i]._attr['name'];
+            } else{
+                nodeName += '.'+nodes[i]._attr['name'] ;
+            }
+        }
+        return  nodeName;
+    },
+
     _addNode: function() {
         var self = this;
         var menuPanel = this.menuPanel;
@@ -544,10 +558,10 @@ TreeConfig.prototype = {
     },
     deleteNode: function() {
         this.menuPanel.hide();
-
+        var nodeName = this.nodePathName(this.currentTreeNode) ;
         var self  = this;
         $.ajax({
-          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=area.base.test",
+          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
           dataType : "json"
         }).done(function(data) {
             if(data && data.status === 'ok') {
