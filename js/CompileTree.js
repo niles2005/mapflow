@@ -257,7 +257,14 @@ TreeConfig.prototype = {
         var jQDel = $('<a id="manuremove">删除</a>');
         jQDel.click(function() {
             self.resetModal();
-            self._scope.deleteTreeNodeName = '您确定要删除节点“'+self.currentTreeNode.textContent+'”？';
+            var confirmText  = '您确定要删除节点 '  ;
+            if($(self.currentTreeNode).find('ul').length > 0){
+                confirmText += self.currentTreeNode._attr['name']+' 及其子节点';
+            }else{
+                confirmText += self.currentTreeNode._attr['name'];
+            }
+            confirmText += ' ?';
+            self._scope.deleteTreeNodeName = confirmText;
             self._scope.$apply();
             $('#confirm').modal();
         });
