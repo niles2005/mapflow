@@ -22,22 +22,22 @@ var asChild = false;
 TreeConfig.defaultNewNodeName = "NewNode";
 
 TreeConfig.prototype = {
-    loadContent: function() {
+    loadContent: function () {
         if (this._url) {
             this.loadXMLFile(this._url, this.loadXmlDoc, this);
         }
     },
-    loadXMLFile: function(url, listener, caller) {
+    loadXMLFile: function (url, listener, caller) {
         $.ajax({
             url: url,
             dataType: "xml",
             cache: false,
-            success: function() {
+            success: function () {
                 listener.apply(caller, arguments);
             }
         });
     },
-    loadXmlDoc: function(xmlDoc) {
+    loadXmlDoc: function (xmlDoc) {
         var doc = xmlDoc.childNodes[0];
         this._treeName = "tree_mapstyle";
         var arr = doc.childNodes;
@@ -62,17 +62,17 @@ TreeConfig.prototype = {
         }
     },
 
-    _addHover: function(event) {
+    _addHover: function (event) {
         //		event.preventDefault();
         //		event.stopPropagation();
         $(this).addClass("nodeHover");
     },
-    _removeHover: function(event) {
+    _removeHover: function (event) {
         //		event.preventDefault();
         //		event.stopPropagation();
         $(this).removeClass("nodeHover");
     },
-    _makeTreeItem: function(node, groupName, childNodes) {
+    _makeTreeItem: function (node, groupName, childNodes) {
         if (childNodes.length > 0) {
             var jul = $('<ul>');
             jul.addClass(this._treeName);
@@ -82,7 +82,8 @@ TreeConfig.prototype = {
                 if (childNode.nodeType === 1) {
                     var strName = $(childNode).attr('name');
                     var elementType = childNode.tagName;
-                    if (elementType === 'group') {} else if (elementType === 'define') {
+                    if (elementType === 'group') {
+                    } else if (elementType === 'define') {
                         continue;
                     } else if (elementType === 'field') {
                         var strValue = $(childNode).attr('value');
@@ -136,8 +137,7 @@ TreeConfig.prototype = {
     },
 
 
-
-    listPathNames: function(node, arr) {
+    listPathNames: function (node, arr) {
         if (node instanceof HTMLLIElement) {
             arr.unshift(node);
         } else {
@@ -149,7 +149,7 @@ TreeConfig.prototype = {
         }
         return this.listPathNames(node, arr);
     },
-    selectLINode: function(liNode) {
+    selectLINode: function (liNode) {
         if (liNode) {
             var theNode = liNode;
             var props = [];
@@ -206,19 +206,19 @@ TreeConfig.prototype = {
             this._scope.selectNode();
         }
     },
-    makeClickListener: function() {
+    makeClickListener: function () {
         var self = this;
 
-        return function(event) {
+        return function (event) {
             if (event) {
                 event.stopPropagation();
                 event.preventDefault();
             }
 
-            if(self.menuPanel.is(':visible')) {
+            if (self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
-            
+
 
             var liNode = this;
             self.selectLINode(liNode);
@@ -242,9 +242,9 @@ TreeConfig.prototype = {
         };
     },
 
-    _initMenuPanel: function() {
+    _initMenuPanel: function () {
         this.menuPanel = $('<ul id="config-tree-edit"></ul>');
-        this._jAreaDiv.parent().bind("contextmenu", function() {
+        this._jAreaDiv.parent().bind("contextmenu", function () {
             return false; //去除默认右键弹出菜单
         });
         this._jAreaDiv.parent().find(">div").mousedown(this.popup());
@@ -255,12 +255,12 @@ TreeConfig.prototype = {
         var jQEdit = $('<a id="manurename">重命名</a>');
         jQEdit.click(this._editNode());
         var jQDel = $('<a id="manuremove">删除</a>');
-        jQDel.click(function() {
+        jQDel.click(function () {
             self.resetModal();
-            var confirmText  = '您确定要删除节点 '  ;
-            if($(self.currentTreeNode).find('ul').length > 0){
-                confirmText += self.currentTreeNode._attr['name']+' 及其子节点';
-            }else{
+            var confirmText = '您确定要删除节点 ';
+            if ($(self.currentTreeNode).find('ul').length > 0) {
+                confirmText += self.currentTreeNode._attr['name'] + ' 及其子节点';
+            } else {
                 confirmText += self.currentTreeNode._attr['name'];
             }
             confirmText += ' ?';
@@ -277,16 +277,16 @@ TreeConfig.prototype = {
         this.menuPanel.hide();
 
 
-
     },
-    popup: function() {
+    popup: function () {
         var self = this;
 
         function popupClick() {
             self.menuPanel.hide();
             unbindEvent(document, 'click', popupClick);
         }
-        return function(event) {
+
+        return function (event) {
             if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true; // 只有在树的节点上单击时才有弹出菜单
@@ -294,8 +294,8 @@ TreeConfig.prototype = {
                     $('#manuremove').parent().show();
                 } else {
                     asChild = false;
-                     $('#manurename').parent().hide();
-                     $('#manuremove').parent().hide();
+                    $('#manurename').parent().hide();
+                    $('#manuremove').parent().hide();
                 }
                 var jqNode = $(event.target).parent();
                 self.currentTreeNode = jqNode[0];
@@ -341,16 +341,15 @@ TreeConfig.prototype = {
                     var offsetY = event.pageY - showY;
                     dragTreeNode.append(dragUl);
                     $(window).unbind('keydown'); // 防止多次bind
-                    $(window).keydown(function(event) { //bind 响应F2改名
+                    $(window).keydown(function (event) { //bind 响应F2改名
                         if (self._selectLI && event.keyCode == 113) {
                             console.dir(self._selectLI);
                             self._editNode()();
                         }
                     });
-                    $(document).mousemove(function() {
-                        return function(evt) {
+                    $(document).mousemove(function () {
+                        return function (evt) {
                             if (evt.which === 1) {
-
                                 dragUl.css({
                                     'left': evt.pageX - offsetX,
                                     'top': evt.pageY - offsetY
@@ -358,11 +357,11 @@ TreeConfig.prototype = {
                             }
                         }
                     }()); //mousemove返回的方法直接运行
-                    $(document).mouseup(function() {
+                    $(document).mouseup(function () {
                         dragUl.remove();
 
                         if (self.targetTreeNode) {
-                            if (self.targetTreeNode[0] ===  dragTreeNode[0]) {
+                            if (self.targetTreeNode[0] === dragTreeNode[0]) {
                                 return;
                             }
                             if (dragTreeNode.siblings().filter("li").length === 0) {
@@ -393,9 +392,9 @@ TreeConfig.prototype = {
         };
     },
 
-    _treeNodeMouseOver: function() {
+    _treeNodeMouseOver: function () {
         var self = this;
-        return function(event) {
+        return function (event) {
             if (event.which === 1) {
                 console.log($(this).parent()[0]._attr["name"] + ' on mouse over')
                 self.targetTreeNode = $(this).parent();
@@ -404,24 +403,24 @@ TreeConfig.prototype = {
         }
     },
 
-    nodePathName: function(liNode){
-        var nodes = [] ;
+    nodePathName: function (liNode) {
+        var nodes = [];
         var nodeName = '';
-        this.listPathNames(liNode ,nodes ) ;
-        for(var i in nodes) {
-            if(i==0){
+        this.listPathNames(liNode, nodes);
+        for (var i in nodes) {
+            if (i == 0) {
                 nodeName = nodes[i]._attr['name'];
-            } else{
-                nodeName += '.'+nodes[i]._attr['name'] ;
+            } else {
+                nodeName += '.' + nodes[i]._attr['name'];
             }
         }
         return  nodeName;
     },
 
-    _addNode: function() {
+    _addNode: function () {
         var self = this;
         var menuPanel = this.menuPanel;
-        return function(event) {
+        return function (event) {
             var node = self.currentTreeNode;
             if (self._selectLI) {
                 $(self._selectLI).find(">span").removeClass("nodeselected");
@@ -471,25 +470,27 @@ TreeConfig.prototype = {
 
             var jQLabel = jli.find(".treeLabel");
             var jQinput = jli.find('.labelInput');
-            jQinput.bind('click', function() {
+            jQinput.bind('click', function () {
                 return false; //在输入到输入框时，不响应onclick事件！
             });
-            jQinput.bind('blur', function() {
+            function nameEfficient() {
                 var newName = jQinput.val();
+                if (!self._isNameValid(newName, jQinput)) {
+                    return;
+                }
                 jQLabel.text(newName);
                 li._attr["name"] = newName;
                 jQinput.remove();
                 jQLabel.show();
                 self.selectLINode(li);
+            }
+
+            jQinput.bind('blur', function () {
+                nameEfficient();
             });
-            jQinput.keypress(function(event) {
+            jQinput.keypress(function (event) {
                 if (event.keyCode === 13) {
-                    var newName = jQinput.val();
-                    jQLabel.text(newName);
-                    li._attr["name"] = newName;
-                    jQinput.remove();
-                    jQLabel.show();
-                    self.selectLINode(li);
+                    nameEfficient();
                 }
             });
 
@@ -497,11 +498,11 @@ TreeConfig.prototype = {
 
         };
     },
-    _editNode: function() {
+    _editNode: function () {
         var self = this;
         var menuPanel = this.menuPanel;
         $(window).unbind('keydown');
-        return function() {
+        return function () {
             if (self._selectLI) {
                 $(self._selectLI).find(">span").removeClass("nodeselected");
             }
@@ -516,19 +517,9 @@ TreeConfig.prototype = {
 
             function setNewName() {
                 var newName = jQinput.val();
-                if (newName.length === 0) {
-                    $('#alertMessage').text('节点名不能为空');
-                    $('#alertModal').modal();
-                    jQinput.focus();
+                if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                if (newName.indexOf('.') >= 0){
-                    $('#alertMessage').text('节点名不能含有"."');
-                    $('#alertModal').modal();
-                    jQinput.focus();
-                    return;
-                }
-
                 jQnameSpan.text(newName);
                 jQnameSpan.fadeIn(200);
                 jQinput.fadeOut(200);
@@ -539,15 +530,15 @@ TreeConfig.prototype = {
                 jQinput.remove();
                 self.selectLINode(li);
             };
-            jQinput.keypress(function(event) {
+            jQinput.keypress(function (event) {
                 if (event.keyCode === 13) {
                     setNewName();
                 }
             });
-            jQinput.bind('blur', function() {
+            jQinput.bind('blur', function () {
                 setNewName();
             });
-            jQinput.bind('click', function() {
+            jQinput.bind('click', function () {
                 return false; //在输入到输入框时，不响应onclick事件！
             });
             jQinput.val(jQnameSpan.text());
@@ -563,50 +554,65 @@ TreeConfig.prototype = {
 
         };
     },
-    deleteNode: function() {
+    deleteNode: function () {
         this.menuPanel.hide();
-        var nodeName = this.nodePathName(this.currentTreeNode) ;
-        var self  = this;
+        var nodeName = this.nodePathName(this.currentTreeNode);
+        var self = this;
         $.ajax({
-          url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
-          dataType : "json"
-        }).done(function(data) {
-            if(data && data.status === 'ok') {
-                var jQli = $(self.currentTreeNode);
-                if(jQli.siblings().filter("li").length === 0){
-                    var jQUl = jQli.parent();
-                    var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                    jQDiv.removeClass('nodeopen') ;
-                    jQUl.remove();
-                }else{
-                    jQli.remove();
+            url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
+            dataType: "json"
+        }).done(function (data) {
+                if (data && data.status === 'ok') {
+                    var jQli = $(self.currentTreeNode);
+                    if (jQli.siblings().filter("li").length === 0) {
+                        var jQUl = jQli.parent();
+                        var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                        jQDiv.removeClass('nodeopen');
+                        jQUl.remove();
+                    } else {
+                        jQli.remove();
+                    }
+                    $('#deleteAlert').hide();
+                    $('#confirmButton').hide();
+                    $('#abortButton').text('完成');
+                    $('#deleteMessage').text('ok');
+                    self.selectLINode();
+                } else {
+                    $('#deleteAlert').hide();
+                    $('#confirmButton').text('重试');
+                    $('#deleteMessage').text('failed');
+                    return;
                 }
-                $('#deleteAlert').hide();
-                $('#confirmButton').hide();
-                $('#abortButton').text('完成');
-                $('#deleteMessage').text('ok');
-                self.selectLINode();
-            } else {
-                $('#deleteAlert').hide();
-                $('#confirmButton').text('重试');
-                $('#deleteMessage').text('failed');
-                return;
-            }
-        });
+            });
     },
-    resetModal: function(){
+    resetModal: function () {
         $('#deleteAlert').show();
         $('#confirmButton').show();
         $('#confirmButton').text('确定');
         $('#abortButton').text('放弃');
         $('#deleteMessage').text('');
+    },
+    _isNameValid: function (newName, jQinput) {
+        if (newName.length === 0) {
+            $('#alertMessage').text('节点名不能为空');
+            $('#alertModal').modal();
+            jQinput.focus();
+            return false;
+        }
+        if (newName.indexOf('.') >= 0) {
+            $('#alertMessage').text('节点名不能含有"."');
+            $('#alertModal').modal();
+            jQinput.focus();
+            return false;
+        }
+        return true;
     }
 
 };
 
 function CompileTreeCtrl($scope) {
 
-    $scope.selectNode = function(treePathArr, propsArr) {
+    $scope.selectNode = function (treePathArr, propsArr) {
         $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
         console.dir(treePathArr);
