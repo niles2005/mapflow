@@ -253,7 +253,7 @@ TreeConfig.prototype = {
         jQEdit.click(this._editNode());
         var jQDel = $('<a>删除</a>');
         jQDel.click(function() {
-            self._scope.deleteTreeNodeName = self.currentTreeNode.textContent;
+            self._scope.deleteTreeNodeName = '您确定要删除节点“'+self.currentTreeNode.textContent+'”？';
             self._scope.$apply();
             $('#confirm').modal();
         });
@@ -529,8 +529,14 @@ TreeConfig.prototype = {
     },
     deleteNode: function() {
         this.menuPanel.hide();
-        var jQli = $(this.currentTreeNode);
 
+        if (this._scope.deleteTreeNodeName.length <= 16) {
+            $('#deleteAlert').hide();
+            $('#confirmButton').text('重试');
+            $('#deleteMessage').text('failed');
+            return;
+        }
+        var jQli = $(this.currentTreeNode);
         if (jQli.siblings().filter("li").length === 0) {
             var jQUl = jQli.parent();
             var jQDiv = jQUl.siblings().filter("div.nodeopen");
@@ -540,7 +546,14 @@ TreeConfig.prototype = {
             jQli.remove();
         }
         this.selectLINode();
+    },
+
+    resetModal: function(){
+        $('#deleteAlert').show();
+        $('#confirmButton').text('确定');
+        $('#deleteMessage').text('');
     }
+
 };
 
 function CompileTreeCtrl($scope) {
