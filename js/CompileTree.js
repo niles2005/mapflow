@@ -214,12 +214,19 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
+<<<<<<< HEAD
+            if(self.menuPanel.is(':visible')) {
+                self.menuPanel.hide();
+            }
+            
+=======
 
             if (self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
 
 
+>>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
@@ -557,6 +564,21 @@ TreeConfig.prototype = {
 
         };
     },
+<<<<<<< HEAD
+    deleteNode: function() {
+        this.menuPanel.hide();
+        var jQli = $(this.currentTreeNode);
+
+        if (jQli.siblings().filter("li").length === 0) {
+            var jQUl = jQli.parent();
+            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+            jQDiv.removeClass('nodeopen');
+            jQUl.remove();
+        } else {
+            jQli.remove();
+        }
+        this.selectLINode();
+=======
     deleteNode: function () {
         this.menuPanel.hide();
         var nodeName = this.nodePathName(this.currentTreeNode);
@@ -609,6 +631,7 @@ TreeConfig.prototype = {
             return false;
         }
         return true;
+>>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
     }
 
 };
