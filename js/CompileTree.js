@@ -214,19 +214,12 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
-<<<<<<< HEAD
-            if(self.menuPanel.is(':visible')) {
-                self.menuPanel.hide();
-            }
-            
-=======
 
             if (self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
 
 
->>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
@@ -287,13 +280,13 @@ TreeConfig.prototype = {
     },
     popup: function () {
         var self = this;
-
         function popupClick() {
             self.menuPanel.hide();
             unbindEvent(document, 'click', popupClick);
         }
 
         return function (event) {
+
             if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true; // 只有在树的节点上单击时才有弹出菜单
@@ -412,14 +405,10 @@ TreeConfig.prototype = {
 
     nodePathName: function (liNode) {
         var nodes = [];
-        var nodeName = '';
+        var nodeName = liNode._attr["groupName"];
         this.listPathNames(liNode, nodes);
         for (var i in nodes) {
-            if (i == 0) {
-                nodeName = nodes[i]._attr['name'];
-            } else {
-                nodeName += '.' + nodes[i]._attr['name'];
-            }
+            nodeName += '.' + nodes[i]._attr['name'];
         }
         return  nodeName;
     },
@@ -485,13 +474,31 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                //TODO ajax set new node's path to server
+                var nodeName = self.nodePathName(self.currentTreeNode)+"."+newName;
+                console.log(nodeName);
+                $.ajax({
+                    url: "/mapflow/work?module=template&action=add&name=new.xml&node=" + nodeName,
+                    dataType: "json"
+                }).done(function (data) {
+                        console.dir(data)
+                        if (data && data.status === 'OK') {
+                            jQLabel.text(newName);
+                            li._attr["name"] = newName;
+                            jQinput.remove();
+                            jQLabel.show();
+                            self.selectLINode(li);
+                        }else{
+                            self._removeLi(jli);
+                            self.selectLINode(node);
+                            self.resetModal();
+                            $('#deleteAlert').hide();
+                            $('#confirmButton').hide();
+                            $('#deleteMessage').text(data.message);
+                            $('#confirm').modal();
+                            return;
+                        }
+                    });
 
-                jQLabel.text(newName);
-                li._attr["name"] = newName;
-                jQinput.remove();
-                jQLabel.show();
-                self.selectLINode(li);
             }
 
             jQinput.bind('blur', function () {
@@ -529,16 +536,34 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                //TODO ajax set new name to server
-                jQnameSpan.text(newName);
-                jQnameSpan.fadeIn(200);
-                jQinput.fadeOut(200);
-                var attr = jQli[0]._attr;
-                if (attr) {
-                    attr["name"] = newName;
-                }
-                jQinput.remove();
-                self.selectLINode(li);
+
+                var nodeName = self.nodePathName(self.currentTreeNode) + "^" + newName;
+                $.ajax({
+                    url: "/mapflow/work?module=template&action=rename&name=new.xml&node=" + nodeName,
+                    dataType: "json"
+                }).done(function (data) {
+                    if (data && data.status === 'OK') {
+                        jQnameSpan.text(newName);
+                        jQnameSpan.fadeIn(200);
+                        jQinput.fadeOut(200);
+                        var attr = jQli[0]._attr;
+                        if (attr) {
+                            attr["name"] = newName;
+                        }
+                        jQinput.remove();
+                        self.selectLINode(li);
+                    }else{
+                        jQnameSpan.show();
+                        jQinput.remove();
+                        self.resetModal();
+                        $('#deleteAlert').hide();
+                        $('#confirmButton').hide();
+                        $('#deleteMessage').text(data.message);
+                        $('#confirm').modal();
+                        return;
+                    }
+                });
+
             };
             jQinput.keypress(function (event) {
                 if (event.keyCode === 13) {
@@ -564,21 +589,7 @@ TreeConfig.prototype = {
 
         };
     },
-<<<<<<< HEAD
-    deleteNode: function() {
-        this.menuPanel.hide();
-        var jQli = $(this.currentTreeNode);
 
-        if (jQli.siblings().filter("li").length === 0) {
-            var jQUl = jQli.parent();
-            var jQDiv = jQUl.siblings().filter("div.nodeopen");
-            jQDiv.removeClass('nodeopen');
-            jQUl.remove();
-        } else {
-            jQli.remove();
-        }
-        this.selectLINode();
-=======
     deleteNode: function () {
         this.menuPanel.hide();
         var nodeName = this.nodePathName(this.currentTreeNode);
@@ -587,16 +598,10 @@ TreeConfig.prototype = {
             url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
             dataType: "json"
         }).done(function (data) {
-                if (data && data.status === 'ok') {
+                console.dir(data)
+                if (data && data.status === 'OK') {
                     var jQli = $(self.currentTreeNode);
-                    if (jQli.siblings().filter("li").length === 0) {
-                        var jQUl = jQli.parent();
-                        var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                        jQDiv.removeClass('nodeopen');
-                        jQUl.remove();
-                    } else {
-                        jQli.remove();
-                    }
+                    self._removeLi(jQli);
                     $('#deleteAlert').hide();
                     $('#confirmButton').hide();
                     $('#abortButton').text('完成');
@@ -604,11 +609,21 @@ TreeConfig.prototype = {
                     self.selectLINode();
                 } else {
                     $('#deleteAlert').hide();
-                    $('#confirmButton').text('重试');
-                    $('#deleteMessage').text('failed');
+                    $('#confirmButton').hide();
+                    $('#deleteMessage').text(data.message);
                     return;
                 }
             });
+    },
+    _removeLi : function(jLi){
+        if (jLi.siblings().filter("li").length === 0) {
+            var jQUl = jLi.parent();
+            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+            jQDiv.removeClass('nodeopen');
+            jQUl.remove();
+        } else {
+            jLi.remove();
+        }
     },
     resetModal: function () {
         $('#deleteAlert').show();
@@ -631,7 +646,7 @@ TreeConfig.prototype = {
             return false;
         }
         return true;
->>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
+
     }
 
 };
