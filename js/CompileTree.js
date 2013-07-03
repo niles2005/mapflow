@@ -343,7 +343,6 @@ TreeConfig.prototype = {
                     $(window).unbind('keydown'); // 防止多次bind
                     $(window).keydown(function (event) { //bind 响应F2改名
                         if (self._selectLI && event.keyCode == 113) {
-                            console.dir(self._selectLI);
                             self._editNode()();
                         }
                     });
@@ -364,23 +363,41 @@ TreeConfig.prototype = {
                             if (self.targetTreeNode[0] === dragTreeNode[0]) {
                                 return;
                             }
-                            if (dragTreeNode.siblings().filter("li").length === 0) {
-                                var jQUl = dragTreeNode.parent();
-                                var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                                jQDiv.removeClass('nodeopen');
-                                jQUl.remove();
-                            }
-                            if ($(self.targetTreeNode).find('>ul').length === 0) {
-                                var wrapperUl = $('<ul>');
-                                wrapperUl.addClass(self._treeName);
-                                $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
-                            } else {
-                                $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
-                            }
 
-                            $(self.targetTreeNode)[0].onclick();
-                            self.selectLINode(self.currentTreeNode);
-                            self.targetTreeNode = null;
+                            var nodeName = self.nodePathName(self.currentTreeNode)+'^'+self.nodePathName(self.targetTreeNode[0]) ;
+                            $.ajax({
+                                 url: "/mapflow/work?module=template&action=move&name=new.xml&node=" + nodeName,
+                                 dataType:"json"
+                            }).done(function(data){
+                                      if(data && data.status === 'OK'){
+                                          if (dragTreeNode.siblings().filter("li").length === 0) {
+                                              var jQUl = dragTreeNode.parent();
+                                              var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                                              jQDiv.removeClass('nodeopen');
+                                              jQUl.remove();
+                                          }
+                                          if ($(self.targetTreeNode).find('>ul').length === 0) {
+                                              var wrapperUl = $('<ul>');
+                                              wrapperUl.addClass(self._treeName);
+                                              $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
+                                          } else {
+                                              $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
+                                          }
+                                          $(self.targetTreeNode)[0].onclick();
+                                          self.selectLINode(self.currentTreeNode);
+                                          self.targetTreeNode = null;
+                                      }else{
+                                          //TODO Ajax send to backword server
+                                          self.resetModal();
+                                          $('#deleteAlert').hide();
+                                          $('#confirmButton').hide();
+                                          $('#deleteMessage').text(data.message);
+                                          $('#confirm').modal();
+                                          return;
+                                      }
+                                });
+
+
                         }
                         $(document).unbind('mousemove');
                         $(document).unbind('mouseup');
@@ -396,7 +413,6 @@ TreeConfig.prototype = {
         var self = this;
         return function (event) {
             if (event.which === 1) {
-                console.log($(this).parent()[0]._attr["name"] + ' on mouse over')
                 self.targetTreeNode = $(this).parent();
                 self.targetTreeNode.addClass('treeDrag');
             }
@@ -475,12 +491,10 @@ TreeConfig.prototype = {
                     return;
                 }
                 var nodeName = self.nodePathName(self.currentTreeNode)+"."+newName;
-                console.log(nodeName);
                 $.ajax({
                     url: "/mapflow/work?module=template&action=add&name=new.xml&node=" + nodeName,
                     dataType: "json"
                 }).done(function (data) {
-                        console.dir(data)
                         if (data && data.status === 'OK') {
                             jQLabel.text(newName);
                             li._attr["name"] = newName;
@@ -598,7 +612,6 @@ TreeConfig.prototype = {
             url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
             dataType: "json"
         }).done(function (data) {
-                console.dir(data)
                 if (data && data.status === 'OK') {
                     var jQli = $(self.currentTreeNode);
                     self._removeLi(jQli);
@@ -656,7 +669,6 @@ function CompileTreeCtrl($scope) {
     $scope.selectNode = function (treePathArr, propsArr) {
         $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
-        console.dir(treePathArr);
         console.table(propsArr);
         $scope.$apply();
     };
