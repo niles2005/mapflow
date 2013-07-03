@@ -478,6 +478,8 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
+                //TODO ajax set new node's path to server
+
                 jQLabel.text(newName);
                 li._attr["name"] = newName;
                 jQinput.remove();
@@ -520,6 +522,7 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
+                //TODO ajax set new name to server
                 jQnameSpan.text(newName);
                 jQnameSpan.fadeIn(200);
                 jQinput.fadeOut(200);
