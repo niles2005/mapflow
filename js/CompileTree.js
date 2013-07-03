@@ -214,19 +214,12 @@ TreeConfig.prototype = {
                 event.stopPropagation();
                 event.preventDefault();
             }
-<<<<<<< HEAD
-            if(self.menuPanel.is(':visible')) {
-                self.menuPanel.hide();
-            }
-            
-=======
 
             if (self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
 
 
->>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
@@ -287,13 +280,13 @@ TreeConfig.prototype = {
     },
     popup: function () {
         var self = this;
-
         function popupClick() {
             self.menuPanel.hide();
             unbindEvent(document, 'click', popupClick);
         }
 
         return function (event) {
+
             if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true; // 只有在树的节点上单击时才有弹出菜单
@@ -350,7 +343,6 @@ TreeConfig.prototype = {
                     $(window).unbind('keydown'); // 防止多次bind
                     $(window).keydown(function (event) { //bind 响应F2改名
                         if (self._selectLI && event.keyCode == 113) {
-                            console.dir(self._selectLI);
                             self._editNode()();
                         }
                     });
@@ -371,23 +363,41 @@ TreeConfig.prototype = {
                             if (self.targetTreeNode[0] === dragTreeNode[0]) {
                                 return;
                             }
-                            if (dragTreeNode.siblings().filter("li").length === 0) {
-                                var jQUl = dragTreeNode.parent();
-                                var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                                jQDiv.removeClass('nodeopen');
-                                jQUl.remove();
-                            }
-                            if ($(self.targetTreeNode).find('>ul').length === 0) {
-                                var wrapperUl = $('<ul>');
-                                wrapperUl.addClass(self._treeName);
-                                $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
-                            } else {
-                                $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
-                            }
 
-                            $(self.targetTreeNode)[0].onclick();
-                            self.selectLINode(self.currentTreeNode);
-                            self.targetTreeNode = null;
+                            var nodeName = self.nodePathName(self.currentTreeNode)+'^'+self.nodePathName(self.targetTreeNode[0]) ;
+                            $.ajax({
+                                 url: "/mapflow/work?module=template&action=move&name=new.xml&node=" + nodeName,
+                                 dataType:"json"
+                            }).done(function(data){
+                                      if(data && data.status === 'OK'){
+                                          if (dragTreeNode.siblings().filter("li").length === 0) {
+                                              var jQUl = dragTreeNode.parent();
+                                              var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                                              jQDiv.removeClass('nodeopen');
+                                              jQUl.remove();
+                                          }
+                                          if ($(self.targetTreeNode).find('>ul').length === 0) {
+                                              var wrapperUl = $('<ul>');
+                                              wrapperUl.addClass(self._treeName);
+                                              $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
+                                          } else {
+                                              $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
+                                          }
+                                          $(self.targetTreeNode)[0].onclick();
+                                          self.selectLINode(self.currentTreeNode);
+                                          self.targetTreeNode = null;
+                                      }else{
+                                          //TODO Ajax send to backword server
+                                          self.resetModal();
+                                          $('#deleteAlert').hide();
+                                          $('#confirmButton').hide();
+                                          $('#deleteMessage').text(data.message);
+                                          $('#confirm').modal();
+                                          return;
+                                      }
+                                });
+
+
                         }
                         $(document).unbind('mousemove');
                         $(document).unbind('mouseup');
@@ -403,7 +413,6 @@ TreeConfig.prototype = {
         var self = this;
         return function (event) {
             if (event.which === 1) {
-                console.log($(this).parent()[0]._attr["name"] + ' on mouse over')
                 self.targetTreeNode = $(this).parent();
                 self.targetTreeNode.addClass('treeDrag');
             }
@@ -412,14 +421,10 @@ TreeConfig.prototype = {
 
     nodePathName: function (liNode) {
         var nodes = [];
-        var nodeName = '';
+        var nodeName = liNode._attr["groupName"];
         this.listPathNames(liNode, nodes);
         for (var i in nodes) {
-            if (i == 0) {
-                nodeName = nodes[i]._attr['name'];
-            } else {
-                nodeName += '.' + nodes[i]._attr['name'];
-            }
+            nodeName += '.' + nodes[i]._attr['name'];
         }
         return  nodeName;
     },
@@ -485,11 +490,29 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                jQLabel.text(newName);
-                li._attr["name"] = newName;
-                jQinput.remove();
-                jQLabel.show();
-                self.selectLINode(li);
+                var nodeName = self.nodePathName(self.currentTreeNode)+"."+newName;
+                $.ajax({
+                    url: "/mapflow/work?module=template&action=add&name=new.xml&node=" + nodeName,
+                    dataType: "json"
+                }).done(function (data) {
+                        if (data && data.status === 'OK') {
+                            jQLabel.text(newName);
+                            li._attr["name"] = newName;
+                            jQinput.remove();
+                            jQLabel.show();
+                            self.selectLINode(li);
+                        }else{
+                            self._removeLi(jli);
+                            self.selectLINode(node);
+                            self.resetModal();
+                            $('#deleteAlert').hide();
+                            $('#confirmButton').hide();
+                            $('#deleteMessage').text(data.message);
+                            $('#confirm').modal();
+                            return;
+                        }
+                    });
+
             }
 
             jQinput.bind('blur', function () {
@@ -527,15 +550,34 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                jQnameSpan.text(newName);
-                jQnameSpan.fadeIn(200);
-                jQinput.fadeOut(200);
-                var attr = jQli[0]._attr;
-                if (attr) {
-                    attr["name"] = newName;
-                }
-                jQinput.remove();
-                self.selectLINode(li);
+
+                var nodeName = self.nodePathName(self.currentTreeNode) + "^" + newName;
+                $.ajax({
+                    url: "/mapflow/work?module=template&action=rename&name=new.xml&node=" + nodeName,
+                    dataType: "json"
+                }).done(function (data) {
+                    if (data && data.status === 'OK') {
+                        jQnameSpan.text(newName);
+                        jQnameSpan.fadeIn(200);
+                        jQinput.fadeOut(200);
+                        var attr = jQli[0]._attr;
+                        if (attr) {
+                            attr["name"] = newName;
+                        }
+                        jQinput.remove();
+                        self.selectLINode(li);
+                    }else{
+                        jQnameSpan.show();
+                        jQinput.remove();
+                        self.resetModal();
+                        $('#deleteAlert').hide();
+                        $('#confirmButton').hide();
+                        $('#deleteMessage').text(data.message);
+                        $('#confirm').modal();
+                        return;
+                    }
+                });
+
             };
             jQinput.keypress(function (event) {
                 if (event.keyCode === 13) {
@@ -561,21 +603,7 @@ TreeConfig.prototype = {
 
         };
     },
-<<<<<<< HEAD
-    deleteNode: function() {
-        this.menuPanel.hide();
-        var jQli = $(this.currentTreeNode);
 
-        if (jQli.siblings().filter("li").length === 0) {
-            var jQUl = jQli.parent();
-            var jQDiv = jQUl.siblings().filter("div.nodeopen");
-            jQDiv.removeClass('nodeopen');
-            jQUl.remove();
-        } else {
-            jQli.remove();
-        }
-        this.selectLINode();
-=======
     deleteNode: function () {
         this.menuPanel.hide();
         var nodeName = this.nodePathName(this.currentTreeNode);
@@ -584,16 +612,9 @@ TreeConfig.prototype = {
             url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
             dataType: "json"
         }).done(function (data) {
-                if (data && data.status === 'ok') {
+                if (data && data.status === 'OK') {
                     var jQli = $(self.currentTreeNode);
-                    if (jQli.siblings().filter("li").length === 0) {
-                        var jQUl = jQli.parent();
-                        var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                        jQDiv.removeClass('nodeopen');
-                        jQUl.remove();
-                    } else {
-                        jQli.remove();
-                    }
+                    self._removeLi(jQli);
                     $('#deleteAlert').hide();
                     $('#confirmButton').hide();
                     $('#abortButton').text('完成');
@@ -601,11 +622,21 @@ TreeConfig.prototype = {
                     self.selectLINode();
                 } else {
                     $('#deleteAlert').hide();
-                    $('#confirmButton').text('重试');
-                    $('#deleteMessage').text('failed');
+                    $('#confirmButton').hide();
+                    $('#deleteMessage').text(data.message);
                     return;
                 }
             });
+    },
+    _removeLi : function(jLi){
+        if (jLi.siblings().filter("li").length === 0) {
+            var jQUl = jLi.parent();
+            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+            jQDiv.removeClass('nodeopen');
+            jQUl.remove();
+        } else {
+            jLi.remove();
+        }
     },
     resetModal: function () {
         $('#deleteAlert').show();
@@ -628,7 +659,7 @@ TreeConfig.prototype = {
             return false;
         }
         return true;
->>>>>>> ffeec1d0dbc1ab7a0e82915fc6818ac2a70aa78c
+
     }
 
 };
@@ -638,7 +669,6 @@ function CompileTreeCtrl($scope) {
     $scope.selectNode = function (treePathArr, propsArr) {
         $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
-        console.dir(treePathArr);
         console.table(propsArr);
         $scope.$apply();
     };
