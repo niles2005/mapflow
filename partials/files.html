@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		
+		<div class="span10">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
+						<th><a href="" ng-click="predicate = 'time'; reverse=!reverse">Time</a></th>
+						<th><a href="" ng-click="predicate = 'size'; reverse=!reverse">Size</a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="file in files | orderBy:predicate:reverse">
+						<td>{{file.name}}</td>
+						<td>{{file.time}}</td>
+						<td>{{file.size}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+

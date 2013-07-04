@@ -10,6 +10,12 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
     $routeProvider.when('/compileContent', {templateUrl: 'partials/compileContent.html', controller: 'CompileContentCtrl'});
     $routeProvider.when('/compilePage', {templateUrl: 'partials/compilePage.html', controller: 'CompilePageCtrl'});
     $routeProvider.when('/projectNew', {templateUrl: 'partials/projectNew.html', controller: 'ProjectNew'});
-    $routeProvider.when('/projectedit/:projectId', {templateUrl: 'partials/projectNew.html', controller: 'ProjectEdit'});
+    $routeProvider.when('/projectedit/:process.assert();ojectId', {templateUrl: 'partials/projectNew.html', controller: 'ProjectEdit'});
+
+
+    $routeProvider.when('/files', {templateUrl: 'partials/files.html', controller: 'FilesCtrl'});
+
+
+
     $routeProvider.otherwise({redirectTo: '/projects'});
   }]);

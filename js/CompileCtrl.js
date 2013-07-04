@@ -137,7 +137,7 @@ function CompileCtrl($scope) {
 		rect1DArr.push(new Rect(xx, startY + gridHeight + margin, gridWidth, gridHeight));
 		rect0DArr.push(new Rect(xx, startY + gridHeight * 2 + margin * 2, gridWidth, gridHeight));
 	}
-	var width = 900, height = 400;
+	var width = 900, height = 200;
 	var canvas = document.getElementById("compile_canvas");
 	canvas.addEventListener("mousedown", onMouseDown, false);
 
