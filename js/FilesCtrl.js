@@ -9,6 +9,7 @@ var files = [
 
 function FilesCtrl($scope) {
 	$scope.files = files;
-	$('a[href="#/files"]').toggleClass('selected');
+	$('.dashboard-tabs a').removeClass('selected');
+	$('.dashboard-tabs a[href="#/files"]').addClass('selected');
 
 }

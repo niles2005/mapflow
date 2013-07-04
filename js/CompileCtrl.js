@@ -120,6 +120,8 @@ Rect.prototype = {
 };
 
 function CompileCtrl($scope) {
+	$('.dashboard-tabs a').removeClass('selected');
+	$('.dashboard-tabs a[href="#/compile"]').addClass('selected');
         $scope.test1 = "test1";
 	var gridNum = 20;
 	var startX = 80;
