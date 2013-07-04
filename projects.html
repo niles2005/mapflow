@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="css/bootstrap.css"/>
+  <link rel="stylesheet" href="css/mask.css">
+  <link type="text/css" href="css/tree.css" rel="stylesheet" />
+
+</head>
+<body>
+<div ng-view="">
+<div class="container ng-scope">
+
+	<div class="row">
+		<div class="span12">
+            <div>
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#/projectNew">添加</a>
+						
+                    </li>
+                </ul>
+            </div>
+			<ul class="projects">
+				<!-- ngRepeat: project in projects --><li ng-repeat="project in projects" class="thumbnail ng-scope">
+                    <div class="row-fluid">
+                        <div class="span2"><img ng-src="img/osm.png" class="thumb" src="img/osm.png"></div>
+                       <div class="span9">
+                            <h3>
+                                <a href="project.html#/compile">
+                                <h3 class="ng-binding">OSM / shanghai</h3>
+                                </a>
+                            <span class="ng-binding">niles @ 2013-5-29 15:03:02</span>
+                            <p class="ng-binding">
+                                Test map project for shanghai
+                            </p>
+                        </h3></div>
+                        <div class="span1"><a href="#/projectedit/p1">编辑</a></div>
+                    </div>
+				</li><li ng-repeat="project in projects" class="thumbnail ng-scope">
+                    <div class="row-fluid">
+                        <div class="span2"><img ng-src="img/osm.png" class="thumb" src="img/osm.png"></div>
+                       <div class="span9">
+                            <h3>
+                                <a href="#/projects/OSM/test">
+                                <h3 class="ng-binding">OSM / test</h3>
+                                </a>
+                            <span class="ng-binding">niles @ 2013-5-28 10:33:27</span>
+                            <p class="ng-binding">
+                                Test map project
+                            </p>
+                        </h3></div>
+                        <div class="span1"><a href="#/projectedit/p2">编辑</a></div>
+                    </div>
+				</li><li ng-repeat="project in projects" class="thumbnail ng-scope">
+                    <div class="row-fluid">
+                        <div class="span2"><img ng-src="img/osm.png" class="thumb" src="img/osm.png"></div>
+                       <div class="span9">
+                            <h3>
+                                <a href="#/projects/OSM/njcc">
+                                <h3 class="ng-binding">OSM / njcc</h3>
+                                </a>
+                            <span class="ng-binding">niles @ 2013-5-29 13:13:43</span>
+                            <p class="ng-binding">
+                                map project for njcc
+                            </p>
+                        </h3></div>
+                        <div class="span1"><a href="#/projectedit/p3">编辑</a></div>
+                    </div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>
