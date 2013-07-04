@@ -120,7 +120,7 @@ TreeConfig.prototype = {
                             jli.find('>div').addClass('nodeopen');
                         }
                     }
-                    jli.css('cursor', 'default');
+                    // jli.css('cursor', 'default');
                 }
                 if (jul.find('>li').length > 0) {
                     $(node).append(jul);
@@ -216,12 +216,12 @@ TreeConfig.prototype = {
                     if (event && event.target instanceof HTMLDivElement) { //点击+/-才可以展开/关闭树，点击内容部分不能关闭，可以打开，参考windows目录
                         jdiv.removeClass('nodeopen');
                         jdiv.addClass('nodeclosed');
-                        jul.children().slideUp('slow');
+                        jul.children().slideUp('fast');
                     }
                 } else {
                     jdiv.removeClass('nodeclosed');
                     jdiv.addClass('nodeopen');
-                    jul.children().slideDown('slow');
+                    jul.children().slideDown('fast');
                 }
             }
         };
