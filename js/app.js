@@ -14,6 +14,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 
 
     $routeProvider.when('/files', {templateUrl: 'partials/files.html', controller: 'FilesCtrl'});
+    $routeProvider.when('/compile', {templateUrl: 'partials/compile.html', controller: 'CompileCtrl'});
 
 
 

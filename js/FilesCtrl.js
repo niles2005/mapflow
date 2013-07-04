@@ -9,5 +9,6 @@ var files = [
 
 function FilesCtrl($scope) {
 	$scope.files = files;
+	$('a[href="#/files"]').toggleClass('selected');
 
 }
