@@ -11,7 +11,31 @@
 
 </head>
 <body>
-  <ul class="menu">
+  <div class='container'>
+    <div class="pagehead">
+      <h1>
+        <span><img class="logo" src="img/osm.png" /></span>
+        <span>Vendor</span>
+        <span>/</span>
+        <span>Project</span>
+      </h1> 
+    </div>
+
+
+    <div class = "tabmenu">
+<ul class="dashboard-tabs">
+  <li><a href="#/" class="selected" >File</a></li>
+  <li><a href="#/" class="" >Compile</a></li>
+  <li><a href="#/">Deploy</a></li>
+  <li><a href="#/">View</a></li>
+  <li><a href="#/">Template</a></li>
+  <li><a href="#/" class="">Style</a></li>
+</ul>
+</div>
+  </div>
+
+
+ <!--  <ul class="menu">
     <li><a href="#/projects">projects</a></li>
     <li><a href="#/compile">compile</a></li>
     <li><a href="#/compileTree">compile tree</a></li>
@@ -19,7 +43,7 @@
     <li><a href="#/compilePage">compile page</a></li>
     <li><a href="doc.html">doc</a></li>
   </ul>
-  <div class="doc"><a href="doc.html">doc</a></div>
+  <div class="doc"><a href="doc.html">doc</a></div> -->
 
   <div ng-view></div>
 
