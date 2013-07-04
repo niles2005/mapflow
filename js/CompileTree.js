@@ -63,13 +63,9 @@ TreeConfig.prototype = {
     },
 
     _addHover: function (event) {
-        //		event.preventDefault();
-        //		event.stopPropagation();
         $(this).addClass("nodeHover");
     },
     _removeHover: function (event) {
-        //		event.preventDefault();
-        //		event.stopPropagation();
         $(this).removeClass("nodeHover");
     },
     _makeTreeItem: function (node, groupName, childNodes) {
@@ -112,7 +108,6 @@ TreeConfig.prototype = {
 
                     li.onclick = this._clickListener;
                     jul.append(jli);
-
                     if (childNode.childNodes.length > 0) {
                         this._makeTreeItem(li, groupName, childNode.childNodes);
                     }
@@ -130,10 +125,8 @@ TreeConfig.prototype = {
                 if (jul.find('>li').length > 0) {
                     $(node).append(jul);
                 }
-
             }
         }
-
     },
 
 
@@ -168,7 +161,6 @@ TreeConfig.prototype = {
                         if (!props[level]) {
                             props[level] = {};
                         }
-
                         for (var propArray in groupMap[groupName]) {
                             var propName = groupMap[groupName][propArray].name;
                             if (props[level][propName]) {
@@ -179,10 +171,8 @@ TreeConfig.prototype = {
                                     props[level][propName] = liNode._attr[propName][index];
                                 }
                             }
-
                         }
                     }
-
                 }
                 var ulObj = liNode.parentElement;
                 if (ulObj) {
@@ -198,7 +188,6 @@ TreeConfig.prototype = {
             //增加节点选择背景
             if (this._selectLI && this._selectLI !== theNode) {
                 $(this._selectLI).find(">span").removeClass("nodeselected");
-
             }
             this._selectLI = theNode;
             $(this._selectLI).find(">span").addClass("nodeselected");
@@ -208,7 +197,6 @@ TreeConfig.prototype = {
     },
     makeClickListener: function () {
         var self = this;
-
         return function (event) {
             if (event) {
                 event.stopPropagation();
@@ -218,12 +206,9 @@ TreeConfig.prototype = {
             if (self.menuPanel.is(':visible')) {
                 self.menuPanel.hide();
             }
-
-
             var liNode = this;
             self.selectLINode(liNode);
             var jli = $(this);
-
             var jul = jli.find('>ul');
             if (jul.length > 0) {
                 var jdiv = jli.find('>div');
@@ -249,7 +234,6 @@ TreeConfig.prototype = {
         });
         this._jAreaDiv.parent().find(">div").mousedown(this.popup());
         var self = this;
-
         var jQAdd = $('<a>添加</a>');
         jQAdd.click(this._addNode());
         var jQEdit = $('<a id="manurename">重命名</a>');
@@ -272,21 +256,19 @@ TreeConfig.prototype = {
         this.menuPanel.append($("<li></li>").wrapInner(jQAdd));
         this.menuPanel.append($("<li></li>").wrapInner(jQEdit));
         this.menuPanel.append($("<li></li>").wrapInner(jQDel));
-
         this.menuPanel.appendTo(this._jAreaDiv.parent());
         this.menuPanel.hide();
-
-
     },
+
     popup: function () {
         var self = this;
+
         function popupClick() {
             self.menuPanel.hide();
             unbindEvent(document, 'click', popupClick);
         }
 
         return function (event) {
-
             if (event.which === 3) {
                 if (event.target.tagName === 'SPAN' && event.target.className.slice(0, 9) === 'treeLabel') {
                     asChild = true; // 只有在树的节点上单击时才有弹出菜单
@@ -315,7 +297,7 @@ TreeConfig.prototype = {
                     showX = event.pageX + _menuW > _winW ? event.pageX - _menuW : event.pageX;
                     showY = event.pageY + _menuH > _winH ? event.pageY - _menuH : event.pageY;
                 } else {
-                    //                    coord = {x:event.clientX + document.body.scrollLeft, y:event.clientY + document.body.scrollTop};
+//                    coord = {x:event.clientX + document.body.scrollLeft, y:event.clientY + document.body.scrollTop};
                 }
                 self.menuPanel.css({
                     'left': showX,
@@ -363,41 +345,38 @@ TreeConfig.prototype = {
                             if (self.targetTreeNode[0] === dragTreeNode[0]) {
                                 return;
                             }
-
-                            var nodeName = self.nodePathName(self.currentTreeNode)+'^'+self.nodePathName(self.targetTreeNode[0]) ;
+                            var nodeName = self.nodePathName(self.currentTreeNode) + '^' + self.nodePathName(self.targetTreeNode[0]);
                             $.ajax({
-                                 url: "/mapflow/work?module=template&action=move&name=new.xml&node=" + nodeName,
-                                 dataType:"json"
-                            }).done(function(data){
-                                      if(data && data.status === 'OK'){
-                                          if (dragTreeNode.siblings().filter("li").length === 0) {
-                                              var jQUl = dragTreeNode.parent();
-                                              var jQDiv = jQUl.siblings().filter("div.nodeopen");
-                                              jQDiv.removeClass('nodeopen');
-                                              jQUl.remove();
-                                          }
-                                          if ($(self.targetTreeNode).find('>ul').length === 0) {
-                                              var wrapperUl = $('<ul>');
-                                              wrapperUl.addClass(self._treeName);
-                                              $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
-                                          } else {
-                                              $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
-                                          }
-                                          $(self.targetTreeNode)[0].onclick();
-                                          self.selectLINode(self.currentTreeNode);
-                                          self.targetTreeNode = null;
-                                      }else{
-                                          //TODO Ajax send to backword server
-                                          self.resetModal();
-                                          $('#deleteAlert').hide();
-                                          $('#confirmButton').hide();
-                                          $('#deleteMessage').text(data.message);
-                                          $('#confirm').modal();
-                                          return;
-                                      }
+                                url: "/mapflow/work?module=template&action=move&name=new.xml&node=" + nodeName,
+                                dataType: "json"
+                            }).done(function (data) {
+                                    if (data && data.status === 'OK') {
+                                        if (dragTreeNode.siblings().filter("li").length === 0) {
+                                            var jQUl = dragTreeNode.parent();
+                                            var jQDiv = jQUl.siblings().filter("div.nodeopen");
+                                            jQDiv.removeClass('nodeopen');
+                                            jQUl.remove();
+                                        }
+                                        if ($(self.targetTreeNode).find('>ul').length === 0) {
+                                            var wrapperUl = $('<ul>');
+                                            wrapperUl.addClass(self._treeName);
+                                            $(self.targetTreeNode).append(wrapperUl.wrapInner(dragTreeNode));
+                                        } else {
+                                            $(self.targetTreeNode).find('>ul:first').append(dragTreeNode);
+                                        }
+                                        $(self.targetTreeNode)[0].onclick();
+                                        self.selectLINode(self.currentTreeNode);
+                                        self.targetTreeNode = null;
+                                    } else {
+                                        //TODO Ajax send to backword server
+                                        self.resetModal();
+                                        $('#deleteAlert').hide();
+                                        $('#confirmButton').hide();
+                                        $('#deleteMessage').text(data.message);
+                                        $('#confirm').modal();
+                                        return;
+                                    }
                                 });
-
-
                         }
                         $(document).unbind('mousemove');
                         $(document).unbind('mouseup');
@@ -490,7 +469,7 @@ TreeConfig.prototype = {
                 if (!self._isNameValid(newName, jQinput)) {
                     return;
                 }
-                var nodeName = self.nodePathName(self.currentTreeNode)+"."+newName;
+                var nodeName = self.nodePathName(self.currentTreeNode) + "." + newName;
                 $.ajax({
                     url: "/mapflow/work?module=template&action=add&name=new.xml&node=" + nodeName,
                     dataType: "json"
@@ -501,7 +480,7 @@ TreeConfig.prototype = {
                             jQinput.remove();
                             jQLabel.show();
                             self.selectLINode(li);
-                        }else{
+                        } else {
                             self._removeLi(jli);
                             self.selectLINode(node);
                             self.resetModal();
@@ -523,11 +502,10 @@ TreeConfig.prototype = {
                     nameEfficient();
                 }
             });
-
             jQinput.focus();
-
         };
     },
+
     _editNode: function () {
         var self = this;
         var menuPanel = this.menuPanel;
@@ -556,28 +534,27 @@ TreeConfig.prototype = {
                     url: "/mapflow/work?module=template&action=rename&name=new.xml&node=" + nodeName,
                     dataType: "json"
                 }).done(function (data) {
-                    if (data && data.status === 'OK') {
-                        jQnameSpan.text(newName);
-                        jQnameSpan.fadeIn(200);
-                        jQinput.fadeOut(200);
-                        var attr = jQli[0]._attr;
-                        if (attr) {
-                            attr["name"] = newName;
+                        if (data && data.status === 'OK') {
+                            jQnameSpan.text(newName);
+                            jQnameSpan.fadeIn(200);
+                            jQinput.fadeOut(200);
+                            var attr = jQli[0]._attr;
+                            if (attr) {
+                                attr["name"] = newName;
+                            }
+                            jQinput.remove();
+                            self.selectLINode(li);
+                        } else {
+                            jQnameSpan.show();
+                            jQinput.remove();
+                            self.resetModal();
+                            $('#deleteAlert').hide();
+                            $('#confirmButton').hide();
+                            $('#deleteMessage').text(data.message);
+                            $('#confirm').modal();
+                            return;
                         }
-                        jQinput.remove();
-                        self.selectLINode(li);
-                    }else{
-                        jQnameSpan.show();
-                        jQinput.remove();
-                        self.resetModal();
-                        $('#deleteAlert').hide();
-                        $('#confirmButton').hide();
-                        $('#deleteMessage').text(data.message);
-                        $('#confirm').modal();
-                        return;
-                    }
-                });
-
+                    });
             };
             jQinput.keypress(function (event) {
                 if (event.keyCode === 13) {
@@ -600,7 +577,6 @@ TreeConfig.prototype = {
             jQnameSpan.hide();
             menuPanel.hide();
             jQinput.focus();
-
         };
     },
 
@@ -628,7 +604,7 @@ TreeConfig.prototype = {
                 }
             });
     },
-    _removeLi : function(jLi){
+    _removeLi: function (jLi) {
         if (jLi.siblings().filter("li").length === 0) {
             var jQUl = jLi.parent();
             var jQDiv = jQUl.siblings().filter("div.nodeopen");
@@ -659,13 +635,10 @@ TreeConfig.prototype = {
             return false;
         }
         return true;
-
     }
-
 };
 
 function CompileTreeCtrl($scope) {
-
     $scope.selectNode = function (treePathArr, propsArr) {
         $scope.treePathArr = treePathArr;
         $scope.p = propsArr;
@@ -673,5 +646,4 @@ function CompileTreeCtrl($scope) {
         $scope.$apply();
     };
     var tree = new TreeConfig("new.xml", $scope);
-
 }
