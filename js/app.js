@@ -21,5 +21,5 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 
 
 
-    $routeProvider.otherwise({redirectTo: '/projects'});
+    $routeProvider.otherwise({redirectTo: '/files'});
   }]);

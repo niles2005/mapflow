@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app>
 <head>
 
   <meta charset="utf-8">
@@ -7,80 +7,52 @@
   <link rel="stylesheet" href="css/app.css"/>
   <link rel="stylesheet" href="css/bootstrap.css"/>
   <link rel="stylesheet" href="css/mask.css">
-  <link type="text/css" href="css/tree.css" rel="stylesheet" />
-
+  <script src="lib/angular/angular.js"></script>
+  <script type="text/javascript">
+    function projectList($scope,$http) {
+      var url = '/mapflow/?module=project&action=list';
+      $http.get(url).success(function(data) {
+        $scope.projects = data;
+      });
+    }
+  </script>
 </head>
-<body>
-  <div class='container'>
-    <div class="pagehead">
-      <h1>
-        <span><img class="logo" src="img/osm.png" /></span>
-        <span>Vendor</span>
-        <span>/</span>
-        <span>Project</span>
-      </h1> 
+<body ng-controller="projectList">
+
+<div class="container">
+
+  <div class="row">
+    <div class="span12">
+            <div>
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#/projectNew">添加</a>
+            
+                    </li>
+                </ul>
+            </div>
+      <ul class="projects">
+        <li ng-repeat="project in projects" class="thumbnail">
+                    <div class="row-fluid">
+                        <div class="span2"><img ng-src="{{project.imageUrl}}" class="thumb"></div>
+                       <div  class="span9" >
+                            <h3>
+                                <a href="{{project.name}}">
+                                <h3>{{project.vendor}} / {{project.name}}</h3>
+                                </a>
+                            <span>{{project.creator}} @ {{project.createTime}}</span>
+                            <p>
+                                {{project.info}}
+                            </p>
+                        </div>
+                        <div class="span1" ><a href="#/projectedit/{{project.id}}">编辑</a></div>
+                    </div>
+        </li>
+      </ul>
     </div>
-
-
-    <div class = "tabmenu">
-<ul class="dashboard-tabs">
-  <li><a href="#/files" >File</a></li>
-  <li><a href="#/compile" >Compile</a></li>
-  <li><a href="#/deploy">Deploy</a></li>
-  <li><a href="#/view">View</a></li>
-  <li><a href="#/template">Template</a></li>
-  <li><a href="#/style" class="">Style</a></li>
-</ul>
-</div>
   </div>
 
 
- <!--  <ul class="menu">
-    <li><a href="#/projects">projects</a></li>
-    <li><a href="#/compile">compile</a></li>
-    <li><a href="#/compileTree">compile tree</a></li>
-    <li><a href="#/compileContent">compile content</a></li>
-    <li><a href="#/template">template</a></li>
-    <li><a href="doc.html">doc</a></li>
-  </ul>
-  <div class="doc"><a href="doc.html">doc</a></div> -->
-
-  <div ng-view></div>
-
-
-
-  <script src="lib/JQuery/jquery-1.7.js"></script>
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-  -->
-
-  <!--<div>Angular seed app: v<span app-version></span></div>-->
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular/angular.tree.js"></script>
-  <script src="lib/bootstrap/bootstrap-transition.js"></script>
-  <script src="lib/bootstrap/bootstrap-collapse.js"></script>
-  <script src="lib/bootstrap/bootstrap-tab.js"></script>
-  <script src="lib/bootstrap/bootstrap-modal.js"></script>
-  <script src="lib/bootstrap/bootstrap-modalmanager.js"></script>
-  <script src="js/CompileCtrl.js"></script>
-  <script src="js/CompileContentCtrl.js"></script>
-  <script src="js/CompileTree.js"></script>
-
-  <script src="js/FilesCtrl.js"></script>
-  <script src="js/CompileCtrl.js"></script>
-  <script src="js/DeployCtrl.js"></script>
-  <script src="js/ViewCtrl.js"></script>
-  <script src="js/TemplateCtrl.js"></script>
-  <script src="js/StyleCtrl.js"></script>
-
-
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
-  <script src="js/mask.js"></script>
-
-
+</div>
 </body>
 </html>
