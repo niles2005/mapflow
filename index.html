@@ -11,7 +11,7 @@
   <script type="text/javascript">
     function projectList($scope,$http) {
       var url = '/mapflow/?module=project&action=list';
-      $http.get(url).success(function(data) {
+      $http.post(url).success(function(data) {
         $scope.projects = data;
       });
     }
