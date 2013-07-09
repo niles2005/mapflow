@@ -1,0 +1,76 @@
+
+progress,          /* All HTML5 progress enabled browsers */
+progress[role]     /* polyfill */
+{
+
+    /* Turns off styling - not usually needed, but good to know. */
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    /* gets rid of default border in Firefox and Opera. */
+    /*border: none;*/
+
+    /* Needs to be in here for Safari polyfill so background images work as expected. */
+    background-size: auto;
+
+    /* Dimensions */
+    width: 300px;
+    height: 22px;
+
+}
+
+/* Polyfill */
+progress[role]:after {
+    background-image: none; /* removes default background from polyfill */
+}
+
+/* Ensure fallback text doesn't appear in polyfill */
+progress[role] strong {
+    display: none;
+}
+
+
+progress::-webkit-progress-value {
+    /*background: #c64442;*/
+    background-image:  url(../img/progressbar.gif);
+}
+
+.row {
+    margin-left: -30px;
+}
+
+.row:before, .row:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+
+[class*="span"] {
+    float: left;
+    min-height: 1px;
+    margin-left: 30px;
+}
+
+.fileupload-buttonbar .btn, .fileupload-buttonbar .toggle {
+    margin-bottom: 5px;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+

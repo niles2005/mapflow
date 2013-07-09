@@ -276,7 +276,7 @@ padding: 0 10px;
 }
 
 .dashboard-tabs {
-  width = 1200px;
+width : 1200px;
 position: relative;
 margin-bottom: 20px;
 margin-right: auto;
@@ -338,3 +338,5 @@ border-bottom: 2px solid #DADADA;
     background: #fff;
     font-size: 14px;
 }
+
+

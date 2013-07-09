@@ -12,6 +12,7 @@ function FilesCtrl($scope, $filter) {
             if (tempFile instanceof File) {
                 tempFile["time"] = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 $scope.tempUploadFiles.push(tempFile);
+                $('#uploadfile').attr('disabled',false);
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
