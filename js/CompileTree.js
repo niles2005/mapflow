@@ -31,7 +31,8 @@ TreeConfig.prototype = {
         $.ajax({
             type: "POST",
             url: url,
-            data: {action:'content',name:'new.xml'},
+            data: "{action:'content',name:'new.xml'}",
+            contentType: "application/json;charset=UTF-8",
             dataType: "xml",
             cache: false,
             success: function() {
