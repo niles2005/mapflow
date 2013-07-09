@@ -11,7 +11,9 @@
   <script type="text/javascript">
     function projectList($scope,$http) {
       var url = 'project';
+
       var value = {action:'list'};
+      
       $http({method:'POST',url:url,data:value}).success(function(data) {
         console.dir(data);
         $scope.projects = data;
