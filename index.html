@@ -7,15 +7,18 @@
   <link rel="stylesheet" href="css/app.css"/>
   <link rel="stylesheet" href="css/bootstrap.css"/>
   <link rel="stylesheet" href="css/mask.css">
+  <script src="lib/JQuery/jquery-1.7.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script type="text/javascript">
     function projectList($scope,$http) {
       var url = 'project';
-      var value = {action:'list'};
-      $http({method:'POST',url:url,data:value}).success(function(data) {
-        console.dir(data);
-        $scope.projects = data;
-      });
+
+      var value = "{action:'list'}";
+      
+       $http({method:'POST',url:url,data:value}).success(function(data) {
+         console.dir(data);
+         $scope.projects = data;
+       });
     }
   </script>
 </head>

@@ -31,7 +31,8 @@ TreeConfig.prototype = {
         $.ajax({
             type: "POST",
             url: url,
-            data: {action:'content',name:'new.xml'},
+            data: "{action:'content',name:'new.xml'}",
+            contentType: "application/json;charset=UTF-8",
             dataType: "xml",
             cache: false,
             success: function() {
@@ -359,7 +360,7 @@ TreeConfig.prototype = {
                             $.ajax({
                                 type: "POST",
                                 url: self._moduleName,
-                                data: "{action:'move',name:'new.xml',node:'" + nodeName + "'}",
+                                data: {action:'move',name:'new.xml',node:nodeName},
                                 dataType: "json"
                             }).done(function(data) {
                                 if (data && data.status === 'OK') {
@@ -549,7 +550,7 @@ TreeConfig.prototype = {
                 $.ajax({
                     type: "POST",
                     url: self._moduleName,
-                    data: "{action:'rename',name:'new.xml',node:'" + nodeName + "'}",
+                    data: {action:'rename',name:'new.xml',node: nodeName},
                     dataType: "json"
                 }).done(function(data) {
                     if (data && data.status === 'OK') {
@@ -605,7 +606,7 @@ TreeConfig.prototype = {
         $.ajax({
             type: "POST",
             url: self._moduleName,
-            data: "{action:'delete',name:'new.xml',node:'" + nodeName + "'}",
+            data: {action:'delete',name:'new.xml',node:nodeName},
             dataType: "json"
         }).done(function(data) {
             if (data && data.status === 'OK') {
