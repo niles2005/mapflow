@@ -1,6 +1,6 @@
 'use strict';
 
-function TreeConfig(configFile, scope) {
+function TreeConfig(moduleName, scope) {
     this._scope = scope;
     this._jAreaDiv = $("#treeTabArea")
     this._jLineDiv = $("#treeTabLine");
@@ -8,7 +8,7 @@ function TreeConfig(configFile, scope) {
     this._jAreaDiv.empty();
     this._jLineDiv.empty();
     this._jPointDiv.empty();
-    this._url = configFile;
+    this._moduleName = moduleName;
     this._clickListener = this.makeClickListener();
     this._initMenuPanel();
     this.loadContent();
@@ -23,13 +23,15 @@ TreeConfig.defaultNewNodeName = "NewNode";
 
 TreeConfig.prototype = {
     loadContent: function() {
-        if (this._url) {
-            this.loadXMLFile(this._url, this.loadXmlDoc, this);
+        if (this._moduleName) {
+            this.loadXMLFile(this._moduleName, this.loadXmlDoc, this);
         }
     },
     loadXMLFile: function(url, listener, caller) {
         $.ajax({
+            type: "POST",
             url: url,
+            data: {action:'content',name:'new.xml'},
             dataType: "xml",
             cache: false,
             success: function() {
@@ -355,7 +357,9 @@ TreeConfig.prototype = {
                                 var nodeName = self.nodePathName(self.currentTreeNode) + '^' + self.nodePathName(self.targetTreeNode[0]);
                             }
                             $.ajax({
-                                url: "/mapflow/work?module=template&action=move&name=new.xml&node=" + nodeName,
+                                type: "POST",
+                                url: self._moduleName,
+                                data: "{action:'move',name:'new.xml',node:'" + nodeName + "'}",
                                 dataType: "json"
                             }).done(function(data) {
                                 if (data && data.status === 'OK') {
@@ -481,7 +485,9 @@ TreeConfig.prototype = {
                 }
                 var nodeName = self.nodePathName(self.currentTreeNode) + "." + newName;
                 $.ajax({
-                    url: "/mapflow/work?module=template&action=add&name=new.xml&node=" + nodeName,
+                    type: "POST",
+                    url: self._moduleName,
+                    data: "{action:'add',name:'new.xml',node:'" + nodeName + "'}",
                     dataType: "json"
                 }).done(function(data) {
                     if (data && data.status === 'OK') {
@@ -541,7 +547,9 @@ TreeConfig.prototype = {
 
                 var nodeName = self.nodePathName(self.currentTreeNode) + "^" + newName;
                 $.ajax({
-                    url: "/mapflow/work?module=template&action=rename&name=new.xml&node=" + nodeName,
+                    type: "POST",
+                    url: self._moduleName,
+                    data: "{action:'rename',name:'new.xml',node:'" + nodeName + "'}",
                     dataType: "json"
                 }).done(function(data) {
                     if (data && data.status === 'OK') {
@@ -595,7 +603,9 @@ TreeConfig.prototype = {
         var nodeName = this.nodePathName(this.currentTreeNode);
         var self = this;
         $.ajax({
-            url: "/mapflow/work?module=template&action=delete&name=new.xml&node=" + nodeName,
+            type: "POST",
+            url: self._moduleName,
+            data: "{action:'delete',name:'new.xml',node:'" + nodeName + "'}",
             dataType: "json"
         }).done(function(data) {
             if (data && data.status === 'OK') {

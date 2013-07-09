@@ -98,7 +98,7 @@ function TemplateCtrl($scope,$http) {
     }
 
     // var treeConfig = new TreeConfig("new.xml",$scope);
-    var treeConfig = new TreeConfig("/mapflow/work?module=template&action=content&name=new.xml",$scope);
+    var treeConfig = new TreeConfig("template",$scope);
 
 	var maskCanvas = new MaskCanvas("MaskCanvas1",$scope);
 

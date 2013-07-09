@@ -10,8 +10,10 @@
   <script src="lib/angular/angular.js"></script>
   <script type="text/javascript">
     function projectList($scope,$http) {
-      var url = '/mapflow/?module=project&action=list';
-      $http.post(url).success(function(data) {
+      var url = 'project';
+      var value = {action:'list'};
+      $http({method:'POST',url:url,data:value}).success(function(data) {
+        console.dir(data);
         $scope.projects = data;
       });
     }
