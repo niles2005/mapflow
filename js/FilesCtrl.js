@@ -26,17 +26,42 @@ function FilesCtrl($scope, $filter) {
         var xhr = new XMLHttpRequest();
         xhr.enctype = 'multipart/form-data';
         xhr.upload.addEventListener("progress", uploadProgress, false);
-        xhr.addEventListener("load", $scope.uploadComplete, false);
+        xhr.addEventListener("load", uploadComplete, false);
         xhr.addEventListener("error", uploadFailed, false);
         xhr.addEventListener("abort", uploadCanceled, false);
         xhr.open("POST", "file?project=shanghai&action=upload");
         var fd = new FormData();
-        fd.append("fileToUpload", $('#fileToUpload')[0].files[0]);
+        for (var i in $scope.tempUploadFiles) {
+            fd.append("fileToUpload", $scope.tempUploadFiles[i]);
+        }
         xhr.send(fd);
     }
 
+    $scope.resetFile = function(){
+        $scope.tempUploadFiles = [];
+    }
 
-    $scope.uploadComplete = function (evt) {
+    $scope.md5Check = function(filename,$event){
+        console.dir(filename);
+        $.ajax({
+            url: "/mapflow/file",
+            data: {project:'shanghai',action:'md5sum',name:filename},
+            type: "POST",
+            dataType: "text"
+        }).done(function (data) {
+                if (data) {
+                    var jQtd = $($event.target).parent() ;
+                    jQtd.text(data);
+                    $($event.target).remove();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                }
+
+            });
+    }
+
+    function uploadComplete(evt) {
         /* This event is raised whenthe server send back a response */
         filesList();
     }
@@ -57,6 +82,8 @@ function FilesCtrl($scope, $filter) {
 
     }
 
+
+
     function filesList() {
         $.ajax({
             url: "/mapflow/file?project=shanghai&action=list",
@@ -72,6 +99,8 @@ function FilesCtrl($scope, $filter) {
 
             });
     }
+
+
 
 
 }

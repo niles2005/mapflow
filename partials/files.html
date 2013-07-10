@@ -8,39 +8,32 @@
         <div class="span10">
             <div class="btn-toolbar">
                 <div class="row fileupload-buttonbar">
-                    <!--<form id="uploadfile" enctype="multipart/form-data" method="post" action="">-->
+                    <form id="uploadfile" enctype="multipart/form-data" method="post" action="">
                     <div class="span7">
                         <span class="btn btn-success fileinput-button">
                             <i class="icon-plus icon-white"></i>
                             <span>Add files...</span>
                            <input type="file" id="fileToUpload" name="files[]" onchange="angular.element(this).scope().setUploadFiles(this.value)" multiple/>
                         </span>
+
                         <button type="submit" class="btn btn-primary start"  ng-click="uploadFile($event)">
                             <i class="icon-upload icon-white"></i>
                             <span>Start upload</span>
                         </button>
-
-
-                        <!--<input id="uploadfile" type="button" ng-click="uploadFile($event)" value="Upload" disabled = "true" />-->
-                        <progress id="progressPercent" max="100" value = "0"></progress>
-                        <span id="progressNumber">0%</span>
+                        <button type="reset" class="btn btn-warning cancel" ng-click="resetFile()">
+                            <i class="icon-ban-circle icon-white"></i>
+                            <span>Cancel upload</span>
+                        </button>
                     </div>
-
-
-                    <!--</form>-->
-
-                        <!--<a class="btn" href="#"><i class="icon-remove"></i></a>-->
-                        <!--<a class="btn" href="#"><i class="icon-align-right"></i></a>-->
-                        <!--<a class="btn" href="#"><i class="icon-align-justify"></i></a>-->
-                </div>
-                <div>
-                    <div ng-repeat="tempFile in tempUploadFiles">
-                        <span>{{tempFile.name}}</span>
-                        <span>{{tempFile.size}}</span>
-                    </div>
+                    </form>
 
                 </div>
-
+            </div>
+            <progress id="progressPercent" max="100" value = "0"></progress>
+            <span id="progressNumber">0%</span>
+            <div ng-repeat="tempFile in tempUploadFiles">
+                <span>{{tempFile.name}}</span>
+                <span>{{tempFile.size}}</span>
             </div>
 
 
@@ -50,6 +43,7 @@
                     <th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
                     <th><a href="" ng-click="predicate = 'time'; reverse=!reverse">Time</a></th>
                     <th><a href="" ng-click="predicate = 'size'; reverse=!reverse">Size</a></th>
+                    <th><a href="" >MD5</a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,6 +51,7 @@
                     <td>{{file.name}}</td>
                     <td>{{file.time}}</td>
                     <td>{{file.size}}</td>
+                    <td><a href="" ng-click = "md5Check(file.name,$event)">calculate md5</a></td>
                 </tr>
                 </tbody>
             </table>

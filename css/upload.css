@@ -4,8 +4,8 @@ progress[role]     /* polyfill */
 {
 
     /* Turns off styling - not usually needed, but good to know. */
-    appearance: none;
-    -moz-appearance: none;
+    /*appearance: none;*/
+    /*-moz-appearance: none;*/
     -webkit-appearance: none;
 
     /* gets rid of default border in Firefox and Opera. */
@@ -32,9 +32,10 @@ progress[role] strong {
 
 
 progress::-webkit-progress-value {
-    /*background: #c64442;*/
+    background: #c64442;
     background-image:  url(../img/progressbar.gif);
 }
+
 
 .row {
     margin-left: -30px;
@@ -53,6 +54,7 @@ progress::-webkit-progress-value {
 }
 
 .fileupload-buttonbar .btn, .fileupload-buttonbar .toggle {
+    margin-right: 8px;
     margin-bottom: 5px;
 }
 
@@ -73,4 +75,5 @@ progress::-webkit-progress-value {
     direction: ltr;
     cursor: pointer;
 }
+
 
