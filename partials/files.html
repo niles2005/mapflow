@@ -49,12 +49,13 @@
                 <tbody>
                 <tr ng-repeat="file in files | orderBy:predicate:reverse">
                     <td>{{file.name}}</td>
-                    <td>{{file.time}}</td>
+                    <td style="width: 170px">{{file.time |  date:'medium'}}</td>
                     <td>{{file.size}}</td>
-                    <td><a href="" ng-click = "md5Check(file.name,$event)">calculate md5</a></td>
+                    <td style="width: 245px"><a href="" ng-click = "md5Check(file.name,$event)">calculate md5</a></td>
                 </tr>
                 </tbody>
             </table>
+
         </div>
 
     </div>

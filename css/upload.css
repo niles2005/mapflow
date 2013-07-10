@@ -54,7 +54,7 @@ progress::-webkit-progress-value {
 }
 
 .fileupload-buttonbar .btn, .fileupload-buttonbar .toggle {
-    margin-right: 8px;
+    margin-right: 5px;
     margin-bottom: 5px;
 }
 
