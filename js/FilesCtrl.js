@@ -53,11 +53,7 @@ function FilesCtrl($scope, $filter) {
                     var jQtd = $($event.target).parent() ;
                     jQtd.text(data);
                     $($event.target).remove();
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
-                    }
                 }
-
             });
     }
 
