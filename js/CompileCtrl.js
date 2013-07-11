@@ -29,15 +29,15 @@ validImg.onload = function() {
 };
 validImg.src = 'img/valid.png';
 
-var module2D = {
-	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-};
-var module1D = {
-	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-};
-var module0D = {
-	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-};
+// var module2D = {
+// 	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// };
+// var module1D = {
+// 	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// };
+// var module0D = {
+// 	"levels": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// };
 
 function Rect(x, y, width, height) {
 	this.x = x;
@@ -119,7 +119,29 @@ Rect.prototype = {
         }
 };
 
-function CompileCtrl($scope) {
+function CompileCtrl($scope,$http) {
+	var module = null;
+	var url = 'project';
+	var value = {project:'shanghai',action:'module'};
+	$http({method:'POST',url:url,data:value}).success(function(data) {
+		if(data && data.d0) {
+			module = data;
+			console.dir(module);
+		}
+		repaint();
+		// console.dir(data);
+	});
+
+	$scope.beginCompile = function() {
+		if(module) {
+			value = {project:'shanghai',action:'moduleUpdate',module: module};
+			$http({method:'POST',url:url,data:value}).success(function(data) {
+				console.log(data);
+			});
+		}		
+		console.log("begin compile");
+	}
+
 	$('.dashboard-tabs a').removeClass('selected');
 	$('.dashboard-tabs a[href="#/compile"]').addClass('selected');
         $scope.test1 = "test1";
@@ -178,9 +200,11 @@ function CompileCtrl($scope) {
 			context.fillText("" + j, xx, startY - 12);
 		}
 
-		drawModule(context, module2D, '2D(Area)', rect2DArr);
-		drawModule(context, module1D, '1D(Line)', rect1DArr);
-		drawModule(context, module0D, '0D(Label)', rect0DArr);
+		if(module) {
+			drawModule(context, module.d2, '2D(Area)', rect2DArr);
+			drawModule(context, module.d1, '1D(Line)', rect1DArr);
+			drawModule(context, module.d0, '0D(Label)', rect0DArr);
+		}
 
 		if (pressX1 && pressY1 && pressX2 && pressY2) {
                     drawHotArea(context,pressX1 , pressY1 , pressX2 , pressY2);
@@ -215,10 +239,12 @@ function CompileCtrl($scope) {
 				pressX2 = pressX1;
 				pressY2 = pressY1;
 			}
-			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect2DArr,module2D);
-			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect1DArr,module1D);
-			checkIntersect(pressX1,pressY1,pressX2,pressY2,rect0DArr,module0D);
-			
+			if(module) {
+				checkIntersect(pressX1,pressY1,pressX2,pressY2,rect2DArr,module.d2);
+				checkIntersect(pressX1,pressY1,pressX2,pressY2,rect1DArr,module.d1);
+				checkIntersect(pressX1,pressY1,pressX2,pressY2,rect0DArr,module.d0);
+			}
+				
 			pressX1 = null;
 			pressY1 = null;
 			pressX2 = null;
@@ -239,10 +265,9 @@ function CompileCtrl($scope) {
 		context.fillStyle = "rgb(0,0,250)";
 		context.fillText(moduleName, rects[0].x - 60, rects[0].y + 20);
 		if (module) {
-			var levels = module.levels;
-			if (levels.length === gridNum) {
+			if (module.length === gridNum) {
 				for (var k = 0; k < gridNum; k++) {
-					rects[k].drawImage(context, levels[k]);
+					rects[k].drawImage(context, module[k]);
 				}
 			}
 		}
@@ -289,10 +314,10 @@ function checkIntersect(x1, y1, x2, y2, rects, module) {
 	}
 	for (var i = 0; i < rects.length; i++) {
 		if (rects[i].intersects(x1, y1, x2 - x1, y2 - y1)) {
-			if(module.levels[i]) {
-				module.levels[i] = 0;
+			if(module[i]) {
+				module[i] = 0;
 			} else {
-				module.levels[i] = 1;
+				module[i] = 1;
 			}
 		}
 	}
