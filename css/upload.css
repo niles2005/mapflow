@@ -22,7 +22,7 @@ progress[role]     /* polyfill */
 
 /* Polyfill */
 progress[role]:after {
-    background-image: none; /* removes default background from polyfill */
+    background-image: none;     /* removes default background from polyfill */
 }
 
 /* Ensure fallback text doesn't appear in polyfill */
@@ -35,7 +35,9 @@ progress::-webkit-progress-value {
     background: #c64442;
     background-image:  url(../img/progressbar.gif);
 }
-
+.need-upload{
+    color: tomato;
+}
 
 .row {
     margin-left: -30px;

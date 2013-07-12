@@ -1,6 +1,7 @@
 'use strict';
-
+FilesCtrl.CALCULATEMD5 = 'calculate md5' ;
 function FilesCtrl($scope, $filter) {
+
     filesList();
     $('.dashboard-tabs a').removeClass('selected');
     $('.dashboard-tabs a[href="#/files"]').addClass('selected');
@@ -42,24 +43,25 @@ function FilesCtrl($scope, $filter) {
     }
 
     $scope.md5Check = function(filename,$event){
-        console.dir(filename);
-        $.ajax({
-            url: "/mapflow/file",
-            data: {project:'shanghai',action:'md5sum',name:filename},
-            type: "POST",
-            dataType: "text"
-        }).done(function (data) {
-                if (data) {
-                    var jQtd = $($event.target).parent() ;
-                    jQtd.text(data);
-                    $($event.target).remove();
-                }
-            });
+        console.dir($event.target.text);
+        if ($event.target.text === FilesCtrl.CALCULATEMD5) {
+            $.ajax({
+                url: "/mapflow/file",
+                data: {project: 'shanghai', action: 'md5sum', name: filename},
+                type: "POST",
+                dataType: "text"
+            }).done(function (data) {
+                    if (data) {
+                        $event.target.innerText = data;
+                    }
+                });
+        }
     }
 
     function uploadComplete(evt) {
         /* This event is raised whenthe server send back a response */
         filesList();
+        $scope.tempUploadFiles = [];
     }
 
     function uploadProgress(evt) {
@@ -81,18 +83,28 @@ function FilesCtrl($scope, $filter) {
 
 
     function filesList() {
+        console.log("in filesList()")
         $.ajax({
             url: "/mapflow/file?project=shanghai&action=list",
             type: "POST",
             dataType: "json"
         }).done(function (data) {
-                if (data && data instanceof Array) {
-                    $scope.files = data;
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
-                    }
-                }
+                console.dir(data.fileMap);
+                $scope.files = [];
+                $.each(data.fileMap ,function(){
+                    if(this){
+                        $scope.files.push(this);
 
+                        if(!this.md5Sum){
+                           this.md5Sum = FilesCtrl.CALCULATEMD5;
+                        }
+
+                    }
+                });
+
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             });
     }
 

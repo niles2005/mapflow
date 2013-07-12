@@ -14,7 +14,7 @@
       var url = 'project';
 
       var value = "{action:'list'}";
-      
+
        $http({method:'POST',url:url,data:value}).success(function(data) {
          console.dir(data);
          $scope.projects = data;
@@ -22,8 +22,8 @@
     }
   </script>
 </head>
-<body ng-controller="projectList">
 
+<body ng-controller="projectList">
 <div class="container">
 
   <div class="row">
@@ -31,8 +31,8 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="active">
-                        <a href="#/projectNew">添加</a>
-            
+                        <a href="partials/projectNew.html">添加</a>
+
                     </li>
                 </ul>
             </div>

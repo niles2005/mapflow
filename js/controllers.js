@@ -2,35 +2,6 @@
 
 /* Controllers */
 
-var projectList = [
-	{
-		"id": "p1",
-		"name": "shanghai",
-		"dataVendor": "OSM",
-		"imageUrl": "img/osm.png",
-		"createTime": "2013-5-29 15:03:02",
-		"creator": "niles",
-		"info": "Test map project for shanghai"
-	},
-	{
-		"id": "p2",
-		"name": "test",
-		"dataVendor": "OSM",
-		"imageUrl": "img/osm.png",
-		"createTime": "2013-5-28 10:33:27",
-		"creator": "niles",
-		"info": "Test map project"
-	},
-	{
-		"id": "p3",
-		"name": "njcc",
-		"dataVendor": "OSM",
-		"imageUrl": "img/osm.png",
-		"createTime": "2013-5-29 13:13:43",
-		"creator": "niles",
-		"info": "map project for njcc"
-	}
-];
 
 var projectDetail = {
 	"id": "p1",
@@ -57,6 +28,7 @@ function Project1Ctrl($scope, $routeParams) {
 }
 
 function ProjectNew($rootScope, $scope, $location, $filter) {
+    console.log("new project");
 	$scope.project = {
 		"id": "",
 		"name": "",

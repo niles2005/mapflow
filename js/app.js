@@ -1,6 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
+
 angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers','angularTree']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/projects', {templateUrl: 'partials/projects.html', controller: 'ProjectsCtrl'});
@@ -21,5 +22,8 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 
 
 
-    $routeProvider.otherwise({redirectTo: '/files'});
+    $routeProvider.otherwise({redirectTo: '/style'});
   }]);
+
+
+

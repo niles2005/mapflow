@@ -31,27 +31,30 @@
             </div>
             <progress id="progressPercent" max="100" value = "0"></progress>
             <span id="progressNumber">0%</span>
-            <div ng-repeat="tempFile in tempUploadFiles">
-                <span>{{tempFile.name}}</span>
-                <span>{{tempFile.size}}</span>
-            </div>
+
 
 
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
-                    <th><a href="" ng-click="predicate = 'time'; reverse=!reverse">Time</a></th>
+                    <th style="width: 170px"><a href="" ng-click="predicate = 'time'; reverse=!reverse">Time</a></th>
                     <th><a href="" ng-click="predicate = 'size'; reverse=!reverse">Size</a></th>
-                    <th><a href="" >MD5</a></th>
+                    <th style="width: 246px"><a href="" >MD5</a></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="file in files | orderBy:predicate:reverse">
+                <tr ng-repeat="tempFile in tempUploadFiles">
+                    <td class="need-upload">{{tempFile.name}}</td>
+                    <td></td>
+                    <td>{{tempFile.size}}</td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="file in files | orderBy:predicate='time':reverse">
                     <td>{{file.name}}</td>
-                    <td style="width: 170px">{{file.time |  date:'medium'}}</td>
+                    <td>{{file.createTime |  date:'yyyy-MM-dd HH:mm:ss '}}</td>
                     <td>{{file.size}}</td>
-                    <td style="width: 245px"><a href="" ng-click = "md5Check(file.name,$event)">calculate md5</a></td>
+                    <td> <a href="" ng-click = "md5Check(file.name,$event)">{{file.md5Sum}}</a>  </td>
                 </tr>
                 </tbody>
             </table>
