@@ -11,7 +11,10 @@
   <link type="text/css" href="css/upload.css" rel="stylesheet" />
   <!--<link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap.min.css">-->
 
+<% 
+com.xtwsoft.mapserver.project.Project project=(com.xtwsoft.mapserver.project.Project)request.getAttribute("project");
 
+%> 
 
 </head>
 <body>
@@ -19,9 +22,8 @@
     <div class="pagehead">
       <h1>
         <span><img class="logo" src="img/osm.png" /></span>
-        <span>Vendor</span>
-        <span>/</span>
-        <span>Project</span>
+        
+        <span ng-init="project='<%= project.getName() %>';"><%= project.getName() %></span>
       </h1> 
     </div>
 
@@ -77,13 +79,12 @@
   <script src="js/StyleCtrl.js"></script>
 
 
-  <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/mask.js"></script>
-
+  <script src="js/app.js"></script>
 
 </body>
 </html>

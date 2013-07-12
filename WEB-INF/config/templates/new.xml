@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config>
-	<group name="area" fields="exist,simplifypixel,showpixel,showriverwidth,shownamerange">
+	<group name="area">
 		<item name="base">
 			<field name="exist" value="1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1"/>
 			<field name="simplifypixel" value="1.5|1.2|   0.8|0.8|0.8|0.7|0.6|     0.5|0.5|0.4|0.4|0.3|     0.3|0.3|0.2|0.2|0.2|    0.1|0.1|0.1"/>
@@ -15,6 +15,7 @@
 				<field name="exist" value="0|0|0|0|0|0|0|0|0|0|0|0|1|1|1|1|1|1|1|1"/>
 			</item>
 			<item name="power"/>
+				
 			<item name="place"/>
 			<item name="office"/>
 			<item name="natural">
