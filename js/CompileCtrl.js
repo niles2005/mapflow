@@ -119,14 +119,14 @@ Rect.prototype = {
         }
 };
 
-function CompileCtrl($scope,$http) {
+function CompileCtrl($rootScope,$scope,$http) {
+	console.dir($rootScope.project)
 	var module = null;
 	var url = 'project';
 	var value = {project:'shanghai',action:'module'};
 	$http({method:'POST',url:url,data:value}).success(function(data) {
 		if(data && data.d0) {
 			module = data;
-			console.dir(module);
 		}
 		repaint();
 		// console.dir(data);
@@ -134,7 +134,10 @@ function CompileCtrl($scope,$http) {
 
 	value = {action: 'list'};
 	$http({method:'POST',url:'template',data:value}).success(function(data) {
-		console.dir(data);
+		if(data) {
+			$scope.tempList = data;
+		}
+		// console.dir(data);
 	});
 
 

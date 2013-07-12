@@ -1,6 +1,7 @@
 'use strict';
 
-function FilesCtrl($scope, $filter) {
+function FilesCtrl($scope,$rootScope, $filter) {
+    var project = $rootScope.project;
     filesList();
     $('.dashboard-tabs a').removeClass('selected');
     $('.dashboard-tabs a[href="#/files"]').addClass('selected');
@@ -29,7 +30,7 @@ function FilesCtrl($scope, $filter) {
         xhr.addEventListener("load", uploadComplete, false);
         xhr.addEventListener("error", uploadFailed, false);
         xhr.addEventListener("abort", uploadCanceled, false);
-        xhr.open("POST", "file?project=shanghai&action=upload");
+        xhr.open("POST", "file?project=" + project + "&action=upload");
         var fd = new FormData();
         for (var i in $scope.tempUploadFiles) {
             fd.append("fileToUpload", $scope.tempUploadFiles[i]);

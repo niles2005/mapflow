@@ -11,10 +11,11 @@
               <div class="row-fluid">
                   <form class="form-horizontal">
                       <div class="span5 input-prepend">
+                        
+                       
                           <span class="add-on">编译模版：</span>
                           <select class="span3">
-                              <option>config</option>
-                              <option>config template</option>
+                              <option ng-repeat="temp in tempList">{{temp.name}}</option>
                           </select>
                           <button ng-click="beginCompile()">开始编译</button>
                       </div>
