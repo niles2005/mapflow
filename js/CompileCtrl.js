@@ -132,6 +132,12 @@ function CompileCtrl($scope,$http) {
 		// console.dir(data);
 	});
 
+	value = {action: 'list'};
+	$http({method:'POST',url:'template',data:value}).success(function(data) {
+		console.dir(data);
+	});
+
+
 	$scope.beginCompile = function() {
 		if(module) {
 			value = {project:'shanghai',action:'moduleUpdate',module: module};
