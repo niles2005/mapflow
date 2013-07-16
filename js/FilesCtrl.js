@@ -2,14 +2,21 @@
 
 FilesCtrl.CALCULATEMD5 = 'calculate md5' ;
 function FilesCtrl($scope,$rootScope, $filter) {
+    console.log("files.html refrash!")
     var project = $rootScope.project;
-
     filesList();
+    $scope.tempUploadFiles = [];
+    $scope.$watch('tempUploadFiles',function(){
+        if($scope.tempUploadFiles.length == 0){
+           $('.btn.btn-primary.start').attr('disabled',true);
+        }else{
+            $('.btn.btn-primary.start').attr('disabled',false);
+        }
+    },true) ;
     $('.dashboard-tabs a').removeClass('selected');
     $('.dashboard-tabs a[href="#/files"]').addClass('selected');
 
     $scope.setUploadFiles = function (filePath) {
-        $scope.tempUploadFiles = [];
         for (var i in  $('#fileToUpload')[0].files) {
             var tempFile = $('#fileToUpload')[0].files[i];
             if (tempFile instanceof File) {
@@ -21,6 +28,7 @@ function FilesCtrl($scope,$rootScope, $filter) {
                 }
             }
         }
+
     }
 
     $scope.uploadFile = function ($event) {
@@ -85,7 +93,7 @@ function FilesCtrl($scope,$rootScope, $filter) {
 
 
     function filesList() {
-        console.log("in filesList()")
+
         $.ajax({
             url: "/mapflow/file?project=shanghai&action=list",
             type: "POST",

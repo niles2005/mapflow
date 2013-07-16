@@ -9,17 +9,33 @@
   <link rel="stylesheet" href="css/mask.css">
   <script src="lib/JQuery/jquery-1.7.js"></script>
   <script src="lib/angular/angular.js"></script>
+  <script src="lib/bootstrap/bootstrap-modal.js"></script>
+  <script src="lib/bootstrap/bootstrap-modalmanager.js"></script>
   <script type="text/javascript">
-    function projectList($scope,$http) {
+    function projectList($scope,$http,$filter) {
       var url = 'project';
-
       var value = {action:'list'};
-      
-
        $http({method:'POST',url:url,data:value}).success(function(data) {
-         console.dir(data);
-         $scope.projects = data;
+           $scope.projects = data;
        });
+
+        $scope.createProject  = function(){
+            $scope.project = {};
+            $('#newProject').modal();
+        };
+
+        $scope.save = function(projectName) {
+            if (!$scope.projects[projectName]) {
+                $scope.project.id = 'p' + ( Object.keys($scope.projects).length + 1);
+                $scope.project.createTime = new Date().getTime();
+                $scope.projects[projectName] = angular.copy($scope.project);  //这里要用angular.copy()否则新属性全会指向同一引用
+            }
+        };
+
+        $scope.edit = function (projectName){
+            $scope.project =  $scope.projects[projectName];
+            $('#newProject').modal();
+        };
     }
   </script>
 </head>
@@ -32,7 +48,7 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="active">
-                        <a href="partials/projectNew.html">添加</a>
+                        <a href="" ng-click = "createProject()">添加</a>
 
                     </li>
                 </ul>
@@ -46,17 +62,51 @@
                                 <a href="{{project.name}}">
                                 <h3>{{project.vendor}} / {{project.name}}</h3>
                                 </a>
-                            <span>{{project.creator}} @ {{project.createTime}}</span>
+                            <span>{{project.creator}} @ {{project.createTime |date:'yyyy-MM-dd HH:mm:ss '}}</span>
                             <p>
                                 {{project.info}}
                             </p>
                         </div>
-                        <div class="span1" ><a href="#/projectedit/{{project.id}}">编辑</a></div>
+                        <div class="span1" ><a href="" ng-click = "edit(project.name)">编辑</a></div>
                     </div>
         </li>
       </ul>
     </div>
   </div>
+
+    <div class="modal hide" id="newProject">
+            <form name="myForm" class="formpadding">
+            <div class="control-group" name = "name" ng-class="{error: myForm.name.$invalid}">
+                <label>Project Name</label>
+                <input type="text" name="name" ng-model="project.name" required>
+                <span ng-show="myForm.name.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <div class="control-group" ng-class="{error: myForm.vendor.$invalid}">
+                <label>Vendor</label>
+                <input type="text" name="vendor" ng-model="project.vendor" required>
+                <span ng-show="myForm.vendor.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <div class="control-group" ng-class="{error: myForm.description.$invalid}">
+                <label>Info</label>
+                <textarea name="description" ng-model="project.info" required></textarea>
+                <span ng-show="myForm.description.$error.required" class="help-inline">
+                    Required
+                </span>
+            </div>
+            <br>
+            <a data-dismiss="modal" href="#/" class="btn">Cancel</a>
+            <button  data-dismiss="modal" ng-click="save(project.name)" ng-disabled="myForm.$invalid" class="btn btn-primary">
+                Save
+            </button>
+
+        </form>
+    </div>
 
 
 </div>
