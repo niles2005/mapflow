@@ -85,6 +85,7 @@ com.xtwsoft.mapserver.project.Project project=(com.xtwsoft.mapserver.project.Pro
   <script src="js/directives.js"></script>
   <script src="js/mask.js"></script>
   <script src="js/app.js"></script>
-
+  <script src="lib/md5.js"></script>
+  <script src="lib/worker.js"></script>
 </body>
 </html>

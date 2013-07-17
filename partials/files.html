@@ -5,13 +5,20 @@
 <div class="container">
     <div class="row">
 
-        <div class="span10">
-         <table>
+        <div class="span12">
+         <table style="width: 100%">
+             <td  style="width: 30%">
+                 <progress id="progressPercent" max="100" value = "0"></progress>
+                 <span id="progressNumber">0%</span>
+             </td>
+
              <td>
             <div class="btn-toolbar">
+
                 <div class="row fileupload-buttonbar">
                     <form id="uploadfile" enctype="multipart/form-data" method="post" action="">
-                    <div class="span5">
+                    <div class="span9">
+                        <input type="checkbox"/>Server端同步生MD5
                         <span class="btn btn-success fileinput-button">
                             <i class="icon-plus icon-white"></i>
                             <span>Add files...</span>
@@ -26,6 +33,10 @@
                             <i class="icon-ban-circle icon-white"></i>
                             <span>Cancel upload</span>
                         </button>
+                        <button type="submit" class="btn btn-danger delete">
+                            <i class="icon-upload icon-white"></i>
+                            <span>Synchronize files</span>
+                        </button>
                     </div>
                     </form>
 
@@ -33,10 +44,7 @@
 
             </div>
              </td>
-             <td>
-                <progress id="progressPercent" max="100" value = "0"></progress>
-                <span id="progressNumber">0%</span>
-             </td>
+
          </table>
 
 
@@ -46,7 +54,8 @@
                     <th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
                     <th style="width: 170px"><a href="" ng-click="predicate = 'createTime'; reverse=!reverse">Time</a></th>
                     <th><a href="" ng-click="predicate = 'size'; reverse=!reverse">Size</a></th>
-                    <th style="width: 246px"><a href="" >MD5</a></th>
+                    <th style="width: 246px"><a href="" >MD5 Server</a></th>
+                    <th style="width: 246px"><a href="" >MD5 Local</a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,12 +64,14 @@
                     <td></td>
                     <td>{{tempFile.size}}</td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr ng-repeat="file in files">
                     <td>{{file.name}}</td>
                     <td>{{file.createTime |  date:'yyyy-MM-dd HH:mm:ss '}}</td>
                     <td>{{file.size}}</td>
                     <td> <a href="" ng-click = "md5Check(file.name,$event)">{{file.md5Sum}}</a>  </td>
+                    <td ng-dblclick = "selectFile($event)">dbclick to select file</td>
                 </tr>
                 </tbody>
             </table>
@@ -68,5 +79,7 @@
         </div>
 
     </div>
+
+    <input type="file" id="selectFile" onchange="angular.element(this).scope().localFileMd5(event)" style="display: none" />
 </div>
 
