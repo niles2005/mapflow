@@ -75,6 +75,31 @@ function FilesCtrl($scope, $rootScope, $filter) {
         }
     }
 
+    $scope.propsUpdate = function (){
+        $.ajax({
+            url:"/mapflow/file",
+            data:{project:'shanghai',action :'propsupdate'},
+            type:"POST",
+            dataType:"json"
+        }).done(function(data){
+                $scope.files = [];
+                $.each(data.fileMap, function () {
+                    if (this) {
+                        $scope.files.push(this);
+
+                        if (!this.md5Sum) {
+                            this.md5Sum = FilesCtrl.CALCULATEMD5;
+                        }
+
+                    }
+                });
+
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            });
+    }
+
     function uploadComplete(evt) {
         /* This event is raised whenthe server send back a response */
         filesList();
@@ -166,7 +191,7 @@ function FilesCtrl($scope, $rootScope, $filter) {
             url: "/mapflow/file?project=shanghai&action=list",
             type: "POST",
             dataType: "json"
-        }).done(function (data) {
+        }).done(function(data){
                 $scope.files = [];
                 $.each(data.fileMap, function () {
                     if (this) {
@@ -184,6 +209,8 @@ function FilesCtrl($scope, $rootScope, $filter) {
                 }
             });
     }
+
+
 
 }
 
